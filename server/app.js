@@ -10,7 +10,7 @@ var indexRoute = require('./routes/index');
 var passport = require('passport');
 var session = require('express-session');
 var localStrategy = require('passport-local').Strategy;
-var User = require('./models/user');
+var User = require('./models/userdb');
 
 // Mongo setup
 var mongoose = require("mongoose");
