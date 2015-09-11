@@ -8,9 +8,33 @@
     <link rel="stylesheet" href="/assets/styles/style.css">
     <title>Prep Hoops</title>
 </head>
-<body>
-  <h1>Prep Hoops</h1>
+<body ng-app="prepHoopsApp">
+    <div class="header">
+        <h1>Prep Hoops</h1>
+        <a href="#login">Login</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#site">Site</a>
+        <a href="#admin">Admin</a>
+    </div>
+
+    <div class="mainview">
+        <main ng-view></main>
+    </div>
+
+    <div class="footer">
+        <h6>Copyright Prep Hoops</h6>
+    </div>
+
 <!--Scripts-->
-<script type="text/javascript" src="/assets/scripts/project.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-ui-bootstrap/ui-bootstrap.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="/vendors/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/project.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/controllers/login.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/controllers/dashboard.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/controllers/site.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/controllers/admin.min.js"></script>
 </body>
 </html>
