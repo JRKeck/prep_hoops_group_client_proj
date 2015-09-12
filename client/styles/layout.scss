@@ -5,6 +5,9 @@ body {
   padding: 0;
   margin: 0;
 }
+table {
+  margin-bottom: 10px;
+}
 table, th , td {
   border: 1px solid grey;
   border-collapse: collapse;
@@ -18,4 +21,7 @@ table tr:nth-child(even) {
 }
 .border {
   border: solid;
+}
+.bottom {
+  height: 40px;
 }
