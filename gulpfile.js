@@ -66,9 +66,9 @@ gulp.task('copy-vendors', function() {
 // Watch Files For Changes
 gulp.task('watch', function() {
     livereload.listen();
-    gulp.watch('client/scripts/*.js', ['lint', 'scripts-index']);
+    gulp.watch('client/scripts/**/*.js', ['lint', 'scripts-index']);
     gulp.watch('client/styles/*.scss', ['sass']);
-    gulp.watch('client/views/*.html', ['views']);
+    gulp.watch('client/views/routes/*.html', ['views']);
 });
 
 // Default Task
