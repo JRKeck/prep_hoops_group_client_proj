@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Client = require('node-rest-client').Client;
 var parseString = require('xml2js').parseString;
-var http = require('http');
 
 var xmlFeed = 'http://www.northstarhoopsreport.com/news_rss_feed?tags=744386%252C744387%252C1469282';
 
