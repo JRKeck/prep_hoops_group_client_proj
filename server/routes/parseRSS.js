@@ -1,15 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var Client = require('node-rest-client').Client;
+var parseString = require('xml2js').parseString;
 
-var xmlFeed = 'http://www.prephoopsarizona.com/news_rss_feed?tags=1560647%2C1564263%2C1564215%2C1564219%2C1564272%2C1564220%2C1579880%2C1579881%2C1579882';
+var xmlFeed = 'http://www.northstarhoopsreport.com/news_rss_feed?tags=744386%252C744387%252C1469282';
 
-router.get('/*', function(req, res, next){
+router.get('/2', function(req, res, next){
     client = new Client();
 
     console.log('Parsing RSS!')
 
-    // Get RSS Feed
+    // direct way
     client.get(xmlFeed, function(data, response){
 
         // Parse the returned xml
@@ -27,9 +28,9 @@ router.get('/*', function(req, res, next){
                 console.log(date);
                 // Change date to ISO
                 date = new Date(date).toISOString();
-                console.log(date);
-
-                console.log(articles[i].title[0]);
+                console.log('Publish Date: ' + date);
+                console.log('Title: '+articles[i].title[0]);
+                console.log('Author: ' + articles[i].author[0]);
             }
             res.send(JSON.stringify(articles));
         });
