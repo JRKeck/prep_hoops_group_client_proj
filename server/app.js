@@ -5,8 +5,9 @@ var bodyParser = require('body-parser');
 
 // Route requires
 var indexRoute = require('./routes/index');
+var parseRssRoute = require('./routes/parseRSS');
 
-// Authentication reuires
+// Authentication requires
 var passport = require('passport');
 var session = require('express-session');
 var localStrategy = require('passport-local').Strategy;
@@ -55,6 +56,7 @@ passport.use('local', new localStrategy({ passReqToCallback : true, usernameFiel
 ));
 
 // Routes
+app.use('/parserss', parseRssRoute);
 app.use('/', indexRoute);
 
 app.listen(app.get('port'), function() {
