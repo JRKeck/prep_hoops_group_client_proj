@@ -4,7 +4,7 @@ var Client = require('node-rest-client').Client;
 //var parseString = require('xml2js').parseString;
 var parseString = require('node-rest-client/node_modules/xml2js').parseString;
 
-// Demo data for a req to the DB for all the sites
+// Demo data of a req to the DB for all the sites
 var networkArray = [
     {
         siteName: 'NorthStar Hoops Report',
@@ -20,6 +20,8 @@ var networkArray = [
     }
 ];
 
+var articleCount = 0;
+
 router.get('/*', function(req, res, next){
     console.log('Parsing RSS!');
 
@@ -33,22 +35,21 @@ router.get('/*', function(req, res, next){
 
 module.exports = router;
 
+// Loop through each RSS Feed in the Network
 function networkParser(array){
     // For each Feed in the network snd it to the parser
     for(i=0; i<array.length; i++){
         var el = array[i];
         parseFeed(el.siteFeed, el.siteName);
     }
-
-
 }
+
+// Parse an RSS Feed
 function parseFeed(feedURL, siteName){
     client = new Client();
 
-    // Get Remote RSS Feed
+    // Connect to Remote RSS Feed
     client.get(feedURL, function(data, response){
-
-
 
         // Parse the returned xml
         parseString(data, function (err, result) {
@@ -56,14 +57,14 @@ function parseFeed(feedURL, siteName){
             // The array of articles
             var articles = result.rss.channel[0].item;
 
-            // Loop through articles
+            // Loop through articles array
             for(i=0; i<articles.length; i++){
                 var el = articles[i];
 
                 // Change  pubdate to ISO format
                 var date = dateToISO(el.pubDate[0]);
 
-                // Get article IDL
+                // Get article ID
                 var articleID = getSportNginArticleID(el.link[0]);
 
                 // Store the parsed info in an obj
@@ -78,9 +79,13 @@ function parseFeed(feedURL, siteName){
                 articleObj.articleID = articleID;
 
                 console.log(articleObj);
+
+                articleCount++;
+                console.log(articleCount + ' articles parsed');
             }
         });
     });
+
 }
 
 function dateToISO(date){
