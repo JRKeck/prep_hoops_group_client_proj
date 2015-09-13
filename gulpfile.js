@@ -53,11 +53,13 @@ gulp.task('images', function() {
 gulp.task('copy-vendors', function() {
     gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css','node_modules/bootstrap/dist/css/bootstrap.css.map'])
         .pipe(gulp.dest('server/public/vendors/bootstrap'));
+    gulp.src(['node_modules/bootstrap/dist/fonts/*'])
+        .pipe(gulp.dest('server/public/vendors/fonts'));
     gulp.src(['node_modules/angular/angular.min.js','node_modules/angular/angular.min.js.map'])
         .pipe(gulp.dest('server/public/vendors/angular'));
     gulp.src(['node_modules/angular-route/angular-route.min.js','node_modules/angular-route/angular-route.min.js.map'])
         .pipe(gulp.dest('server/public/vendors/angular-route'));
-    gulp.src(['node_modules/angular-ui-bootstrap/ui-bootstrap.min.js','node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js'])
+    gulp.src(['node_modules/angular-ui-bootstrap/ui-bootstrap.min.js','node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.min.js', 'node_modules/angular-ui-bootstrap/ui-bootstrap-csp.css'])
         .pipe(gulp.dest('server/public/vendors/angular-ui-bootstrap'));
     gulp.src(['node_modules/angular-animate/angular-animate.min.js','node_modules/angular-animate/angular-animate.min.js.map'])
         .pipe(gulp.dest('server/public/vendors/angular-animate'));

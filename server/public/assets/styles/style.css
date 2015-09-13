@@ -21,11 +21,31 @@ table tr:nth-child(odd) {
 table tr:nth-child(even) {
   background-color: #ffffff; }
 
+#goToAdmin, #dashboardBanner {
+  display: inline-block;
+  margin-bottom: 10px; }
+
+#goToAdmin {
+  margin-left: 550px; }
+
 .border {
   border: solid; }
 
 .bottom {
   height: 40px; }
+
+.full button span {
+  background-color: limegreen;
+  border-radius: 32px;
+  color: black; }
+
+.partially button span {
+  background-color: orange;
+  border-radius: 32px;
+  color: black; }
+
+.datepicker {
+  display: inline; }
 
 /* header.scss */
 /* footer.scss */
