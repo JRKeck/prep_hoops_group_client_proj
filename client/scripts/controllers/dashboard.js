@@ -21,8 +21,10 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[0];
 
-    $scope.open = function($event) {
-        $scope.status.opened = true;
+    $scope.open = function($event,opened) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope[opened]= true;
     };
 
 
