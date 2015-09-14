@@ -14,9 +14,9 @@ router.post("/articleAdd", function(req, res, next){
     if (Articles.find({date: req.body.date})){
         testDate = true;
     }
-    if (Articles.find({site: req.body.date}).where({date})){
-        testDate = true;
-    }
+    //if (Articles.find({site: req.body.date}).where({date})){
+    //    testDate = true;
+    //}
     console.log(testDate);
     //var testbool = Articles.
     //    find({date: req.body.date}).
