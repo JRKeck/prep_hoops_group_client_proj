@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 
 // Route requires
 var indexRoute = require('./routes/index');
+var apiRoute = require('./routes/api');
 
 // Authentication reuires
 var passport = require('passport');
@@ -18,19 +19,19 @@ var mongoose = require("mongoose");
 ////Local DB
 //var mongoURI = "";
 //
-////Mongo Labs DB
-// var mongoURI = "";
-//
-////Connect to DB
-// var MongoDB = mongoose.connect(mongoURI).connection;
-//
-// MongoDB.on('error', function (err) {
-//     console.log('mongolab connection error', err);
-// });
-//
-// MongoDB.once('open', function () {
-//     console.log('mongolab connection open');
-// });
+//Mongo Labs DB
+ var mongoURI = "mongodb://prephoopsAdmin:PHoopsAdmin@ds039073.mongolab.com:39073/prep_hoops_articledb";
+
+//Connect to DB
+ var MongoDB = mongoose.connect(mongoURI).connection;
+
+ MongoDB.on('error', function (err) {
+     console.log('mongolab connection error', err);
+ });
+
+ MongoDB.once('open', function () {
+     console.log('mongolab connection open');
+ });
 
 // Server setup
 app.set('port', (process.env.PORT || 3000));
@@ -56,6 +57,7 @@ passport.use('local', new localStrategy({ passReqToCallback : true, usernameFiel
 
 // Routes
 app.use('/', indexRoute);
+app.use('/api', apiRoute);
 
 app.listen(app.get('port'), function() {
     console.log('Prep Hoops is running on port', app.get('port'));
