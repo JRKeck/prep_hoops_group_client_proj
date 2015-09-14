@@ -39,12 +39,11 @@
             <table class="col-md-12">
                 <tr>
                     <td>Date</td>
-                    <td ng-repeat="site in sites">{{site}}</td>
+                    <td ng-repeat="site in sites">{{site.siteName}}</td>
                 </tr>
                 <tr ng-repeat="day in dates">
                     <td>{{ day.date }}</td>
-                    <td>{{ day.sites[0].Site1[0].articles.length }}</td>
-                    <td>{{ day.sites[0].Site2[0].articles.length }}</td>
+                    <td ng-click="getArticles()">{{ day.site[0].articles.length }}</td>
                 </tr>
             </table>
         </div>
