@@ -1,5 +1,5 @@
     <div class="row">
-        <div class="col-md-offset-1 col-md-10 border">
+        <div class="col-md-12 border">
             <h1>Main Dashboard</h1>
         </div>
     </div>
@@ -7,30 +7,32 @@
 
 
     <div class="row">
-        <div class="col-md-10 col-md-offset-1 border">
-            <h4 id="dashboardBanner">Prep Hoops Network Article Stats</h4>
-            <input type="button" id="goToAdmin" class="btn post" ng-click="go('/admin')" value="Admin"/>
+        <div class="col-md-12 border">
+            <div class="row">
+                <h4 class="col-md-4" id="dashboardBanner">Prep Hoops Network Article Stats</h4>
+                <input type="button" id="goToAdmin" class="btn post col-md-1 col-md-offset-7" ng-click="go('/admin')" value="Admin"/>
+            </div>
 
             <div class="row">
-
-                <div class="col-md-5 datepicker">
+                <p class="search col-md-1">From:</p>
+                <div class="col-md-4 datepicker">
                     <p class="input-group">
-                        <input type="date" class="form-control" datepicker-popup ng-model="first" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                        <input type="date" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                  </span>
-                    </p>
-                    </div>
-
-                <div class="col-md-5 datepicker">
-                    <p class="input-group">
-                        <input type="date" class="form-control" datepicker-popup ng-model="last" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                  <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                    <button type="button" class="btn btn-default" ng-click="open($event, 'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
                   </span>
                     </p>
                 </div>
-                <input type="button" id="getRSS" class="col-md-2 btn post" ng-click="getRSS(first, last)" value="Refresh RSS"/>
+                <p class="search col-md-1">To:</p>
+                <div class="col-md-4 datepicker">
+                    <p class="input-group">
+                        <input type="date" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                    </p>
+                </div>
+                <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
 
             </div>
 
@@ -49,7 +51,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-offset-1 col-md-10 border bottom"></div>
+        <div class="col-md-12 border bottom"></div>
     </div>
 
 

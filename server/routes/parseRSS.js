@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var Client = require('node-rest-client').Client;
-//var parseString = require('xml2js').parseString;
-var parseString = require('node-rest-client/node_modules/xml2js').parseString;
+var parseString = require('xml2js').parseString;
+//var parseString = require('node-rest-client/node_modules/xml2js').parseString;
 
 // Keep track of the # of articles parsed
 var articleCount = 0;

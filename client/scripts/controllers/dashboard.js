@@ -3,7 +3,11 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Hard-coded data for testing purposes
     $scope.sites = ["Site1", "Site2"];
     $scope.daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    $scope.dates = [{date: "9/11/15", sites:[{Site1:[{articles:[{title: "Hoops", author: "Sarah"}, {title: "Hoops2", author: "Suren"}]}], Site2:[{articles:[{title: "Hoops3", author: "Josh"}]}]}]}];
+    $scope.dates = [{date: "9/11/15", sites:[{Site1:[{articles:[{title: "Hoops", author: "Sarah"}, {title: "Hoops2", author: "Suren"}]}], Site2:[{articles:[{title: "Hoops3", author: "Josh"}]}]}]},
+        {date: "9/12/15", sites:[{Site1:[{articles:[{title: "Hoops", author: "Sarah"}, {title: "Hoops2", author: "Suren"}]}], Site2:[{articles:[{title: "Hoops3", author: "Josh"}]}]}]},
+        {date: "9/13/15", sites:[{Site1:[{articles:[{title: "Hoops", author: "Sarah"}, {title: "Hoops2", author: "Suren"}]}], Site2:[{articles:[{title: "Hoops3", author: "Josh"}]}]}]},
+        {date: "9/14/15", sites:[{Site1:[{articles:[{title: "Hoops", author: "Sarah"}, {title: "Hoops2", author: "Suren"}]}], Site2:[{articles:[{title: "Hoops3", author: "Josh"}]}]}]}
+    ];
 
     //Not yet working code to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
@@ -16,15 +20,21 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $location.path( path );
     };
 
+    //Function to call RSS feed dump into database
+    $scope.getRSS = function (firstDate, lastDate){
+        console.log(firstDate, lastDate);
+    };
 
     //Code for DatePicker
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[0];
 
-    $scope.open = function($event) {
-        $scope.status.opened = true;
-    };
+    $scope.open = function($event, opened) {
+        $event.preventDefault();
+        $event.stopPropagation();
 
+        $scope[opened] = true;
+    };
 
     $scope.status = {
         opened: false
@@ -34,6 +44,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $scope.first = new Date();
         $scope.last = new Date();
     };
+
     $scope.today();
 
     $scope.clear = function () {

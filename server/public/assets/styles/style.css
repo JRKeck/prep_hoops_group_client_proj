@@ -26,7 +26,7 @@ table tr:nth-child(even) {
   margin-bottom: 10px; }
 
 #goToAdmin {
-  margin-left: 550px; }
+  margin-top: 2px; }
 
 .border {
   border: solid; }
@@ -46,6 +46,9 @@ table tr:nth-child(even) {
 
 .datepicker {
   display: inline; }
+
+.search {
+  font-weight: bold; }
 
 /* header.scss */
 /* footer.scss */
