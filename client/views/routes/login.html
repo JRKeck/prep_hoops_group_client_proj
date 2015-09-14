@@ -1,22 +1,17 @@
 <!--<p>Login Page!</p>-->
 
-<section class="container authSection">
-    <form class="authForm well well-lg">
-        <fieldset>
-            <div class="fields">
-                <div class="field">
-                    <input ng-model="username" type="username" ng-required="true" placeholder="username" class="authInput">
-                </div>
-
-                <div class="field">
-                    <input ng-model="password" type="password" ng-required="true" placeholder=" Password" class="authInput">
-                </div>
-            </div>
-            <div class="field">
-                <input type="submit" ng-click="login()" value="Log In" class="authInput authButton" />
-            </div>
-
-        </fieldset>
-
+<section class="authSection">
+    <form novalidate id="loginForm" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" ng-model="loginForm.username" name="username" id="username"/>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" ng-model="loginForm.password" name="password" id="password"/>
+        </div>
+        <div>
+            <input type="submit" id="login" class="" ng-click="login(loginForm)" value="Log In"/>
+        </div>
     </form>
 </section>
