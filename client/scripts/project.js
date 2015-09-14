@@ -8,6 +8,10 @@ prepHoopsApp.config(['$routeProvider', function($routeProvider){
             templateUrl: '/assets/views/routes/login.html',
             controller: 'LoginController'
         })
+        .when('/register', {
+            templateUrl: '/assets/views/routes/register.html',
+            controller: 'RegisterController'
+        })
         .when('/admin', {
             templateUrl: '/assets/views/routes/admin.html',
             controller: 'AdminController'
