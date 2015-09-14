@@ -1,21 +1,20 @@
-prepHoopsApp.controller('LoginController', ['$scope', '$http', function($scope, $http){
+prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', function($scope, $http, $location){
     console.log("Login Controller Loaded");
 
     $scope.loginForm = {};
 
     $scope.login = function(user){
         return $http.post('/userauth/login', user)
-            .then(function(response){
-                if (response.status !== 200){
-                    alert('error logging in!');
-                } else {
-                    $scope.loginForm = {};
-                    $scope.registerFlag = false;
-                    $scope.loginFlag = false;
-                    $scope.logoutFlag = true;
-                    return $scope.username;
-                }
+            .success(function(user){
+                //$rootScope.authenticated = true;
+                //$rootScope.current_user = "james";
+                console.log('login success');
+                $location.path('/dashboard');
+            })
+            .error(function(err){
+                console.log('Login Error');
+                $scope.error_message = 'Username or Password is Incorrect';
             });
-    };
 
+    };
 }]);

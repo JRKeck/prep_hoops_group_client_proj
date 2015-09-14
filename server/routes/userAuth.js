@@ -7,12 +7,10 @@ var User = require('../models/userdb');
 
 
 // User Authentication
-router.post('/login',
-    passport.authenticate('local', {
-        successRedirect: '/success',
-        failureRedirect: '/dashboard'
-    })
-);
+router.post('/login', passport.authenticate('local'), function(req, res){
+    console.log(req.user);
+    res.send(req.user);
+});
 
 // User Registration
 router.post('/register', function(req,res,next) {

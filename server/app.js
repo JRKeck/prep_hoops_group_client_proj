@@ -53,10 +53,10 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-//passport.use('local', new localStrategy({ passReqToCallback : true, usernameField: 'username' },
-//    function(req, username, password, done) {
-//    }
-//));
+passport.use('local', new localStrategy({ passReqToCallback : true, usernameField: 'username' },
+    function(req, username, password, done) {
+    }
+));
 
 // Routes
 app.use('/userauth', userAuthRoute);
