@@ -13,8 +13,6 @@ prepHoopsApp.controller('LoginController', ['$scope', '$http', function($scope, 
                     $scope.registerFlag = false;
                     $scope.loginFlag = false;
                     $scope.logoutFlag = true;
-                    $scope.username = response.config.data.username;
-                    properties.set('username', $scope.username);
                     return $scope.username;
                 }
             });
