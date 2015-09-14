@@ -4,6 +4,9 @@ var Client = require('node-rest-client').Client;
 //var parseString = require('xml2js').parseString;
 var parseString = require('node-rest-client/node_modules/xml2js').parseString;
 
+// Keep track of the # of articles parsed
+var articleCount = 0;
+
 // Demo data of a req to the DB for all the sites
 var networkArray = [
     {
@@ -19,8 +22,6 @@ var networkArray = [
         siteFeed: 'http://www.prephoopsiowa.com/news_rss_feed?tags=1160474%2C1160478%2C1160479%2C1160453%2C1164934%2C1164913%2C1164890%2C1164908%2C1161834%2C1330622'
     }
 ];
-
-var articleCount = 0;
 
 router.get('/*', function(req, res, next){
     console.log('Parsing RSS!');
@@ -40,12 +41,12 @@ function networkParser(array){
     // For each Feed in the network snd it to the parser
     for(i=0; i<array.length; i++){
         var el = array[i];
-        parseFeed(el.siteFeed, el.siteName);
+        parseFeed(el.siteFeed, el.siteName, el.siteID);
     }
 }
 
 // Parse an RSS Feed
-function parseFeed(feedURL, siteName){
+function parseFeed(feedURL, siteName, siteID){
     client = new Client();
 
     // Connect to Remote RSS Feed
@@ -71,7 +72,8 @@ function parseFeed(feedURL, siteName){
                 var articleObj = {};
 
                 // add data to obj that will be sent to mongoose
-                articleObj.date = date;
+                articleObj.pubDate = date;
+                articleObj.siteID = siteID;
                 articleObj.siteName = siteName;
                 articleObj.title = el.title[0];
                 articleObj.author = el.author[0];
@@ -85,18 +87,17 @@ function parseFeed(feedURL, siteName){
             }
         });
     });
-
 }
-
+// Convert a date to ISO format
 function dateToISO(date){
     var ISOdate = new Date(date).toISOString();
     return ISOdate;
 }
+
+// Grab the unique ID from a SportNgin article
 function getSportNginArticleID(url){
     var articleID = url.substr(url.lastIndexOf('/') + 1);
     // Remove everything after the ?
     articleID = articleID.substr(0, articleID.indexOf('?'));
     return articleID;
 }
-
-
