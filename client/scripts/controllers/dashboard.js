@@ -51,7 +51,4 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $scope.first = null;
         $scope.last = null;
     };
-
-
-
 }]);
