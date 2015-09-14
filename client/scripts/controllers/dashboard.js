@@ -25,6 +25,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $scope.status.opened = true;
     };
 
+
     $scope.status = {
         opened: false
     };

@@ -17,21 +17,22 @@
                 <div class="col-md-5 datepicker">
                     <p class="input-group">
                         <input type="date" class="form-control" datepicker-popup ng-model="first" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
                     </p>
                     </div>
 
                 <div class="col-md-5 datepicker">
-
                     <p class="input-group">
                         <input type="date" class="form-control" datepicker-popup ng-model="last" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
                     </p>
                 </div>
+                <input type="button" id="getRSS" class="col-md-2 btn post" ng-click="getRSS(first, last)" value="Refresh RSS"/>
+
             </div>
 
             <table class="col-md-12">
