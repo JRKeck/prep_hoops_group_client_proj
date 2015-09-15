@@ -134,7 +134,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         };
 
         console.log("Full article with site and date: ", newDateArticle);
-        console.log("Push artcile only: ", pushArticle);
 
         //$http({
         //    url: '/api/getObjectID',
