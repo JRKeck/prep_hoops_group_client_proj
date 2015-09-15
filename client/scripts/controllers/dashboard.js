@@ -136,7 +136,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     var dbDate = year + month + day;
     console.log(dbDate);
 
-    $scope.getRSS = function() {
+    $scope.testDatabase = function() {
         var newDateArticle =
         {
             date: dbDate,
@@ -148,7 +148,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                         [{
                             pubDate: 'Sat, 27 Dec 2014 20:15:00 -0600',
                             author: 'The Czar',
-                            title: '2014 Granite City Classic: Monticello vs Apollo',
+                            title: 'Test Number 3',
                             url: 'http://www.northstarhoopsreport.com/news_article/show/460716?referral=rss&referrer_id=982824',
                             articleID: 460716,
                             paywalled: false,

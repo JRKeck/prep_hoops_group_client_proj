@@ -34,9 +34,9 @@ router.post("/articleAdd", function(req, res, next){
             // Set newArticle to only the article information that is being passed in (Site and Date not needed)
             // Only want to push the article.
             newArticle = req.body.site[0].articles[0];
-            // Push - not working
-            Articles.findByIdAndUpdate({id: mongoSiteID},
-                {$push: {'articles': {
+            console.log(req.body.site[0].articles[0].articleID);
+
+            var articleToAdd = {
                     pubDate: req.body.site[0].articles[0].pubDate,
                     author: req.body.site[0].articles[0].author,
                     title: req.body.site[0].articles[0].title,
@@ -44,14 +44,14 @@ router.post("/articleAdd", function(req, res, next){
                     articleID: req.body.site[0].articles[0].articleID,
                     paywalled: req.body.site[0].articles[0].paywalled,
                     tags: req.body.site[0].articles[0].tags
-                }
-                }},
-                {safe: true, upsert: true},
-                function(err, article){
-                    console.log("This is the error: ", err);
-                    console.log("This is the article: ", article);
-                }
-            );
+            };
+
+            Articles.findById(mongoDateID, function(err, item) {
+                item.site[0].articles.push(articleToAdd);
+                item.save(function (err, item) {
+                console.log(err);
+                });
+            });
         }
 
         // If Date exists - Set to true - Once you can push in an article - this would be used to push an article
