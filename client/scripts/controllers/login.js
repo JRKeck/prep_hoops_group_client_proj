@@ -1,4 +1,4 @@
-prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', function($scope, $http, $location){
+prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', 'userAuth', function($scope, $http, $location, userAuth){
     console.log("Login Controller Loaded");
 
     $scope.loginForm = {};
@@ -6,9 +6,9 @@ prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', func
     $scope.login = function(user){
         return $http.post('/userauth/login', user)
             .success(function(user){
-                //$rootScope.authenticated = true;
-                //$rootScope.current_user = "james";
-                console.log('login success');
+                console.log('login success, return user object from login controller: ');
+                console.log(user);
+                userAuth.setUser(user);
                 $location.path('/dashboard');
             })
             .error(function(err){

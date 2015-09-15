@@ -1,4 +1,6 @@
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', function($scope, $http, $location){
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', function($scope, $http, $location, userAuth){
+    console.log('Dashboard script loaded');
+
 
     //Hard-coded data for testing purposes
     $scope.sites = ["Site1", "Site2"];
@@ -24,7 +26,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.open = function($event) {
         $scope.status.opened = true;
     };
-
 
     $scope.status = {
         opened: false
