@@ -14,7 +14,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     $scope.dates = [];
 
-    //Not yet working code to get day of the week for specified date
+    //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
             $scope.dayOfWeek = date.getDay();
             console.log($scope.dayOfWeek);
@@ -44,12 +44,14 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     };
 
     $scope.getArticles = function(){
-      console.log(this);
+      console.log(this.day.site);
+        for(var i=0; i < this.day.site[0].articles.length; i++){
+            console.log(this.day.site[0].articles[0].url)
+        }
     };
 
     //Code for DatePicker
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
+
 
     $scope.open = function($event, opened) {
         $event.preventDefault();
