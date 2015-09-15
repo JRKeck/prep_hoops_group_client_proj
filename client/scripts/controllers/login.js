@@ -13,6 +13,7 @@ prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', func
             })
             .error(function(err){
                 console.log('Login Error');
+                $scope.loginForm = {};
                 $scope.error_message = 'Username or Password is Incorrect';
             });
 
