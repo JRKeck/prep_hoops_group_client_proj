@@ -65,6 +65,8 @@ function parseFeed(feedURL, siteName, siteID){
                 // Change  pubdate to ISO format
                 var date = dateToISO(el.pubDate[0]);
 
+                var shortDate = date.substr(0, date.indexOf('T'));
+
                 // Get article ID
                 var articleID = getSportNginArticleID(el.link[0]);
 
@@ -73,6 +75,7 @@ function parseFeed(feedURL, siteName, siteID){
 
                 // add data to obj that will be sent to mongoose
                 articleObj.pubDate = date;
+                articleObj.shortDate = shortDate;
                 articleObj.siteID = siteID;
                 articleObj.siteName = siteName;
                 articleObj.title = el.title[0];
