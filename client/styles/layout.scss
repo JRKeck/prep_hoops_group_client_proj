@@ -5,3 +5,46 @@ body {
   padding: 0;
   margin: 0;
 }
+table {
+  margin-bottom: 10px;
+}
+table, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+#goToAdmin, #dashboardBanner {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+#goToAdmin {
+  margin-top: 2px;
+}
+.border {
+  border: solid;
+}
+.bottom {
+  height: 40px;
+}
+.full button span {
+  background-color: limegreen;
+  border-radius: 32px;
+  color: black;
+}
+.partially button span {
+  background-color: orange;
+  border-radius: 32px;
+  color: black;
+}
+.datepicker {
+  display: inline;
+}
+.search {
+  font-weight: bold;
+}
