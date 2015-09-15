@@ -10,15 +10,12 @@ var ArticleSchema = new mongoose.Schema({
             siteID: Number,
             articles:
                 [{
+                    _id: false,
                     pubDate: Date,
                     author: String,
                     title: String,
                     url: String,
-                    articleID:
-                    {
-                        type: String,
-                        unique: true
-                    },
+                    articleID: String,
                     paywalled: Boolean,
                     tags: Array
                 }]

@@ -53,54 +53,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // This is Bob's test code for creating new database records.
     // All of this is not needed once we being parsing data.
     var myDate = new Date('9/13/2015');
@@ -118,15 +70,15 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             date: dbDate,
             site:
                 [{
-                    siteName: 'North Star Hoops Report',
+                    siteName: 'Vantage Hoops',
                     siteID: 1,
                     articles:
                         [{
-                            pubDate: 'Sat, 27 Dec 2014 20:15:00 -0600',
-                            author: 'The Czar',
-                            title: '2014 Granite City Classic: Monticello vs Apollo',
-                            url: 'http://www.northstarhoopsreport.com/news_article/show/460716?referral=rss&referrer_id=982824',
-                            articleID: 460716,
+                            pubDate: 'Mon, 14 Sep 2015 14:15:00 -0400',
+                            author: 'Jack Herron',
+                            title: '2016 Rankings Breakdown: Wing Forwards',
+                            url: 'http://www.vantagehoops.com/news_article/show/553703?referral=rss&referrer_id=1103687',
+                            articleID: '553703',
                             paywalled: false,
                             tags: []
                         }]

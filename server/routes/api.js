@@ -15,60 +15,58 @@ router.post("/articleAdd", function(req, res, next){
     // Console Log to show the initial settings are set (Should be False / False)
     console.log("Test Date: ", testDate, " Test Site: ", testSite);
 
-    // This set of code will pull the Object IDs of the Date Collection and the Site Array underneath the collection.
-    var queryDateID = Articles.findOne({date: req.body.date});
-    queryDateID.select('id site');
-    queryDateID.exec(function(err, article) {
-        if (err) console.log(err);
-        var mongoDateID = article.id;
-        var mongoSiteID = article.site[0]._id;
-        console.log(mongoDateID);
-        console.log(mongoSiteID);
 
-
-        // This if Statement will check if a Date collection exists AND a site collection exists
-        // The push functionality here is not working.  Could be just a syntax issue.
-        if (Articles.find({site: {"$in": req.body.site[0].siteID }}).where({date: req.body.date})) {
-            // Denote that the current site exists
-            testSite = true;
-            // Set newArticle to only the article information that is being passed in (Site and Date not needed)
-            // Only want to push the article.
-            newArticle = req.body.site[0].articles[0];
-            // Push - not working
-            Articles.findByIdAndUpdate({id: mongoSiteID},
-                {$push: {'articles': {
-                    pubDate: req.body.site[0].articles[0].pubDate,
-                    author: req.body.site[0].articles[0].author,
-                    title: req.body.site[0].articles[0].title,
-                    url: req.body.site[0].articles[0].url,
-                    articleID: req.body.site[0].articles[0].articleID,
-                    paywalled: req.body.site[0].articles[0].paywalled,
-                    tags: req.body.site[0].articles[0].tags
-                }
-                }},
-                {safe: true, upsert: true},
-                function(err, article){
-                    console.log("This is the error: ", err);
-                    console.log("This is the article: ", article);
-                }
-            );
+    // Test Area
+    // Results of the .find is an array.  Therefore if the results (articles)
+    // is greater than 0 - The date already exists in the database.
+    Articles.find({date: req.body.date}, function(err, articles){
+        if (err) {
+            console.log("This is the error! ", err);
         }
-
-        // If Date exists - Set to true - Once you can push in an article - this would be used to push an article
-        // with a new site.
-        if (Articles.find({date: req.body.date})){
+        if (articles.length > 0){
             testDate = true;
+            console.log("Number of Documents in DB with this Date: ", articles.length);
+            console.log("Test Date Value is now: ", testDate);
         }
-
-        // Console Log to show the checks on the date collection and site collection.
-        console.log("Test Date: ", testDate, " Test Site: ", testSite);
     });
-    res.send("OK");
 
+    Articles.find({site: {"$in": req.body.site[0].siteID }}).where({date: req.body.date}, function(err, articles){
+        if (err) {
+            console.log("This is the error! ", err);
+        }
+        if (articles.length > 0){
+            testSite = true;
+            console.log("Number of sites in DB with this Date: ", articles.length);
+            console.log("Test Site Value is now: ". testSite);
+        }
+    });
+
+
+
+
+    // This if Statement will check if a Date collection exists AND a site collection exists
+    // The push functionality here is not working.  Could be just a syntax issue.
+    if (Articles.find({site: {"$in": req.body.site[0].siteID }}).where({date: req.body.date})) {
+        console.log("Date and Site Match");
+
+    // If Date exists - Set to true - Once you can push in an article - this would be used to push an article
+    // with a new site.
+    } else if (Articles.find({date: req.body.date})){
+        console.log("Date only matches");
+
+    } else {
+        console.log("New Date for Article Hit!");
+
+    }
+
+    // Console Log to show the checks on the date collection and site collection.
+
+    res.send("OK");
 });
+
+
 router.get('/getObjectID', function(request, response, next){
     console.log(request);
-
 
 });
 

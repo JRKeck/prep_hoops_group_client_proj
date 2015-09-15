@@ -17,6 +17,7 @@ var User = require('./models/userdb');
 
 // Mongo setup
 var mongoose = require("mongoose");
+mongoose.set("debug",true);
 
 ////Local DB
 //var mongoURI = "";
