@@ -37,7 +37,7 @@ module.exports = router;
 
 // Loop through each RSS Feed in the Network
 function networkParser(array){
-    // For each Feed in the network snd it to the parser
+    // For each Feed in the network send it to the parser
     for(i=0; i<array.length; i++){
         var el = array[i];
         parseFeed(el.siteFeed, el.siteName, el.siteID);
