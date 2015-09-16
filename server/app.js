@@ -59,8 +59,8 @@ passport.use('local', new localStrategy({ passReqToCallback : true, usernameFiel
 
 // Routes
 app.use('/parserss', parseRssRoute);
-app.use('/', indexRoute);
 app.use('/api', apiRoute);
+app.use('/', indexRoute);
 
 app.listen(app.get('port'), function() {
     console.log('Prep Hoops is running on port', app.get('port'));
