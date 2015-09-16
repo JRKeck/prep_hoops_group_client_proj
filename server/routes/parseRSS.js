@@ -10,6 +10,10 @@ var articleCount = 0;
 // Initializes an array that will hold the parsed objects
 var holdingArray = [];
 
+// Flag to wait until all RSS feeds are parsed before sending the to DB
+var networkFinished = false;
+
+
 // Demo data of a req to the DB for all the sites
 var networkArray = [
     {
@@ -48,6 +52,7 @@ function networkParser(array){
         var el = array[i];
         parseFeed(el.siteFeed, el.siteName, el.siteID);
     }
+    networkFinished = true;
 }
 
 // Parse an RSS Feed
@@ -94,6 +99,10 @@ function parseFeed(feedURL, siteName, siteID){
                 console.log("Holding Array Items: ", holdingArray.length);
                 articleCount++;
                 console.log(articleCount + ' articles parsed');
+            }
+            if(networkArray){
+                // If all articles in network have been parsed send them to the DB
+                console.log(holdingArray);
             }
         });
     });
