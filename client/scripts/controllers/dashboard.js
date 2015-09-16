@@ -1,4 +1,4 @@
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', function($scope, $http, $location){
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', '$modal', function($scope, $http, $location, $modal){
 
     $scope.getDate = function(date){
         var year = date.getFullYear().toString();
@@ -12,7 +12,13 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Hard-coded data for testing purposes
     $scope.sites = [];
     $scope.daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    $scope.siteIds = [[1, []], [2, []], [3, []]];
+    $scope.daysArray = [];
     $scope.dates = [];
+    $scope.firstDate = '';
+    $scope.secondDate = '';
+    $scope.dateRangeLength = 0;
+
 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
@@ -32,21 +38,78 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         //var shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
         //var shortSecondDate = last.toISOString();
         //var shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
-        var firstDate = $scope.getDate(first);
-        var secondDate = $scope.getDate(last);
-        $http.post('/api/articleGet', [firstDate, secondDate]).
+
+        $scope.firstDate = $scope.getDate(first);
+        $scope.secondDate = $scope.getDate(last);
+        $scope.dateRangeLength = ($scope.secondDate + 1) - $scope.firstDate;
+
+        $http.post('/api/articleGet', [$scope.firstDate, $scope.secondDate]).
             success(function(data){
-            console.log(data);
+            //console.log(data);
                 $scope.dates = data;
                 $scope.sites = data[0].site;
-                console.log(data[0].site);
+                $scope.dateArrayCreator();
         });
+    };
+
+    //sorts incoming data into arrays for different sites
+    $scope.siteArray=[];
+    var n =3;
+    $scope.sitesArrayCreator = function(){
+        for(var j=0; j<n;j++){
+            $scope.siteArray.push([j+1,[]]);
+        }
+    }
+ $scope.sitesArrayCreator();
+    $scope.dateArrayCreator = function(){
+
+        for(var i=0; i<4; i++ ) {
+            $scope.daysArray.push([$scope.firstDate, $scope.siteArray]);
+               $scope.firstDate= (parseInt($scope.firstDate) +1).toString();
+        }
+        //console.log($scope.daysArray);
+            $scope.daySiteSort();
+
+        };
+
+
+ var dateRange= 4;
+    var temp;
+    $scope.daySiteSort = function(){
+        console.log($scope.daysArray);
+
+        for (var i = 0; i < dateRange; i++){
+          console.log('from database: ' + $scope.dates[i].date);
+          if($scope.dates[i].date!=null){
+              if (($scope.daysArray[i][0] === $scope.dates[i].date)) {
+                  console.log('one date match');
+                  console.log($scope.daysArray[i][0]);
+                  //console.log($scope.dates[i].date);
+
+                  for(var j = 0; j < $scope.dates[i].site.length; j++) {
+                      temp = $scope.dates[i].site[j];
+
+                      if($scope.daysArray[i][1][j][0] === temp.siteID){
+
+                          $scope.daysArray[i][1][j][1].push('this works');
+                      }
+                      console.log($scope.daysArray);
+
+                  }
+              }
+
+          }
+
+
+      }
+        //console.log($scope.daysArray);
+
     };
 
     $scope.getArticles = function(){
       console.log(this.day.site);
         for(var i=0; i < this.day.site[0].articles.length; i++){
-            console.log(this.day.site[0].articles[0].url)
+            console.log(this.day.site[0].articles[i].url)
         }
     };
 
@@ -75,54 +138,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $scope.first = null;
         $scope.last = null;
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // This is Bob's test code for creating new database records.
@@ -171,5 +186,39 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             console.log("Your article was added successfully! ", response);
         });
 
+    };
+
+    //working on modal to list articles on specific date
+
+    $scope.animationsEnabled = true;
+    $scope.openModal = function(size){
+        $scope.selectedArticles = this.day.site[0].articles;
+        var modalInstance = $modal.open(
+            {
+                animation: $scope.animationsEnabled,
+                templateUrl: '/assets/views/routes/articleUrl.html',
+                controller: 'ArticleInstanceController',
+                size: size,
+                resolve: {
+                    selectedArticles: function(){
+                        return $scope.selectedArticles;
+                    }
+                }
+            }
+        )
     }
+
+}]);
+
+prepHoopsApp.controller('ArticleInstanceController', ['$scope', '$modalInstance', 'selectedArticles', function($scope, $modalInstance, selectedArticles){
+    $scope.modalArticles = selectedArticles;
+    console.log($scope.modalArticles);
+
+    for(var i = 0; i < $scope.modalArticles.length; i++){
+        console.log($scope.modalArticles[i].url);
+    }
+
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
 }]);
