@@ -115,6 +115,16 @@ router.post("/articleAdd", function(req, res, next){
     res.send("OK");
 });
 
+router.post('/articleGet', function(request, response, next){
+    console.log(request.body);
+    return Articles.find({date: request.body[0]}).exec(function(err, articles){
+        if(err) console.log("Your error is in the Articles router.get");
+        if(err) throw new Error(err);
+        response.send(JSON.stringify(articles));
+        //next();
+    });
+});
+
 router.get('/getObjectID', function(request, response, next){
     console.log(request);
 
