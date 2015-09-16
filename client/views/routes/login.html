@@ -1,1 +1,18 @@
-<p>Login Page!</p>
+<!--<p>Login Page!</p>-->
+
+<section class="authSection">
+    <form novalidate id="loginForm" method="post">
+        <div class="error">{{error_message}}</div>
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" ng-model="loginForm.username" name="username" id="username"/>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" ng-model="loginForm.password" name="password" id="password"/>
+        </div>
+        <div>
+            <input type="submit" id="login" class="" ng-click="login(loginForm)" value="Log In"/>
+        </div>
+    </form>
+</section>

@@ -1,4 +1,6 @@
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', function($scope, $http, $location){
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', function($scope, $http, $location, userAuth){
+    console.log('Dashboard script loaded');
+
 
     $scope.getDate = function(date){
         var year = date.getFullYear().toString();
@@ -51,7 +53,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     };
 
     //Code for DatePicker
-
 
     $scope.open = function($event, opened) {
         $event.preventDefault();

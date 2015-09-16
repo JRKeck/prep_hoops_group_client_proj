@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var indexRoute = require('./routes/index');
 var apiRoute = require('./routes/api');
 var parseRssRoute = require('./routes/parseRSS');
+var userAuthRoute = require('./routes/userAuth');
+var networkRoute = require('./routes/network');
 
 
 // Authentication requires
@@ -60,6 +62,8 @@ passport.use('local', new localStrategy({ passReqToCallback : true, usernameFiel
 ));
 
 // Routes
+app.use('/userauth', userAuthRoute);
+app.use('/network', networkRoute);
 app.use('/parserss', parseRssRoute);
 app.use('/api', apiRoute);
 app.use('/', indexRoute);
@@ -85,10 +89,15 @@ passport.use('local', new localStrategy({
         usernameField: 'username'
     },
     function(req, username, password, done){
-        User.findOne({ email: username }, function(err, user) {
-            if (err) throw err;
-            if (!user)
+        console.log('looking for username');
+        User.findOne({ username: username }, function(err, user) {
+            if (err) {
+                throw err;
+            }
+            if (!user) {
+                console.log('Could Not Find User');
                 return done(null, false, {message: 'Incorrect username and password.'});
+            }
 
             // test a matching password
             user.comparePassword(password, function(err, isMatch) {

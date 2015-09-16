@@ -70,6 +70,7 @@ function parseFeed(feedURL, siteName, siteID){
                 // Change  pubdate to ISO format
                 var date = dateToISO(el.pubDate[0]);
 
+                //Remove the time information from the ISO date
                 var shortDate = date.substr(0, date.indexOf('T'));
 
                 // Get article ID
