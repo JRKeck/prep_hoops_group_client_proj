@@ -85,7 +85,9 @@ router.get('/getObjectID', function(request, response, next){
 //
 router.post('/articleGet', function(request, response, next){
     console.log(request.body);
-    return Articles.find({date: {$gte: request.body[0], $lte: request.body[1]}}).exec(function(err, articles){
+
+    return Articles.find({$query: {date: {$gte: request.body[0], $lte: request.body[1]}}, $orderby: { date : 1}}).exec(function(err, articles){
+
         if(err) console.log("Your error is in the Articles router.get");
         if(err) throw new Error(err);
         response.send(JSON.stringify(articles));
