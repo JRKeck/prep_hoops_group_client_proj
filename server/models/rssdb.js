@@ -8,6 +8,5 @@ var RSSSchema = new mongoose.Schema({
             siteFullName: String,
             rssURL: String
 });
-
 // Package and Export Article Database Model
 module.exports = mongoose.model("Feeds", RSSSchema);

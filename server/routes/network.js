@@ -14,4 +14,13 @@ router.post('/addsite', function(req,res,next) {
     })
 });
 
+// Find last siteID
+router.get('/lastid', function(req, res, next){
+    console.log('finding last id');
+    Feeds.findOne({}, {}, { sort: { 'siteID' : -1 } }, function(err, post) {
+        console.log(post.siteID);
+        res.send(post);
+    });
+});
+
 module.exports = router;
