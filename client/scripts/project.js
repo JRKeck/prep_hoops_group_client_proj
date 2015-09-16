@@ -58,5 +58,5 @@ prepHoopsApp.factory('userAuth', function(){
             console.log('authenticating user');
             return(user) ? user : false;
         }
-    }
+    };
 });

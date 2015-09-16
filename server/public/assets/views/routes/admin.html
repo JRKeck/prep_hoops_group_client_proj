@@ -21,3 +21,19 @@
         </div>
     </form>
 </section>
+<section class="networklist">
+    <h2>Sites</h2>
+    <table class="col-xs-12">
+        <tr>
+            <th>Report Name</th>
+            <th>Site Name</th>
+            <th>RSS Feed</th>
+        </tr>
+        <tr ng-repeat="site in sites">
+            <td>{{site.siteShortName}}</td>
+            <td>{{site.siteFullName}}</td>
+            <td>{{site.rssURL}}</td>
+        </tr>
+    </table>
+
+</section>

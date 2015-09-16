@@ -22,4 +22,12 @@ router.get('/lastid', function(req, res, next){
     });
 });
 
+// Get the list of Sites in the Network
+router.get('/*', function(req, res, next){
+    console.log('Getting List of Sites');
+    Feeds.find({}, function (err, feeds) {
+        res.send(feeds);
+    });
+});
+
 module.exports = router;
