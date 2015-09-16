@@ -1,1 +1,23 @@
-<p>Admin Page!</p>
+<!--<p>Admin Page!</p>-->
+
+<section class="adminSection">
+    <h2>Add a New Site to the Network</h2>
+    <form novalidate id="adminForm" method="post">
+        <div class="error">{{error_message}}</div>
+        <div>
+            <label for="siteFullName">Site Name:</label>
+            <input type="text" ng-model="adminForm.siteFullName" name="siteFullName" id="siteFullName" placeholder="test"/>
+        </div>
+        <div>
+            <label for="siteShortName">Report Code:</label>
+            <input type="text" ng-model="adminForm.siteShortName" name="siteShortName" id="siteShortName"/>
+        </div>
+        <div>
+            <label for="rssURL">RSS Feed:</label>
+            <input type="text" ng-model="adminForm.rssURL" name="rssURL" id="rssURL"/>
+        </div>
+        <div>
+            <input type="submit" id="addsite" class="" ng-click="addNewSite(adminForm)" value="Submit"/>
+        </div>
+    </form>
+</section>

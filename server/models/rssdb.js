@@ -6,10 +6,10 @@ var RSSSchema = new mongoose.Schema({
     lastParseDate : Date,
     sites :
         [{
-            siteId: Integer,
-            siteCode: String,
+            siteId: Number,
+            siteShortName: String,
             siteFullName: String,
-            parseURL: String
+            rssURL: String
         }]
 });
 

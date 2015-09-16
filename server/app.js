@@ -8,6 +8,7 @@ var indexRoute = require('./routes/index');
 var apiRoute = require('./routes/api');
 var parseRssRoute = require('./routes/parseRSS');
 var userAuthRoute = require('./routes/userAuth');
+var networkRoute = require('./routes/network');
 
 
 // Authentication requires
@@ -60,6 +61,7 @@ passport.use('local', new localStrategy({ passReqToCallback : true, usernameFiel
 
 // Routes
 app.use('/userauth', userAuthRoute);
+app.use('/network', networkRoute);
 app.use('/parserss', parseRssRoute);
 app.use('/api', apiRoute);
 app.use('/', indexRoute);
