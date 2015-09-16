@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 // Declare Schema for the Prep Hoops Article Collection of Mongo DB
 var RSSSchema = new mongoose.Schema({
-            siteId: Number,
+            siteID: Number,
             siteShortName: String,
             siteFullName: String,
             rssURL: String
