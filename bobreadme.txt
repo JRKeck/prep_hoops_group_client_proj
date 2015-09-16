@@ -116,3 +116,30 @@ STash working code:
                         console.log("Error on Article Create: ", err);
                     }
                 });
+
+
+
+
+
+    _________________________
+
+    Code we did not need (yet)
+    //
+    //router.put("/article/:id", function(req, res, next){
+    //    console.log("Article Put hit: ", req.params.id, req.body);
+    //    Articles.findByIdAndUpdate(req.params.id, req.body, function(err, post){
+    //        res.send("Database update successful");
+    //        if(err){
+    //            console.log("Error: ", err);
+    //        }
+    //    });
+    //});
+    //
+    //router.get('/articleGet', function(request, response, next){
+    //    return Articles.find({}).exec(function(err, rides){
+    //        if(err) console.log("Your error is in the Articles router.get");
+    //        if(err) throw new Error(err);
+    //        response.send(JSON.stringify(rides));
+    ////        next();
+    //    });
+    //});

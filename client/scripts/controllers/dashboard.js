@@ -55,7 +55,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
     // This is Bob's test code for creating new database records.
     // All of this is not needed once we being parsing data.
-    var myDate = new Date('9/13/2015');
+    var myDate = new Date('9/15/2015');
     console.log(myDate);
     var year = myDate.getFullYear().toString();
     var tempMonth = myDate.getMonth();
@@ -70,15 +70,15 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             date: dbDate,
             site:
                 [{
-                    siteName: 'Vantage Hoops',
-                    siteID: 1,
+                    siteName: 'Prep Hoops Arizona',
+                    siteID: 4,
                     articles:
                         [{
                             pubDate: 'Mon, 14 Sep 2015 14:15:00 -0400',
-                            author: 'Jack Herron',
-                            title: '2016 Rankings Breakdown: Wing Forwards',
-                            url: 'http://www.vantagehoops.com/news_article/show/553703?referral=rss&referrer_id=1103687',
-                            articleID: '553703',
+                            author: 'Brandon Dunson',
+                            title: 'Frosh/Soph Showcase: Top Freshmen',
+                            url: 'http://www.prephoopsarizona.com/news_article/show/553453?referral=rss&referrer_id=1560651',
+                            articleID: '553453',
                             paywalled: false,
                             tags: []
                         }]

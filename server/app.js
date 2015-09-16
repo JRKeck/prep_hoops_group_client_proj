@@ -17,6 +17,7 @@ var User = require('./models/userdb');
 
 // Mongo setup
 var mongoose = require("mongoose");
+// Turn on the debug feature for mongoose - additional information sent to server console
 mongoose.set("debug",true);
 
 ////Local DB
