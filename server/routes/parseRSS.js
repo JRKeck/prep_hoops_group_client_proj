@@ -3,17 +3,18 @@ var router = express.Router();
 var Client = require('node-rest-client').Client;
 var parseString = require('xml2js').parseString;
 var saveArticle = require('./parseAPI');
+var ParseDate = require('../models/parseDate');
 
+// Holds date/time of last time network was parsed
+var lastParseDate;
+// Holds date/time of new time network was parsed
+var newParseDate;
 // Keep track of the # of articles parsed
 var articleCount = 0;
-
 // Initializes an array that will hold the parsed objects
 var holdingArray = [];
-
 // Flag to wait until all RSS feeds are parsed before sending the to DB
-var networkFinished = false;
-
-
+var networksParsed = 0;
 // Demo data of a req to the DB for all the sites
 var networkArray = [
     {
@@ -34,6 +35,20 @@ var networkArray = [
 // fed into the browser
 router.get('/*', function(req, res, next){
     console.log('Parsing RSS!');
+    newParseDate = dateToISO(Date.now());
+    console.log('New parse date: '+newParseDate);
+    ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
+        if(!obj){
+            lastParseDate = '2000-01-01T00:00:00.000Z';
+            ParseDate.create({date: newParseDate}, function (err, post) {
+            })
+        }
+        else {
+            lastParseDate = (dateToISO(obj.date));
+
+        }
+        console.log('Last parse date: '+lastParseDate);
+    });
 
     networkParser(networkArray);
 
@@ -50,13 +65,13 @@ function networkParser(array){
     // For each Feed in the network send it to the parser
     for(i=0; i<array.length; i++){
         var el = array[i];
-        parseFeed(el.siteFeed, el.siteName, el.siteID);
+        var networkCount = array.length;
+        parseFeed(el.siteFeed, el.siteName, el.siteID, networkCount);
     }
-    networkFinished = true;
 }
 
 // Parse an RSS Feed
-function parseFeed(feedURL, siteName, siteID){
+function parseFeed(feedURL, siteName, siteID, numNetworks){
     client = new Client();
 
     // Connect to Remote RSS Feed
@@ -69,7 +84,7 @@ function parseFeed(feedURL, siteName, siteID){
             var articles = result.rss.channel[0].item;
 
             // Loop through articles array
-            for(i=0; i<articles.length; i++){
+            for(i=0; i<articles.length; i++) {
                 var el = articles[i];
 
                 // Change  pubdate to ISO format
@@ -84,7 +99,7 @@ function parseFeed(feedURL, siteName, siteID){
                 // Store the parsed info in an obj
                 var articleObj = {};
 
-                // add data to obj that will be sent to mongoose
+                // Add data to obj that will be sent to mongoose
                 articleObj.pubDate = date;
                 articleObj.shortDate = shortDate;
                 articleObj.siteID = siteID;
@@ -94,15 +109,20 @@ function parseFeed(feedURL, siteName, siteID){
                 articleObj.url = el.link[0];
                 articleObj.articleID = articleID;
 
-                //console.log("This is from parseRSS: ", articleObj);
-                holdingArray.push(articleObj);
-                console.log("Holding Array Items: ", holdingArray.length);
+                // If the articles pubDate is newer than the last parse date push it to array
+                if (articleObj.pubDate > lastParseDate) {
+                    console.log(articleObj.pubDate +' is greater than '+ lastParseDate);
+                    holdingArray.push(articleObj);
+                }
+                // console.log("Holding Array Items: ", holdingArray.length);
                 articleCount++;
-                console.log(articleCount + ' articles parsed');
             }
-            if(networkArray){
-                // If all articles in network have been parsed send them to the DB
-                console.log(holdingArray);
+            networksParsed++;
+            // If all articles in network have been parsed send them to the DB
+            if(networksParsed == numNetworks){
+                console.log(articleCount + ' articles parsed');
+                console.log('There are ' + holdingArray.length + ' articles in the array');
+                //console.log(holdingArray);
             }
         });
     });
