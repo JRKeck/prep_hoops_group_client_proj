@@ -122,7 +122,7 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
 
                 // If the articles pubDate is newer than the last parse date push it to array
                 if (articleObj.pubDate > lastParseDate) {
-                    console.log(articleObj.pubDate +' is greater than '+ lastParseDate);
+                    console.log(articleObj.pubDate +' is newer than '+ lastParseDate);
                     holdingArray.push(articleObj);
                 }
                 else {
