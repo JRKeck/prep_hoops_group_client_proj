@@ -11,7 +11,7 @@ var articleCount = 0;
 var holdingArray = [];
 
 // Flag to wait until all RSS feeds are parsed before sending the to DB
-var networkFinished = false;
+var networksParsed = 0;
 
 
 // Demo data of a req to the DB for all the sites
@@ -50,13 +50,13 @@ function networkParser(array){
     // For each Feed in the network send it to the parser
     for(i=0; i<array.length; i++){
         var el = array[i];
-        parseFeed(el.siteFeed, el.siteName, el.siteID);
+        var networkCount = array.length;
+        parseFeed(el.siteFeed, el.siteName, el.siteID, networkCount);
     }
-    networkFinished = true;
 }
 
 // Parse an RSS Feed
-function parseFeed(feedURL, siteName, siteID){
+function parseFeed(feedURL, siteName, siteID, numNetworks){
     client = new Client();
 
     // Connect to Remote RSS Feed
@@ -100,14 +100,14 @@ function parseFeed(feedURL, siteName, siteID){
                 articleCount++;
                 console.log(articleCount + ' articles parsed');
             }
-            if(networkArray){
+            networksParsed++;
+            if(networksParsed == numNetworks){
                 // If all articles in network have been parsed send them to the DB
-                console.log(holdingArray);
+                //console.log(holdingArray);
+                saveArticle(holdingArray);
             }
         });
     });
-    //saveArticle(holdingArray);
-
 }
 // Convert a date to ISO format
 function dateToISO(date){
