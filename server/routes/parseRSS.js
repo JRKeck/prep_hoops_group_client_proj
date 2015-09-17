@@ -35,8 +35,21 @@ var networkArray = [
 // fed into the browser
 router.get('/*', function(req, res, next){
     console.log('Parsing RSS!');
+    // Capture the time of Parsing execution
     newParseDate = dateToISO(Date.now());
     console.log('New parse date: '+newParseDate);
+    // Check the DB for the last parse date
+    findLastParseDate();
+    // Get the RSS Feeds
+    networkParser(networkArray);
+
+    res.send('Parsing Complete!');
+
+});
+
+module.exports = router;
+// Find the last parse date in the DB
+function findLastParseDate(){
     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
         if (err){
             console.log('Error finding last parse date');
@@ -53,19 +66,6 @@ router.get('/*', function(req, res, next){
         }
         console.log('Last parse date: '+lastParseDate);
     });
-
-    networkParser(networkArray);
-
-
-
-    res.send('Parsing Complete!');
-
-});
-
-module.exports = router;
-// Find the last parse date in the DB
-function findLastParseDate(){
-
 }
 
 // Loop through each RSS Feed in the Network
