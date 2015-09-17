@@ -62,6 +62,9 @@ function findLastParseDate(){
         }
         else {
             lastParseDate = (dateToISO(obj.date));
+            console.log(obj.id);
+            ParseDate.findByIdAndUpdate(obj.id, {date: newParseDate}, function (err, post) {
+            })
 
         }
         console.log('Last parse date: '+lastParseDate);
