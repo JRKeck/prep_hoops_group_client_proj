@@ -140,6 +140,7 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                 // Reset Counters
                 networksParsed = 0;
                 articleCount = 0;
+
                 if (holdingArray.length > 0){
                     console.log(holdingArray);
                 }
