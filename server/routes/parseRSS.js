@@ -38,7 +38,11 @@ router.get('/*', function(req, res, next){
     newParseDate = dateToISO(Date.now());
     console.log('New parse date: '+newParseDate);
     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
-        if(!obj){
+        if (err){
+            console.log('Error finding last parse date');
+        }
+        // If there is no last parse date create a new one
+        else if(!obj){
             lastParseDate = '2000-01-01T00:00:00.000Z';
             ParseDate.create({date: newParseDate}, function (err, post) {
             })
@@ -52,13 +56,17 @@ router.get('/*', function(req, res, next){
 
     networkParser(networkArray);
 
-    console.log('Parsing Complete!');
+
 
     res.send('Parsing Complete!');
 
 });
 
 module.exports = router;
+// Find the last parse date in the DB
+function findLastParseDate(){
+
+}
 
 // Loop through each RSS Feed in the Network
 function networkParser(array){
@@ -114,20 +122,27 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                     console.log(articleObj.pubDate +' is greater than '+ lastParseDate);
                     holdingArray.push(articleObj);
                 }
+                else {
+                    console.log('article is older than the last parse date');
+                }
                 // console.log("Holding Array Items: ", holdingArray.length);
                 articleCount++;
             }
             networksParsed++;
             // If all articles in network have been parsed send them to the DB
             if(networksParsed == numNetworks){
+                console.log('Parsing Complete!');
                 console.log(articleCount + ' articles parsed');
                 console.log('There are ' + holdingArray.length + ' articles in the array');
-                //console.log(holdingArray);
+                // Reset Counters
+                networksParsed = 0;
+                articleCount = 0;
+                if (holdingArray.length > 0){
+                    console.log(holdingArray);
+                }
             }
         });
     });
-    //saveArticle(holdingArray);
-
 }
 // Convert a date to ISO format
 function dateToISO(date){
