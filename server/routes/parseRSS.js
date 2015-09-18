@@ -15,6 +15,7 @@ var articleCount = 0;
 var holdingArray = [];
 // Flag to wait until all RSS feeds are parsed before sending the to DB
 var networksParsed = 0;
+
 // Demo data of a req to the DB for all the sites
 var networkArray = [
     {

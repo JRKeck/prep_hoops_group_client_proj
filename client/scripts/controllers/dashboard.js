@@ -1,4 +1,5 @@
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', function($scope, $http, $location, userAuth){
+
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
     console.log('Dashboard script loaded');
 
 
@@ -14,7 +15,12 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Hard-coded data for testing purposes
     $scope.sites = [];
     $scope.daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    $scope.siteIds = [1, 2, 3];
+    $scope.daysArray = [];
     $scope.dates = [];
+    $scope.firstDate = '';
+    $scope.secondDate = '';
+    $scope.dateRangeLength = 0;
 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
@@ -30,27 +36,74 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
         //code for when we are matching dates from RSS feed to database
-        //var shortFirstDate = first.toISOString();
-        //var shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
-        //var shortSecondDate = last.toISOString();
-        //var shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
-        var firstDate = $scope.getDate(first);
-        var secondDate = $scope.getDate(last);
-        $http.post('/api/articleGet', [firstDate, secondDate]).
+        var shortFirstDate = first.toISOString();
+        $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
+        var shortSecondDate = last.toISOString();
+        $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
+
+        //$scope.firstDate = $scope.getDate(first);
+        //$scope.secondDate = $scope.getDate(last);
+        //$scope.dateRangeLength = ($scope.secondDate + 1) - $scope.firstDate;
+
+        $http.post('/api/articleGet', [$scope.shortFirstDateString, $scope.shortSecondDateString]).
             success(function(data){
-            console.log(data);
+            //console.log(data);
                 $scope.dates = data;
                 $scope.sites = data[0].site;
-                console.log(data[0].site);
+                console.log(data);
+                //$scope.dateArrayCreator();
         });
-    };
+    }
 
-    $scope.getArticles = function(){
-      console.log(this.day.site);
-        for(var i=0; i < this.day.site[0].articles.length; i++){
-            console.log(this.day.site[0].articles[0].url)
-        }
-    };
+    //sorts incoming data into arrays for different sites
+ //   $scope.siteArray=[];
+ //   var n =3;
+ //   $scope.sitesArrayCreator = function(){
+ //       for(var j=0; j<n;j++){
+ //           $scope.siteArray.push([j+1,[]]);
+ //       }
+ //   };
+ //   $scope.sitesArrayCreator();
+ //   $scope.dateArrayCreator = function(){
+ //
+ //       for(var i=0; i<4; i++ ) {
+ //           $scope.daysArray.push([$scope.firstDate, $scope.siteArray]);
+ //              $scope.firstDate= (parseInt($scope.firstDate) +1).toString();
+ //       }
+ //       //console.log($scope.daysArray);
+ //           $scope.daySiteSort();
+ //
+ //       };
+ //
+ //
+ //var dateRange= 4;
+ //   $scope.daySiteSort = function(){
+ //       for(var m = 0; m < $scope.dates.length; m++){
+ //           for (var i = 0; i < dateRange; i++){
+ //               if($scope.daysArray[i][0] === $scope.dates[m].date){
+ //                   console.log('array: ' + $scope.daysArray[i][0] + 'database: ' + $scope.dates[m].date);
+ //                   for(var j = 0; j < $scope.daysArray[i][1].length; j++) {
+ //                       if($scope.dates[i].site[j]!=null){
+ //                           for(var k=0; k < $scope.daysArray[i][1].length; k++){
+ //                               if ($scope.dates[m].site[j].siteID === $scope.daysArray[i][1][k][0]){
+ //                                   console.log($scope.daysArray[i][1][k][1]);
+ //                                   $scope.daysArray[0][1][k][1].push($scope.dates[m].site[j].articles);
+ //                                   console.log($scope.daysArray);
+ //                               }
+ //                           }
+ //
+ //                       }
+ //                   }
+ //               }
+ //
+ //           }
+ //
+ //
+ //
+ //     }
+        //console.log($scope.daysArray);
+
+    //};
 
     //Code for DatePicker
 
@@ -76,6 +129,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $scope.first = null;
         $scope.last = null;
     };
+
 
 
     // This is Bob's test code for creating new database records.
@@ -124,5 +178,40 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             console.log("Your article was added successfully! ", response);
         });
 
+    };
+
+    //working on modal to list articles on specific date
+
+    $scope.animationsEnabled = true;
+    $scope.openModal = function(size){
+        $scope.selectedArticles = this.site.articles;
+        var modalInstance = $modal.open(
+            {
+                animation: $scope.animationsEnabled,
+                templateUrl: '/assets/views/routes/articleUrl.html',
+                controller: 'ArticleInstanceController',
+                size: size,
+                resolve: {
+                    selectedArticles: function(){
+                        return $scope.selectedArticles;
+                    }
+                }
+            }
+        )
     }
+
+}]);
+
+prepHoopsApp.controller('ArticleInstanceController', ['$scope', '$modalInstance', 'selectedArticles', function($scope, $modalInstance, selectedArticles){
+    $scope.modalArticles = selectedArticles;
+    $scope.articleUrlArray = [];
+
+    for(var i = 0; i < $scope.modalArticles.length; i++){
+        $scope.articleUrlArray.push($scope.modalArticles[i].url);
+    }
+
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
+
 }]);
