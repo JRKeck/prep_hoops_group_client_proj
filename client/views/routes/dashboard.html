@@ -1,4 +1,4 @@
-    <div class="row">
+ <div class="row">
         <div class="col-md-12 border">
             <h1>Main Dashboard</h1>
         </div>
@@ -19,7 +19,9 @@
                     <p class="input-group">
                         <input type="date" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
+
                     <button type="button" class="btn btn-default" ng-click="open($event, 'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+
                   </span>
                     </p>
                 </div>
@@ -28,30 +30,27 @@
                     <p class="input-group">
                         <input type="date" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
+
                     <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+
                   </span>
                     </p>
                 </div>
                 <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
-                <input type="button" id="testbtn" class="col-md-1 btn post" ng-click="testDatabase()" value="Test"/>
 
             </div>
 
             <table class="col-md-12">
-
-                <tr ng-repeat='day in dates'>
-                    <td>Date</td>
-                    <td>{{ day.date }}</td>
-                </tr>
-
-
-
                 <tr>
-                    <td ng-repeat="site in siteIds">{{site[0]}}}</td>
+                    <td>Date</td>
+                    <td ng-repeat="site in siteIds">{{site}}</td>
                     <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>-->
                 </tr>
 
-
+                <tr ng-repeat='day in dates'>
+                    <td>{{ day.date }}</td>
+                    <td ng-repeat="site in day.site" ng-click="getArticles()"><a href ="">{{site.articles.length}}</a></td>
+                </tr>
             </table>
         </div>
     </div>
