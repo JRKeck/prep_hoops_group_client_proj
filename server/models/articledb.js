@@ -7,6 +7,7 @@ var ArticleSchema = new mongoose.Schema({
     site :
         [{
             siteName: String,
+            siteShortName: String,
             siteID: Number,
             articles:
                 [{
