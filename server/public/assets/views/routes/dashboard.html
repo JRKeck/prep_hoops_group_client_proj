@@ -50,10 +50,6 @@
                 <tr ng-repeat='day in dates'>
                     <td>{{ day.date }}</td>
                     <td ng-repeat="site in day.site" ng-click="getArticles()"><a href ="">{{site.articles.length}}</a></td>
-                    <!--<td ng-click="getArticles()"><a href ="">{{ day.site[0].articles.length }}</a></td>-->
-                    <!--<td ng-click="getArticles()"><a href ="">{{ day.site[1].articles.length }}</a></td>-->
-                    <!--<td ng-click="getArticles()"><a href ="">{{ day.site[2].articles.length }}</a></td>-->
-
                 </tr>
             </table>
         </div>
