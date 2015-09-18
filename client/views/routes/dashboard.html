@@ -49,7 +49,7 @@
 
                 <tr ng-repeat='day in dates'>
                     <td>{{ day.date }}</td>
-                    <td ng-repeat="site in day.site" ng-click="getArticles()"><a href ="">{{site.articles.length}}</a></td>
+                    <td ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="">{{site.articles.length}}</a></td>
                 </tr>
             </table>
         </div>

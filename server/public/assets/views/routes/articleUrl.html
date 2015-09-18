@@ -1,5 +1,9 @@
-<p>Modal loaded!</p>
-<p ng-repeat="article in modalArticles">{{modalArticles.url}}</p>
+<div ng-repeat="article in modalArticles">
+    <div>
+        <p>{{article.author}}</p>
+        <p><a href="{{article.url}}" target="_blank">{{article.title}}</a></p>
+    </div>
+</div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
 </div>

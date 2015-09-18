@@ -19,13 +19,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.secondDate = '';
     $scope.dateRangeLength = 0;
 
-    var range = [];
-    for(var i=0;i<$scope.siteIds.length;i++) {
-        range.push(i);
-    }
-    $scope.range = range;
-
-
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
             $scope.dayOfWeek = date.getDay();
@@ -55,66 +48,59 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 $scope.dates = data;
                 $scope.sites = data[0].site;
                 console.log(data);
-                $scope.dateArrayCreator();
+                //$scope.dateArrayCreator();
         });
     };
 
     //sorts incoming data into arrays for different sites
-    $scope.siteArray=[];
-    var n =3;
-    $scope.sitesArrayCreator = function(){
-        for(var j=0; j<n;j++){
-            $scope.siteArray.push([j+1,[]]);
-        }
-    }
- $scope.sitesArrayCreator();
-    $scope.dateArrayCreator = function(){
-
-        for(var i=0; i<4; i++ ) {
-            $scope.daysArray.push([$scope.firstDate, $scope.siteArray]);
-               $scope.firstDate= (parseInt($scope.firstDate) +1).toString();
-        }
+ //   $scope.siteArray=[];
+ //   var n =3;
+ //   $scope.sitesArrayCreator = function(){
+ //       for(var j=0; j<n;j++){
+ //           $scope.siteArray.push([j+1,[]]);
+ //       }
+ //   };
+ //   $scope.sitesArrayCreator();
+ //   $scope.dateArrayCreator = function(){
+ //
+ //       for(var i=0; i<4; i++ ) {
+ //           $scope.daysArray.push([$scope.firstDate, $scope.siteArray]);
+ //              $scope.firstDate= (parseInt($scope.firstDate) +1).toString();
+ //       }
+ //       //console.log($scope.daysArray);
+ //           $scope.daySiteSort();
+ //
+ //       };
+ //
+ //
+ //var dateRange= 4;
+ //   $scope.daySiteSort = function(){
+ //       for(var m = 0; m < $scope.dates.length; m++){
+ //           for (var i = 0; i < dateRange; i++){
+ //               if($scope.daysArray[i][0] === $scope.dates[m].date){
+ //                   console.log('array: ' + $scope.daysArray[i][0] + 'database: ' + $scope.dates[m].date);
+ //                   for(var j = 0; j < $scope.daysArray[i][1].length; j++) {
+ //                       if($scope.dates[i].site[j]!=null){
+ //                           for(var k=0; k < $scope.daysArray[i][1].length; k++){
+ //                               if ($scope.dates[m].site[j].siteID === $scope.daysArray[i][1][k][0]){
+ //                                   console.log($scope.daysArray[i][1][k][1]);
+ //                                   $scope.daysArray[0][1][k][1].push($scope.dates[m].site[j].articles);
+ //                                   console.log($scope.daysArray);
+ //                               }
+ //                           }
+ //
+ //                       }
+ //                   }
+ //               }
+ //
+ //           }
+ //
+ //
+ //
+ //     }
         //console.log($scope.daysArray);
-            $scope.daySiteSort();
 
-        };
-
-
- var dateRange= 4;
-    $scope.daySiteSort = function(){
-        for(var m = 0; m < $scope.dates.length; m++){
-            for (var i = 0; i < dateRange; i++){
-                if($scope.daysArray[i][0] === $scope.dates[m].date){
-                    console.log('array: ' + $scope.daysArray[i][0] + 'database: ' + $scope.dates[m].date);
-                    for(var j = 0; j < $scope.daysArray[i][1].length; j++) {
-                        if($scope.dates[i].site[j]!=null){
-                            for(var k=0; k < $scope.daysArray[i][1].length; k++){
-                                if ($scope.dates[m].site[j].siteID === $scope.daysArray[i][1][k][0]){
-                                    console.log($scope.daysArray[i][1][k][1]);
-                                    $scope.daysArray[0][1][k][1].push($scope.dates[m].site[j].articles);
-                                    console.log($scope.daysArray);
-                                }
-                            }
-
-                        }
-                    }
-                }
-
-            }
-
-
-
-      }
-        //console.log($scope.daysArray);
-
-    };
-
-    $scope.getArticles = function(){
-      console.log(this.day.site);
-        for(var i=0; i < this.day.site[0].articles.length; i++){
-            console.log(this.day.site[0].articles[i].url)
-        }
-    };
+    //};
 
     //Code for DatePicker
 
@@ -197,7 +183,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
     $scope.animationsEnabled = true;
     $scope.openModal = function(size){
-        $scope.selectedArticles = this.day.site[0].articles;
+        $scope.selectedArticles = this.site.articles;
         var modalInstance = $modal.open(
             {
                 animation: $scope.animationsEnabled,
@@ -217,10 +203,10 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
 prepHoopsApp.controller('ArticleInstanceController', ['$scope', '$modalInstance', 'selectedArticles', function($scope, $modalInstance, selectedArticles){
     $scope.modalArticles = selectedArticles;
-    console.log($scope.modalArticles);
+    $scope.articleUrlArray = [];
 
     for(var i = 0; i < $scope.modalArticles.length; i++){
-        console.log($scope.modalArticles[i].url);
+        $scope.articleUrlArray.push($scope.modalArticles[i].url);
     }
 
     $scope.ok = function () {
