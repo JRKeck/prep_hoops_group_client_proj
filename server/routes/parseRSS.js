@@ -143,7 +143,9 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                 articleCount = 0;
 
                 if (holdingArray.length > 0){
-                    console.log(holdingArray);
+                    //console.log(holdingArray);
+                    saveArticle(holdingArray, 0);
+                    holdingArray = [];
                 }
             }
         });
