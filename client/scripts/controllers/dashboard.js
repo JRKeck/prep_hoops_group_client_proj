@@ -12,12 +12,18 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Hard-coded data for testing purposes
     $scope.sites = [];
     $scope.daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    $scope.siteIds = [[1, []], [2, []], [3, []]];
+    $scope.siteIds = [1, 2, 3];
     $scope.daysArray = [];
     $scope.dates = [];
     $scope.firstDate = '';
     $scope.secondDate = '';
     $scope.dateRangeLength = 0;
+
+    var range = [];
+    for(var i=0;i<$scope.siteIds.length;i++) {
+        range.push(i);
+    }
+    $scope.range = range;
 
 
     //Not yet working to get day of the week for specified date
@@ -34,20 +40,21 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
         //code for when we are matching dates from RSS feed to database
-        //var shortFirstDate = first.toISOString();
-        //var shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
-        //var shortSecondDate = last.toISOString();
-        //var shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
+        var shortFirstDate = first.toISOString();
+        $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
+        var shortSecondDate = last.toISOString();
+        $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
 
-        $scope.firstDate = $scope.getDate(first);
-        $scope.secondDate = $scope.getDate(last);
-        $scope.dateRangeLength = ($scope.secondDate + 1) - $scope.firstDate;
+        //$scope.firstDate = $scope.getDate(first);
+        //$scope.secondDate = $scope.getDate(last);
+        //$scope.dateRangeLength = ($scope.secondDate + 1) - $scope.firstDate;
 
-        $http.post('/api/articleGet', [$scope.firstDate, $scope.secondDate]).
+        $http.post('/api/articleGet', [$scope.shortFirstDateString, $scope.shortSecondDateString]).
             success(function(data){
             //console.log(data);
                 $scope.dates = data;
                 $scope.sites = data[0].site;
+                console.log(data);
                 $scope.dateArrayCreator();
         });
     };
@@ -74,31 +81,27 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
 
  var dateRange= 4;
-    var temp;
     $scope.daySiteSort = function(){
-        console.log($scope.daysArray);
+        for(var m = 0; m < $scope.dates.length; m++){
+            for (var i = 0; i < dateRange; i++){
+                if($scope.daysArray[i][0] === $scope.dates[m].date){
+                    console.log('array: ' + $scope.daysArray[i][0] + 'database: ' + $scope.dates[m].date);
+                    for(var j = 0; j < $scope.daysArray[i][1].length; j++) {
+                        if($scope.dates[i].site[j]!=null){
+                            for(var k=0; k < $scope.daysArray[i][1].length; k++){
+                                if ($scope.dates[m].site[j].siteID === $scope.daysArray[i][1][k][0]){
+                                    console.log($scope.daysArray[i][1][k][1]);
+                                    $scope.daysArray[0][1][k][1].push($scope.dates[m].site[j].articles);
+                                    console.log($scope.daysArray);
+                                }
+                            }
 
-        for (var i = 0; i < dateRange; i++){
-          console.log('from database: ' + $scope.dates[i].date);
-          if($scope.dates[i].date!=null){
-              if (($scope.daysArray[i][0] === $scope.dates[i].date)) {
-                  console.log('one date match');
-                  console.log($scope.daysArray[i][0]);
-                  //console.log($scope.dates[i].date);
+                        }
+                    }
+                }
 
-                  for(var j = 0; j < $scope.dates[i].site.length; j++) {
-                      temp = $scope.dates[i].site[j];
+            }
 
-                      if($scope.daysArray[i][1][j][0] === temp.siteID){
-
-                          $scope.daysArray[i][1][j][1].push('this works');
-                      }
-                      console.log($scope.daysArray);
-
-                  }
-              }
-
-          }
 
 
       }
@@ -144,7 +147,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
     // This is Bob's test code for creating new database records.
     // All of this is not needed once we being parsing data.
-    var myDate = new Date('9/13/2015');
+    var myDate = new Date('9/14/2015');
     console.log(myDate);
     var year = myDate.getFullYear().toString();
     var tempMonth = myDate.getMonth();
@@ -164,8 +167,8 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                     articles:
                         [{
                             pubDate: 'Sat, 27 Dec 2014 20:15:00 -0600',
-                            author: 'The Czar',
-                            title: 'Test Number 3',
+                            author: 'Yoda',
+                            title: 'Test Number 4',
                             url: 'http://www.northstarhoopsreport.com/news_article/show/460716?referral=rss&referrer_id=982824',
                             articleID: 460716,
                             paywalled: false,

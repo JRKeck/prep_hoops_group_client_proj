@@ -37,29 +37,24 @@
                     </p>
                 </div>
                 <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
-                <input type="button" id="testbtn" class="col-md-1 btn post" ng-click="testDatabase()" value="Test"/>
 
             </div>
 
             <table class="col-md-12">
-
-                <tr ng-repeat='day in dates'>
-                    <td>Date</td>
-                    <td>{{ day.date }}</td>
-<<<<<<< HEAD
-                    <td ng-click="getArticles()"><a href ="">{{ day.site[0].articles.length }}</a></td>
-=======
->>>>>>> 1e1553534878882311603cb36f4fd4807e5faa0e
-                </tr>
-
-
-
                 <tr>
-                    <td ng-repeat="site in siteIds">{{site[0]}}}</td>
+                    <td>Date</td>
+                    <td ng-repeat="site in siteIds">{{site}}</td>
                     <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>-->
                 </tr>
 
+                <tr ng-repeat='day in dates'>
+                    <td>{{ day.date }}</td>
+                    <td ng-repeat="site in day.site" ng-click="getArticles()"><a href ="">{{site.articles.length}}</a></td>
+                    <!--<td ng-click="getArticles()"><a href ="">{{ day.site[0].articles.length }}</a></td>-->
+                    <!--<td ng-click="getArticles()"><a href ="">{{ day.site[1].articles.length }}</a></td>-->
+                    <!--<td ng-click="getArticles()"><a href ="">{{ day.site[2].articles.length }}</a></td>-->
 
+                </tr>
             </table>
         </div>
     </div>
