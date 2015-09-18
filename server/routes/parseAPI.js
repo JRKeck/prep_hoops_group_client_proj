@@ -6,6 +6,14 @@ var testDate = false;
 var testSite = false;
 var x = 0;
 
+Array.prototype.getIndexBy = function (name, value) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i][name] == value) {
+            return i;
+        }
+    }
+};
+
 // Declare Database models that will be used by Router
 var Articles = require('../models/articledb');
 
@@ -48,7 +56,11 @@ var saveFeedArticle = function(feedArray, x){
                     // Otherwise the array index of the site will be returned.
                     //var test = article.site;
                     //console.log(test);
-                    var siteArrayIndex = article.site.indexOf({siteID: saveObject.siteID});
+
+                    var siteArrayIndex = article.site.getIndexBy("SiteID", saveObject.siteID);
+
+                    // Old way
+                    //var siteArrayIndex = article.site.indexOf({siteID: saveObject.siteID});
                     console.log("Looking for site: ", saveObject.siteID, " Got return of: ", siteArrayIndex);
                     if (siteArrayIndex == -1) {
                         console.log("Site ID: ", saveObject.siteID, " was not found!");
@@ -153,12 +165,9 @@ var saveFeedArticle = function(feedArray, x){
                 });
             }
         });
-
     // This is to illustrate that we have an async issue here where the values
     // of testDate and testSite are getting "updated" before the promises are returned
     // from the database.
     //console.log("After Find functions - testDate = ", testDate, " and testSite = ", testSite);
-
 };
-
 module.exports = saveFeedArticle;
