@@ -57,12 +57,10 @@ var saveFeedArticle = function(feedArray, x){
                     //var test = article.site;
                     //console.log(test);
 
-                    var siteArrayIndex = article.site.getIndexBy("SiteID", saveObject.siteID);
+                    var siteArrayIndex = article.site.getIndexBy("siteID", saveObject.siteID);
 
-                    // Old way
-                    //var siteArrayIndex = article.site.indexOf({siteID: saveObject.siteID});
                     console.log("Looking for site: ", saveObject.siteID, " Got return of: ", siteArrayIndex);
-                    if (siteArrayIndex == -1) {
+                    if (siteArrayIndex == null) {
                         console.log("Site ID: ", saveObject.siteID, " was not found!");
                         // Since the date exists but the site does not,
                         // we will append the site and article within the Date
@@ -98,7 +96,7 @@ var saveFeedArticle = function(feedArray, x){
                         });
                     } else {
                         testSite = true;
-                        console.log("Site ID: ", searchTerm, " was found at Index: ", siteArrayIndex);
+                        console.log("Site ID: ", saveObject.siteID, " was found at Index: ", siteArrayIndex);
                         console.log("Test Site Value is now: ", testSite);
                         // Since the date and the site exist, we will append the article
                         // to the site within the Date
