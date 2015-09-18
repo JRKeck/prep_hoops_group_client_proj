@@ -7,6 +7,7 @@ var ArticleSchema = new mongoose.Schema({
     site :
         [{
             siteName: String,
+            siteShortName: String,
             siteID: Number,
             articles:
                 [{
@@ -14,11 +15,7 @@ var ArticleSchema = new mongoose.Schema({
                     author: String,
                     title: String,
                     url: String,
-                    articleID:
-                    {
-                        type: String,
-                        unique: true
-                    },
+                    articleID: String,
                     paywalled: Boolean,
                     tags: Array
                 }]

@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 var indexRoute = require('./routes/index');
 var apiRoute = require('./routes/api');
 var parseRssRoute = require('./routes/parseRSS');
+var blankSiteRoute = require('./routes/blankSite');
+var userAuthRoute = require('./routes/userAuth');
+var networkRoute = require('./routes/network');
 
 
 // Authentication requires
@@ -17,7 +20,10 @@ var User = require('./models/userdb');
 
 // Mongo setup
 var mongoose = require("mongoose");
-mongoose.set("debug", true);
+
+// Turn on the debug feature for mongoose - additional information sent to server console
+mongoose.set("debug",true);
+
 
 ////Local DB
 //var mongoURI = "";
@@ -59,7 +65,10 @@ passport.use('local', new localStrategy({ passReqToCallback : true, usernameFiel
 ));
 
 // Routes
+app.use('/userauth', userAuthRoute);
+app.use('/network', networkRoute);
 app.use('/parserss', parseRssRoute);
+app.use('/blanksite', blankSiteRoute);
 app.use('/api', apiRoute);
 app.use('/', indexRoute);
 
@@ -84,10 +93,15 @@ passport.use('local', new localStrategy({
         usernameField: 'username'
     },
     function(req, username, password, done){
-        User.findOne({ email: username }, function(err, user) {
-            if (err) throw err;
-            if (!user)
+        console.log('looking for username');
+        User.findOne({ username: username }, function(err, user) {
+            if (err) {
+                throw err;
+            }
+            if (!user) {
+                console.log('Could Not Find User');
                 return done(null, false, {message: 'Incorrect username and password.'});
+            }
 
             // test a matching password
             user.comparePassword(password, function(err, isMatch) {
