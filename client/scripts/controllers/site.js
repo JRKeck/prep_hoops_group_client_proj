@@ -1,58 +1,42 @@
-prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', function($scope, $http, $location){
-
-    $scope.getDate = function(date){
-        var year = date.getFullYear().toString();
-        var tempMonth = date.getMonth();
-        var month = (tempMonth + 1).toString();
-        var day = date.getDate().toString();
-        var dbDate = year + month + day;
-        return dbDate;
-    };
-
-    //Hard-coded data for testing purposes
+prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
+    console.log('Dashboard script loaded');
     $scope.sites = [];
-    $scope.daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     $scope.dates = [];
+    $scope.feeds = [];
 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
             $scope.dayOfWeek = date.getDay();
-            console.log($scope.dayOfWeek);
+            //console.log($scope.dayOfWeek);
     };
 
-    //Function to make admin button redirect to admin page
-    $scope.go = function ( path ) {
-        $location.path( path );
+    //Gets short names from feeds for table headers
+
+    $scope.getFeeds = function(){
+        $http.get('/network/getFeeds').
+            success(function(data){
+                $scope.feeds = data;
+            });
     };
 
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
-        //code for when we are matching dates from RSS feed to database
-        //var shortFirstDate = first.toISOString();
-        //var shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
-        //var shortSecondDate = last.toISOString();
-        //var shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
-        var firstDate = $scope.getDate(first);
-        var secondDate = $scope.getDate(last);
-        $http.post('/api/articleGet', [firstDate, secondDate]).
+        var shortFirstDate = first.toISOString();
+        $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
+        var shortSecondDate = last.toISOString();
+        $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
+
+        $http.post('/api/articleGet', [$scope.shortFirstDateString, $scope.shortSecondDateString]).
             success(function(data){
-            console.log(data);
+                $scope.getFeeds();
                 $scope.dates = data;
                 $scope.sites = data[0].site;
-                console.log(data[0].site);
+                console.log(data);
         });
     };
 
-    $scope.getArticles = function(){
-      console.log(this.day.site);
-        for(var i=0; i < this.day.site[0].articles.length; i++){
-            console.log(this.day.site[0].articles[i].url)
-        }
-    };
 
     //Code for DatePicker
-
-
 
     $scope.open = function($event, opened) {
         $event.preventDefault();
@@ -76,7 +60,41 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', funct
         $scope.first = null;
         $scope.last = null;
     };
-    
 
-   
+    //creates modal to list articles on specific date
+
+    $scope.animationsEnabled = true;
+    $scope.openModal = function(size){
+        $scope.selectedArticles = this.site.articles;
+        var modalInstance = $modal.open(
+            {
+                animation: $scope.animationsEnabled,
+                templateUrl: '/assets/views/routes/articleUrl.html',
+                controller: 'ArticleInstanceController',
+                size: size,
+                resolve: {
+                    selectedArticles: function(){
+                        return $scope.selectedArticles;
+                    }
+                }
+            }
+        )
+    }
+
+}]);
+
+//controller for modal
+
+prepHoopsApp.controller('ArticleInstanceController', ['$scope', '$modalInstance', 'selectedArticles', function($scope, $modalInstance, selectedArticles){
+    $scope.modalArticles = selectedArticles;
+    $scope.articleUrlArray = [];
+
+    for(var i = 0; i < $scope.modalArticles.length; i++){
+        $scope.articleUrlArray.push($scope.modalArticles[i].url);
+    }
+
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
+
 }]);

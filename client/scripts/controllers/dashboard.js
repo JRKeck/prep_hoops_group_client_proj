@@ -20,6 +20,12 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             });
     };
 
+    //Function to make admin button redirect to site page
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
+
+
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
         var shortFirstDate = first.toISOString();

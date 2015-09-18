@@ -44,7 +44,7 @@
                 <tr>
                     <td>Date</td>
 
-                    <td ng-repeat="site in feeds">{{site.siteShortName}}</td>
+                    <td ng-repeat="site in feeds" ng-click="go('/site')"><a href ="">{{site.siteShortName}}</a></td>
 
                     <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
 
