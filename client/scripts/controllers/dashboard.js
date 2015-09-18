@@ -1,4 +1,7 @@
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', '$modal', function($scope, $http, $location, $modal){
+
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
+    console.log('Dashboard script loaded');
+
 
     $scope.getDate = function(date){
         var year = date.getFullYear().toString();
@@ -50,7 +53,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 console.log(data);
                 //$scope.dateArrayCreator();
         });
-    };
+    }
 
     //sorts incoming data into arrays for different sites
  //   $scope.siteArray=[];
@@ -104,8 +107,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
     //Code for DatePicker
 
-
-
     $scope.open = function($event, opened) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -133,7 +134,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
     // This is Bob's test code for creating new database records.
     // All of this is not needed once we being parsing data.
-    var myDate = new Date('9/14/2015');
+    var myDate = new Date('9/15/2015');
     console.log(myDate);
     var year = myDate.getFullYear().toString();
     var tempMonth = myDate.getMonth();
@@ -148,15 +149,15 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             date: dbDate,
             site:
                 [{
-                    siteName: 'North Star Hoops Report',
-                    siteID: 1,
+                    siteName: 'Prep Hoops Arizona',
+                    siteID: 4,
                     articles:
                         [{
-                            pubDate: 'Sat, 27 Dec 2014 20:15:00 -0600',
-                            author: 'Yoda',
-                            title: 'Test Number 4',
-                            url: 'http://www.northstarhoopsreport.com/news_article/show/460716?referral=rss&referrer_id=982824',
-                            articleID: 460716,
+                            pubDate: 'Mon, 14 Sep 2015 14:15:00 -0400',
+                            author: 'Brandon Dunson',
+                            title: 'Frosh/Soph Showcase: Top Freshmen',
+                            url: 'http://www.prephoopsarizona.com/news_article/show/553453?referral=rss&referrer_id=1560651',
+                            articleID: '553453',
                             paywalled: false,
                             tags: []
                         }]

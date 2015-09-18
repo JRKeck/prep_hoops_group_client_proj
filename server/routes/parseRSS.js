@@ -2,10 +2,17 @@ var express = require('express');
 var router = express.Router();
 var Client = require('node-rest-client').Client;
 var parseString = require('xml2js').parseString;
-//var parseString = require('node-rest-client/node_modules/xml2js').parseString;
+var saveArticle = require('./parseAPI');
 
 // Keep track of the # of articles parsed
 var articleCount = 0;
+
+// Initializes an array that will hold the parsed objects
+var holdingArray = [];
+
+// Flag to wait until all RSS feeds are parsed before sending the to DB
+var networkFinished = false;
+
 
 // Demo data of a req to the DB for all the sites
 var networkArray = [
@@ -13,7 +20,7 @@ var networkArray = [
         siteName: 'NorthStar Hoops Report',
         shortName: 'MN',
         siteID: 1,
-        siteFeed: 'http://www.northstarhoopsreport.com/news_rss_feed?tags=744386%252C744387%252C1469282'
+        siteFeed: 'http://www.northstarhoopsreport.com/news_rss_feed?tags=903525%2C477068%2C477064%2C718293%2C744134%2C744381%2C763955%2C744167%2C876578%2C454209%2C744386%2C744387%2C1513588%2C1469282'
     },
     {
         siteName: 'Prep Hoops Iowa',
@@ -23,6 +30,8 @@ var networkArray = [
     }
 ];
 
+// This is the GET call to fire off the parse when localhost:3000/parseRSS is
+// fed into the browser
 router.get('/*', function(req, res, next){
     console.log('Parsing RSS!');
 
@@ -38,11 +47,12 @@ module.exports = router;
 
 // Loop through each RSS Feed in the Network
 function networkParser(array){
-    // For each Feed in the network snd it to the parser
+    // For each Feed in the network send it to the parser
     for(i=0; i<array.length; i++){
         var el = array[i];
         parseFeed(el.siteFeed, el.siteName, el.siteID);
     }
+    networkFinished = true;
 }
 
 // Parse an RSS Feed
@@ -65,6 +75,9 @@ function parseFeed(feedURL, siteName, siteID){
                 // Change  pubdate to ISO format
                 var date = dateToISO(el.pubDate[0]);
 
+                //Remove the time information from the ISO date
+                var shortDate = date.substr(0, date.indexOf('T'));
+
                 // Get article ID
                 var articleID = getSportNginArticleID(el.link[0]);
 
@@ -73,6 +86,7 @@ function parseFeed(feedURL, siteName, siteID){
 
                 // add data to obj that will be sent to mongoose
                 articleObj.pubDate = date;
+                articleObj.shortDate = shortDate;
                 articleObj.siteID = siteID;
                 articleObj.siteName = siteName;
                 articleObj.title = el.title[0];
@@ -80,13 +94,20 @@ function parseFeed(feedURL, siteName, siteID){
                 articleObj.url = el.link[0];
                 articleObj.articleID = articleID;
 
-                console.log(articleObj);
-
+                //console.log("This is from parseRSS: ", articleObj);
+                holdingArray.push(articleObj);
+                console.log("Holding Array Items: ", holdingArray.length);
                 articleCount++;
                 console.log(articleCount + ' articles parsed');
             }
+            if(networkArray){
+                // If all articles in network have been parsed send them to the DB
+                console.log(holdingArray);
+            }
         });
     });
+    //saveArticle(holdingArray);
+
 }
 // Convert a date to ISO format
 function dateToISO(date){
