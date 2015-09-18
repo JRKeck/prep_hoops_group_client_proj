@@ -22,6 +22,14 @@ router.get('/lastid', function(req, res, next){
     });
 });
 
+//Get feed info from database
+router.get('/getFeeds', function(req, res, next){
+    console.log('Getting feeds info');
+    Feeds.find({}, function(err, feeds){
+        res.send(feeds)
+    });
+});
+
 // Get the list of Sites in the Network
 router.get('/*', function(req, res, next){
     console.log('Getting List of Sites');

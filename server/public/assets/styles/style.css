@@ -28,6 +28,9 @@ table tr:nth-child(even) {
 #goToAdmin {
   margin-top: 2px; }
 
+#article {
+  border: solid; }
+
 .border {
   border: solid; }
 
