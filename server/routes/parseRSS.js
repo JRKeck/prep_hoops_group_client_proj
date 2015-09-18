@@ -16,12 +16,12 @@ var networksParsed = 0;
 
 // Demo data of a req to the DB for all the sites
 var networkArray = [
-    {
-        siteName: 'NorthStar Hoops Report',
-        shortName: 'MN',
-        siteID: 1,
-        siteFeed: 'http://www.northstarhoopsreport.com/news_rss_feed?tags=903525%2C477068%2C477064%2C718293%2C744134%2C744381%2C763955%2C744167%2C876578%2C454209%2C744386%2C744387%2C1513588%2C1469282'
-    },
+    //{
+    //    siteName: 'NorthStar Hoops Report',
+    //    shortName: 'MN',
+    //    siteID: 1,
+    //    siteFeed: 'http://www.northstarhoopsreport.com/news_rss_feed?tags=903525%2C477068%2C477064%2C718293%2C744134%2C744381%2C763955%2C744167%2C876578%2C454209%2C744386%2C744387%2C1513588%2C1469282'
+    //}
     {
         siteName: 'Prep Hoops Iowa',
         shortName: 'IA',
@@ -96,15 +96,16 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
 
                 //console.log("This is from parseRSS: ", articleObj);
                 holdingArray.push(articleObj);
-                console.log("Holding Array Items: ", holdingArray.length);
+                //console.log("Holding Array Items: ", holdingArray.length);
                 articleCount++;
-                console.log(articleCount + ' articles parsed');
+                //console.log(articleCount + ' articles parsed');
             }
             networksParsed++;
             if(networksParsed == numNetworks){
                 // If all articles in network have been parsed send them to the DB
                 //console.log(holdingArray);
-                saveArticle(holdingArray);
+                console.log(articleCount + ' articles parsed');
+                saveArticle(holdingArray, 0);
             }
         });
     });
