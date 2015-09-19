@@ -7,12 +7,17 @@ body {
 }
 body {
   background-image: url("/assets/images/bg-main.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-color: #000;
 }
 a {
   color: $color-accent;
 }
 main {
   margin-top: 20px;
+  margin-bottom: 40px;
+  background-color: $color-white;
 }
 
 #goToAdmin, #dashboardBanner {
