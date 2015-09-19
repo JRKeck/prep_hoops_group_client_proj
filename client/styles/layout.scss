@@ -6,6 +6,10 @@ body {
   margin: 0;
 }
 
+a {
+  color: $color-accent;
+}
+
 #goToAdmin, #dashboardBanner {
   display: inline-block;
   margin-bottom: 10px;
