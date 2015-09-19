@@ -1,5 +1,5 @@
 
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal','siteFullName', function($scope, $http, $location, userAuth, $modal,siteFullName){
     console.log('Dashboard script loaded');
     $scope.sites = [];
     $scope.dates = [];
@@ -23,6 +23,8 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
         $location.path( path );
+        console.log(this);
+        siteFullName.set('siteFullName',this.site.siteFullName);
     };
 
 

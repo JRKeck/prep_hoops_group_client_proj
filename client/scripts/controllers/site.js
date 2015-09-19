@@ -1,8 +1,19 @@
-prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
+prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'userAuth', '$modal','siteFullName', function($scope, $http, $location, userAuth, $modal,siteFullName){
     console.log('Dashboard script loaded');
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
+    $scope.sitesWithArrays=[];
+    $scope.siteName=siteFullName.get('siteFullName');
+    $scope.authors=[];
+    $scope.uniqueAuthors=[];
+
+  console.log($scope.siteName);
+
+    $scope.onlyUnique= function (value, index, self) {
+    return self.indexOf(value) === index;
+};
+
 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
@@ -19,6 +30,19 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
             });
     };
 
+    $scope.getAuthors= function(data){
+       for(var i=0; i<data.length; i++) {
+                    for (var j = 0; j < data[i].site.length; j++) {
+                        if (data[i].site[j].siteName === $scope.siteName) {
+                           for (k = 0; k < data[i].site[j].articles.length; k++) {
+                            $scope.authors.push(data[i].site[j].articles[k].author);
+
+                            }
+                        }
+                    }
+                }
+    };
+
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
         var shortFirstDate = first.toISOString();
@@ -31,10 +55,12 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
                 $scope.getFeeds();
                 $scope.dates = data;
                 $scope.sites = data[0].site;
-                console.log(data);
+                $scope.getAuthors(data);
+                //console.log($scope.authors);
+                $scope.uniqueAuthors=$scope.authors.filter( $scope.onlyUnique);
+                console.log($scope.uniqueAuthors);
         });
     };
-
 
     //Code for DatePicker
 

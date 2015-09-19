@@ -60,3 +60,19 @@ prepHoopsApp.factory('userAuth', function(){
         }
     };
 });
+
+
+prepHoopsApp.factory('siteFullName', function(){
+    var siteFullName = {};
+
+    return {
+        get : function(key){
+            //console.log(siteFullName[key]);
+            return siteFullName[key];
+        },
+        set : function(key, value){
+            //console.log('value');
+            siteFullName[key]= value;
+        }
+    };
+});
