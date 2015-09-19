@@ -1,9 +1,13 @@
+// Declare requirements for Router
 var express = require('express');
 var router = express.Router();
 var Client = require('node-rest-client').Client;
 var parseString = require('xml2js').parseString;
 var saveArticle = require('./parseAPI');
 var ParseDate = require('../models/parseDate');
+
+// Declare Database models that will be used by Router
+var Feeds = require('../models/rssdb');
 
 // Holds date/time of last time network was parsed
 var lastParseDate;
@@ -17,20 +21,20 @@ var holdingArray = [];
 var networksParsed = 0;
 
 // Demo data of a req to the DB for all the sites
-var networkArray = [
-    {
-        siteName: 'NorthStar Hoops Report',
-        shortName: 'MN',
-        siteID: 1,
-        siteFeed: 'http://www.northstarhoopsreport.com/news_rss_feed?tags=903525%2C477068%2C477064%2C718293%2C744134%2C744381%2C763955%2C744167%2C876578%2C454209%2C744386%2C744387%2C1513588%2C1469282'
-    }
-    //{
-    //    siteName: 'Prep Hoops Iowa',
-    //    shortName: 'IA',
-    //    siteID: 2,
-    //    siteFeed: 'http://www.prephoopsiowa.com/news_rss_feed?tags=1160474%2C1160478%2C1160479%2C1160453%2C1164934%2C1164913%2C1164890%2C1164908%2C1161834%2C1330622'
-    //}
-];
+//var staticNetworkArray = [
+//    {
+//        siteName: 'NorthStar Hoops Report',
+//        shortName: 'MN',
+//        siteID: 1,
+//        siteFeed: 'http://www.northstarhoopsreport.com/news_rss_feed?tags=903525%2C477068%2C477064%2C718293%2C744134%2C744381%2C763955%2C744167%2C876578%2C454209%2C744386%2C744387%2C1513588%2C1469282'
+//    },
+//    {
+//        siteName: 'Prep Hoops Iowa',
+//        shortName: 'IA',
+//        siteID: 2,
+//        siteFeed: 'http://www.prephoopsiowa.com/news_rss_feed?tags=1160474%2C1160478%2C1160479%2C1160453%2C1164934%2C1164913%2C1164890%2C1164908%2C1161834%2C1330622'
+//    }
+//];
 
 // This is the GET call to fire off the parse when localhost:3000/parseRSS is
 // fed into the browser
@@ -42,7 +46,7 @@ router.get('/*', function(req, res, next){
     // Check the DB for the last parse date
     findLastParseDate();
     // Get the RSS Feeds
-    networkParser(networkArray);
+    networkParser();
 
     res.send('Parsing Complete!');
 
@@ -73,13 +77,20 @@ function findLastParseDate(){
 }
 
 // Loop through each RSS Feed in the Network
-function networkParser(array){
-    // For each Feed in the network send it to the parser
-    for(i=0; i<array.length; i++){
-        var el = array[i];
-        var networkCount = array.length;
-        parseFeed(el.siteFeed, el.siteName, el.siteID, networkCount);
-    }
+function networkParser(){
+    Feeds.find({}, function (err, sites) {
+        if (err) {
+            console.log("Error in pull sites from database ", err);
+        }
+        //console.log(sites);
+        console.log("Number of Sites: ", sites.length);
+        // For each Feed in the network send it to the parser
+        for(i = 0; i < sites.length; i++){
+            var el = sites[i];
+            var networkCount = sites.length;
+            parseFeed(el.rssURL, el.siteFullName, el.siteID, networkCount);
+        }
+    });
 }
 
 // Parse an RSS Feed
@@ -96,7 +107,7 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
             var articles = result.rss.channel[0].item;
 
             // Loop through articles array
-            for(i=0; i<articles.length; i++) {
+            for(i = 0; i < articles.length; i++) {
                 var el = articles[i];
 
                 // Change  pubdate to ISO format

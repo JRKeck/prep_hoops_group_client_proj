@@ -15,7 +15,7 @@ function getFeeds() {
         }
         console.log(sites);
         console.log("Number of Sites: ", sites.length);
-        for(var j = 18; j < 31; j++) {
+        for(var j = 15; j < 20; j++) {
             var temp = j.toString();
             var dateArticleToAdd = {
                 date: "2015-09-" + temp,
