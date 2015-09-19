@@ -9,14 +9,17 @@
     <title>Prep Hoops</title>
 </head>
 <body ng-app="prepHoopsApp">
-
-    <div class="header">
-        <h1>Prep Hoops</h1>
-        <a href="#login">Login</a>
-        <a href="#dashboard">Dashboard</a>
-        <a href="#site">Site</a>
-        <a href="#admin">Admin</a>
-    </div>
+    <header>
+        <nav>
+            <ul>
+                <li class="logo">Prep Hoops</li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#site">Site</a></li>
+                <li><a href="#admin">Admin</a></li>
+                <li><a href="#login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="container">
         <div class="mainview">
             <main ng-view></main>
