@@ -17,6 +17,9 @@ header {
       li {
         display: inline-block;
         padding: 30px 20px 10px;
+        &.login {
+          float: right;
+        }
       }
     }
   }
