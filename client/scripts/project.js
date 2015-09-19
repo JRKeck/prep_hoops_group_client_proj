@@ -28,35 +28,156 @@ prepHoopsApp.config(['$routeProvider', function($routeProvider){
             redirectTo: "/login"
         });
 }]);
+//
+prepHoopsApp.factory('AuthService',
+    ['$q', '$timeout', '$http',
+        function ($q, $timeout, $http) {
 
-prepHoopsApp.controller("IndexCtrl", ["$scope", "$http", "userAuth",  "$location", function($scope, $http, userAuth, $location) {
+            // create user variable
+            var user = false;
 
-    $scope.$watch(Auth.isLoggedIn, function (value, oldValue) {
-        if (!value && oldValue) {
-            console.log("Log Out");
-            $scope.user = {};
+            // return available functions for use in controllers
+            return ({
+                isLoggedIn: isLoggedIn,
+                getUserStatus: getUserStatus,
+                login: login,
+                logout: logout,
+                user: user
+            });
+
+            function isLoggedIn() {
+                if(user) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function getUserStatus() {
+                return user;
+            }
+
+            function login(username, password) {
+
+                // create a new instance of deferred
+                var deferred = $q.defer();
+
+                // send a post request to the server
+                $http.post('/userauth/login', {username: username, password: password})
+                    // handle success
+                    .success(function (data, status) {
+                        if(status === 200 && data.status){
+                            console.log('success');
+                            user = true;
+                            deferred.resolve();
+                        } else {
+                            user = false;
+                            deferred.reject();
+                        }
+                    })
+                    // handle error
+                    .error(function (data) {
+                        console.log('error');
+                        user = false;
+                        deferred.reject();
+                    });
+
+                // return promise object
+                return deferred.promise;
+
+            }
+
+            function logout() {
+
+                // create a new instance of deferred
+                var deferred = $q.defer();
+
+                // send a get request to the server
+                $http.get('/userauth/logout')
+                    // handle success
+                    .success(function (data) {
+                        user = false;
+                        deferred.resolve();
+                    })
+                    // handle error
+                    .error(function (data) {
+                        user = false;
+                        deferred.reject();
+                    });
+
+                // return promise object
+                return deferred.promise;
+
+            }
+        }]);
+
+
+prepHoopsApp.run(['$rootScope', '$location', '$route', 'AuthService', function ($rootScope, $location, $route, AuthService) {
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        if (AuthService.isLoggedIn() === false) {
             $location.path('/login');
         }
-        if (value) {
-            $scope.user = value;
-        }
-    }, true);
-
+    });
 }]);
 
-// factory for user object
-prepHoopsApp.factory('userAuth', function(){
-    var user;
 
-    return {
-        setUser : function(aUser){
-            console.log('saving user to var user in the factory');
-            user = aUser;
-            console.log(user);
-        },
-        isLoggedIn : function(){
-            console.log('authenticating user');
-            return(user) ? user : false;
-        }
-    };
-});
+//
+
+
+//
+
+
+
+
+// factory for user object
+//prepHoopsApp.factory('userAuth', function(){
+//    var user;
+//
+//    return {
+//        setUser : function(aUser){
+//            console.log('saving user to var user in the factory');
+//            user = aUser;
+//            console.log(user);
+//        },
+//        isLoggedIn : function(){
+//            console.log('authenticating user');
+//            return(user) ? user : false;
+//        }
+//    };
+//});
+//    myApp.config(function ($routeProvider) {
+//        $routeProvider
+//            .when('/', {templateUrl: 'partials/home.html'})
+//            .when('/login', {
+//                templateUrl: 'partials/login.html',
+//                controller: 'loginController',
+//                access: {restricted: false}
+//            })
+//            .when('/logout', {
+//                controller: 'logoutController',
+//                access: {restricted: true}
+//            })
+//            .when('/register', {
+//                templateUrl: 'partials/register.html',
+//                controller: 'registerController',
+//                access: {restricted: false}
+//            })
+//            .when('/one', {
+//                template: '<h1>This is page one!</h1>',
+//                access: {restricted: true}
+//            })
+//            .when('/two', {
+//                template: '<h1>This is page two!</h1>',
+//                access: {restricted: false}
+//            })
+//            .otherwise({redirectTo: '/'});
+//    });
+//
+//
+//    myApp.run(function ($rootScope, $location, $route, AuthService) {
+//        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+//            if (next.access.restricted && AuthService.isLoggedIn() === false) {
+//                $location.path('/login');
+//            }
+//        });
+//    });

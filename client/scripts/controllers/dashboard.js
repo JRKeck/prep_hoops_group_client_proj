@@ -1,5 +1,5 @@
 
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', '$modal', 'AuthService', function($scope, $http, $location, $modal, AuthService){
     console.log('Dashboard script loaded');
     $scope.sites = [];
     $scope.dates = [];
@@ -19,6 +19,19 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 $scope.feeds = data;
             });
     };
+
+    $scope.logout = function () {
+
+        console.log(AuthService.getUserStatus());
+
+        // call logout from service
+        AuthService.logout()
+            .then(function () {
+                $location.path('/login');
+            });
+
+    };
+
 
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){

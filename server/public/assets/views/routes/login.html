@@ -1,18 +1,34 @@
-<!--<p>Login Page!</p>-->
+<!--<section class="authSection">-->
+    <!--<form novalidate id="loginForm" method="post">-->
+        <!--<div class="error">{{error_message}}</div>-->
+        <!--<div>-->
+            <!--<label for="username">Username:</label>-->
+            <!--<input type="text" ng-model="loginForm.username" name="username" id="username"/>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<label for="password">Password:</label>-->
+            <!--<input type="password" ng-model="loginForm.password" name="password" id="password"/>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<input type="submit" id="login" class="" ng-click="login(loginForm)" value="Log In"/>-->
+        <!--</div>-->
+    <!--</form>-->
+<!--</section>-->
 
-<section class="authSection">
-    <form novalidate id="loginForm" method="post">
-        <div class="error">{{error_message}}</div>
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" ng-model="loginForm.username" name="username" id="username"/>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" ng-model="loginForm.password" name="password" id="password"/>
-        </div>
-        <div>
-            <input type="submit" id="login" class="" ng-click="login(loginForm)" value="Log In"/>
-        </div>
-    </form>
-</section>
+<div class="col-md-4">
+    <h1>Login</h1>
+        <div ng-show="error" class="alert alert-danger"></div>
+        <form class="form" ng-submit="login()">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" name="username" ng-model="loginForm.username" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" ng-model="loginForm.password" required>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-default" ng-disabled="disabled">Login</button>
+            </div>
+        </form>
+</div>
