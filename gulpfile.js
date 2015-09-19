@@ -71,6 +71,7 @@ gulp.task('watch', function() {
     gulp.watch('client/scripts/**/*.js', ['lint', 'scripts-index']);
     gulp.watch('client/styles/*.scss', ['sass']);
     gulp.watch('client/views/**/*.html', ['views']);
+    gulp.watch('client/images/**/*', ['images']);
 });
 
 // Default Task
