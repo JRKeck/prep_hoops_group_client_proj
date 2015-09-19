@@ -7,8 +7,14 @@ body {
   padding: 0;
   margin: 0; }
 
+body {
+  background-image: url("/assets/images/bg-main.jpg"); }
+
 a {
   color: #f56529; }
+
+main {
+  margin-top: 20px; }
 
 #goToAdmin, #dashboardBanner {
   display: inline-block;
