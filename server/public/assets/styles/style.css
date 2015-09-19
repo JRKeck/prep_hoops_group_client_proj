@@ -17,9 +17,8 @@ a {
   color: #f56529; }
 
 main {
-  margin-top: 20px;
-  margin-bottom: 40px;
-  background-color: #fff; }
+  background-color: #fff;
+  margin: 20px 20px 40px; }
 
 #goToAdmin, #dashboardBanner {
   display: inline-block;
@@ -68,7 +67,8 @@ header {
     padding: 0; }
     header nav ul li {
       display: inline-block;
-      padding: 30px 20px 10px; }
+      padding: 30px 20px 10px;
+      text-transform: uppercase; }
       header nav ul li.login {
         float: right; }
 
