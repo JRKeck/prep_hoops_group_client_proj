@@ -37,26 +37,13 @@
                 </div>
 
                 <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
-<<<<<<< HEAD
-=======
-
->>>>>>> 841a957765c51275c3e448c102b8b422148f7296
 
             </div>
 
             <table class="col-md-12">
                 <tr>
                     <td>Date</td>
-<<<<<<< HEAD
-                    <td ng-repeat="site in siteIds">{{site}}</td>
-                    <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>-->
-                </tr>
 
-                <tr ng-repeat='day in dates'>
-                    <td>{{ day.date }}</td>
-                    <td ng-repeat="site in day.site" ng-click="getArticles()"><a href ="">{{site.articles.length}}</a></td>
-                </tr>
-=======
                     <td ng-repeat="site in feeds">{{site.siteShortName}}</td>
 
                     <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
@@ -65,7 +52,6 @@
                     <td>{{ day.date }}</td>
                     <td ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="">{{site.articles.length}}</a></td>
                 </tr>
->>>>>>> 841a957765c51275c3e448c102b8b422148f7296
             </table>
         </div>
     </div>
