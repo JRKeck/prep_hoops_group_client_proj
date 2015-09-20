@@ -4,6 +4,10 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
+    $scope.totalArticles = [];
+    $scope.dailyAvg = [];
+    $scope.percentPaid= [];
+    $scope.zeroDays= [];
 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
@@ -23,7 +27,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
         $location.path( path );
-        console.log(this);
+        //console.log(this);
         siteFullName.set('siteFullName',this.site.siteFullName);
     };
 
@@ -40,9 +44,39 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 $scope.getFeeds();
                 $scope.dates = data;
                 $scope.sites = data[0].site;
-                console.log(data);
+                $scope.getStats(data);
+                //console.log(data);
+
+
         });
     };
+
+     $scope.getStats= function(data){
+         $scope.totalSiteArticles=0;
+         var zeroDaysSite=0;
+         for (var n=1; n<18; n++) {// Total number of sites = 17 and siteIDs start from 1
+             for (var i = 0; i < data.length; i++) {
+                 for (var j = 0; j < data[i].site.length; j++) {
+                     if (data[i].site[j].siteID === n){
+                             $scope.totalSiteArticles = $scope.totalSiteArticles + data[i].site[j].articles.length;
+                         if(data[i].site[j].articles.length===0){
+                             zeroDaysSite++;
+                         }
+
+                    }
+                 }
+
+             }
+             $scope.totalArticles.push($scope.totalSiteArticles);
+             $scope.dailyAvg.push(($scope.totalSiteArticles/(data.length)));
+             $scope.zeroDays.push(zeroDaysSite);
+             //console.log($scope.totalArticles, $scope.dailyAvg,$scope.zeroDays );
+             $scope.totalSiteArticles=0;
+             zeroDaysSite=0;
+         }
+
+     };
+
 
 
     //Code for DatePicker

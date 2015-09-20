@@ -59,7 +59,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
 
         $scope.getAuthorArticles(data);
     };
-
+    //Function to create and array of author article objects
     $scope.getAuthorArticles = function(data){
         for(var i=0; i<data.length; i++) {
            for (var j = 0; j < data[i].site.length; j++) {
