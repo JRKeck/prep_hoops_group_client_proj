@@ -3,13 +3,19 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
-    $scope.sitesWithArrays=[];
+    $scope.authorsWithArticles=[];
     $scope.siteName=siteFullName.get('siteFullName');
     $scope.authors=[];
     $scope.uniqueAuthors=[];
+    $scope.Author = function(date,author, articles){
+        this.date= date;
+        this.author = author;
+        this.articles= articles;
+
+    };
 
   console.log($scope.siteName);
-
+//Function to get a unique array from  an array with duplicates
     $scope.onlyUnique= function (value, index, self) {
     return self.indexOf(value) === index;
 };
@@ -30,17 +36,46 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
             });
     };
 
+    //Function to get unique authors for a site for requested dates
     $scope.getAuthors= function(data){
        for(var i=0; i<data.length; i++) {
-                    for (var j = 0; j < data[i].site.length; j++) {
-                        if (data[i].site[j].siteName === $scope.siteName) {
-                           for (k = 0; k < data[i].site[j].articles.length; k++) {
-                            $scope.authors.push(data[i].site[j].articles[k].author);
+           for (var j = 0; j < data[i].site.length; j++) {
+               if (data[i].site[j].siteName === $scope.siteName) {
+                   for (k = 0; k < data[i].site[j].articles.length; k++) {
+                       $scope.authors.push(data[i].site[j].articles[k].author);
 
                             }
                         }
                     }
                 }
+         $scope.uniqueAuthors=$scope.authors.filter($scope.onlyUnique);
+        for(i=0; i<data.length; i++) {
+               $scope.authorsWithArticles.push({date:data[i].date,authors:[]});
+                     for (var a = 0; a < $scope.uniqueAuthors.length; a++) {
+                         $scope.authorsWithArticles[i].authors.push({authorName:$scope.uniqueAuthors[a], articles:[]});
+            }
+        }
+        //console.log($scope.authorsWithArticles);
+
+        $scope.getAuthorArticles(data);
+    };
+
+    $scope.getAuthorArticles = function(data){
+        for(var i=0; i<data.length; i++) {
+           for (var j = 0; j < data[i].site.length; j++) {
+               if (data[i].site[j].siteName === $scope.siteName) {
+                   for (var a=0; a<$scope.uniqueAuthors.length; a++){
+                       for (var k = 0; k < data[i].site[j].articles.length; k++) {
+                           if(data[i].site[j].articles[k].author===$scope.uniqueAuthors[a] && data[i].date ===$scope.authorsWithArticles[i].date) {
+                               $scope.authorsWithArticles[i].authors[a].articles.push(data[i].site[j].articles[k].title);
+                           }
+                       }
+
+                   }
+               }
+           }
+        }
+              console.log($scope.authorsWithArticles);
     };
 
     //Function to call RSS feed dump into database & pull back articles for requested dates
@@ -56,9 +91,17 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
                 $scope.dates = data;
                 $scope.sites = data[0].site;
                 $scope.getAuthors(data);
-                //console.log($scope.authors);
-                $scope.uniqueAuthors=$scope.authors.filter( $scope.onlyUnique);
-                console.log($scope.uniqueAuthors);
+                //for(var i=0; i<data.length; i++) {
+                //    for (var j = 0; j < data[i].site.length; j++) {
+                //        if (data[i].site[j].siteName === $scope.siteName) {
+                //            for (k = 0; k < data[i].site[j].articles.length; k++) {
+                //                $scope.authors.push(data[i].site[j].articles[k].author);
+                //
+                //            }
+                //        }
+                //    }
+                //}
+
         });
     };
 

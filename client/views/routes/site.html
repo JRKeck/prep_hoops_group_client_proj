@@ -48,9 +48,9 @@
 
                     <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
 
-                <tr ng-repeat='day in dates'>
+                <tr ng-repeat='day in authorsWithArticles'>
                     <td>{{ day.date }}</td>
-                    <td ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="">{{site.articles.length}}</a></td>
+                    <td ng-repeat="author in day.authors" ng-click="openModal('md')"><a href ="">{{author.articles.length}}</a></td>
                 </tr>
             </table>
         </div>
