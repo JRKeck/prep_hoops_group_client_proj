@@ -67,7 +67,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
                    for (var a=0; a<$scope.uniqueAuthors.length; a++){
                        for (var k = 0; k < data[i].site[j].articles.length; k++) {
                            if(data[i].site[j].articles[k].author===$scope.uniqueAuthors[a] && data[i].date ===$scope.authorsWithArticles[i].date) {
-                               $scope.authorsWithArticles[i].authors[a].articles.push(data[i].site[j].articles[k].title);
+                               $scope.authorsWithArticles[i].authors[a].articles.push(data[i].site[j].articles[k]);
                            }
                        }
 
@@ -134,11 +134,13 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
 
     $scope.animationsEnabled = true;
     $scope.openModal = function(size){
-        $scope.selectedArticles = this.site.articles;
+
+        console.log(this);
+        $scope.selectedArticles = this.author.articles;
         var modalInstance = $modal.open(
             {
                 animation: $scope.animationsEnabled,
-                templateUrl: '/assets/views/routes/articleUrl.html',
+                templateUrl: '/assets/views/routes/authorArticleUrl.html',
                 controller: 'ArticleInstanceController',
                 size: size,
                 resolve: {
