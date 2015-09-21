@@ -44,11 +44,7 @@
                 <tr>
                     <td>Date</td>
 
-<<<<<<< HEAD
                     <td ng-repeat="site in feeds" ng-click="go('/site')"><a href ="">{{site.siteShortName}}</a></td>
-=======
-                    <td ng-repeat="site in feeds">{{site.siteShortName}}</td>
->>>>>>> e499336065e25340d619a2554b2db8deafbbb8f9
 
                     <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
 
@@ -56,7 +52,6 @@
                     <td>{{ day.date }}</td>
                     <td ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="" ng-class="{red: (site.articles.length==0)}">{{site.articles.length}}</a></td>
                 </tr>
-<<<<<<< HEAD
                 <tr>
                     <td></td>
                 </tr>
@@ -76,8 +71,6 @@
 
                     <td ng-repeat="days in zeroDays track by $index" >{{days}}</td>
                 </tr>
-=======
->>>>>>> e499336065e25340d619a2554b2db8deafbbb8f9
             </table>
         </div>
     </div>
