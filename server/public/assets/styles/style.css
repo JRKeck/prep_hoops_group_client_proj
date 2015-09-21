@@ -124,15 +124,31 @@ footer {
 
 /* tables.scss */
 table {
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  table-layout: fixed; }
+  table a {
+    color: #000; }
 
 table, th, td {
   border: 1px solid grey;
   border-collapse: collapse;
-  padding: 5px; }
+  padding: 5px;
+  text-align: center; }
 
 table tr:nth-child(odd) {
   background-color: #f1f1f1; }
 
 table tr:nth-child(even) {
   background-color: #ffffff; }
+
+th.site-short-name {
+  width: 60px; }
+
+td.feed-url {
+  word-wrap: break-word; }
+
+th.site-edit, th.site-delete {
+  width: 100px; }
+
+td.date {
+  width: 140px; }

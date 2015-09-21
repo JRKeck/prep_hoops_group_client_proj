@@ -40,9 +40,9 @@
 
             </div>
 
-             <table class="col-md-12">
+             <table class="col-md-12 table-sitepage">
                 <tr>
-                    <td>Date</td>
+                    <td class="date">Date</td>
 
                     <td ng-repeat="author in uniqueAuthors" >{{author}}</td>
 
@@ -50,7 +50,31 @@
 
                 <tr ng-repeat='day in authorsWithArticles'>
                     <td>{{ day.date }}</td>
-                    <td ng-repeat="author in day.authors" ng-click="openModal('md')"><a href ="">{{author.articles.length}}</a></td>
+                    <td ng-repeat="author in day.authors" ng-click="openModal('md')"><a href ="" ng-class="{red: (author.articles.length==0)}">{{author.articles.length}}</a></td>
+                </tr>
+                 <tr>
+                    <td></td>
+                </tr>
+
+                <tr>
+                     <td>Total Articles</td>
+
+                    <td ng-repeat="total in totalArticles track by $index" >{{total}}</td>
+                </tr>
+                <tr>
+                     <td>Daily AVG</td>
+
+                    <td ng-repeat="avg in dailyAvg track by $index" >{{avg}}</td>
+                </tr>
+                 <tr>
+                     <td>Maximum</td>
+
+                    <td ng-repeat="maxNo in max track by $index" >{{maxNo}}</td>
+                </tr>
+                <tr>
+                     <td>Zero Days</td>
+
+                    <td ng-repeat="days in zeroDays track by $index" >{{days}}</td>
                 </tr>
             </table>
         </div>
