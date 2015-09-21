@@ -43,16 +43,16 @@
 
         </div>
 
-        <table class="col-md-12">
+        <table class="col-md-12 table-dashboard">
             <tr>
-                <td class="cell">Date</td>
 
+                <td class="date">Date</td>
                     <td class="cell" ng-repeat="site in feeds" ng-click="go('/site')"><a href ="">{{site.siteShortName}}</a></td>
 
                 <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
 
                 <tr ng-repeat='day in dates'>
-                    <td class="cell">{{ day.date }}</td>
+                    <td class="date">{{ day.date }}</td>
                     <td class="cell" ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="" ng-class="{red: (site.articles.length==0)}">{{site.articles.length}}</a></td>
                 </tr>
                 <tr>
