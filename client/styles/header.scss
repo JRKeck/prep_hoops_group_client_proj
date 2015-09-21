@@ -16,6 +16,9 @@ header {
     &:hover {
       color: $color-accent;
     }
+    &:focus {
+      color: $color-accent;
+    }
     @media (min-width: 768px) {
       padding-top: 35px;
       height: $height-header;

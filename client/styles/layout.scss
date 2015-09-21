@@ -45,6 +45,11 @@ main {
 #goToAdmin {
   margin-top: 2px;
 }
+#article {
+  border: solid;
+  padding-left: 3px;
+  margin-bottom: 3px;
+}
 .border {
   border: solid;
 }
@@ -67,3 +72,9 @@ main {
 .search {
   font-weight: bold;
 }
+
+a.red:link {color: #ff0000; font-style: normal;}
+a.red:active {color: #ff0000; background: #ffffff; font-style: normal;}
+a.red:visited {color: #ff0000; background: #ffffff; font-style: normal;}
+a.red:hover {color: #ff0000; background: #ffffff; font-style: normal;}
+
