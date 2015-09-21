@@ -42,6 +42,13 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             });
     };
 
+    $scope.runParse = function(){
+        $http.get('/parseRSS').
+            success(function(req, res){
+                console.log(res);
+            });
+    };
+
 
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
@@ -72,8 +79,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
-
-                $scope.sites = data[0].site;
                 $scope.getStats(data);
                 //console.log(data);
 
@@ -83,6 +88,9 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
      $scope.getStats= function(data){
          $scope.totalSiteArticles=0;
+         $scope.totalArticles = [];
+         $scope.dailyAvg = [];
+         $scope.zeroDays = [];
          var zeroDaysSite=0;
          for (var n=1; n<18; n++) {// Total number of sites = 17 and siteIDs start from 1
              for (var i = 0; i < data.length; i++) {
