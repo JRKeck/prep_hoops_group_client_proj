@@ -1,6 +1,7 @@
 
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal','siteFullName', function($scope, $http, $location, userAuth, $modal,siteFullName){
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'AuthService', '$modal','siteFullName', function($scope, $http, $location, AuthService, $modal,siteFullName){
     console.log('Dashboard script loaded');
+
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
@@ -8,6 +9,23 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.dailyAvg = [];
     $scope.percentPaid= [];
     $scope.zeroDays= [];
+
+
+    //Function to get last parse date and load data for 30 days before
+    $scope.getLastParseDate = function(){
+        $http.get('/parseRSS/getLastDate').
+            success(function(data){
+                $scope.lastParseDate = new Date(data[0].date);
+                var lastParseDate = new Date(data[0].date);
+                $scope.thirtyDaysBefore = new Date(lastParseDate.setDate($scope.lastParseDate.getDate() - 30));
+                var shortFirstDate = $scope.lastParseDate.toISOString();
+                $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
+                var shortSecondDate = $scope.thirtyDaysBefore.toISOString();
+                $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
+                $scope.getThirtyDaysOfArticles($scope.shortSecondDateString, $scope.shortFirstDateString);
+            });
+    };
+    $scope.getLastParseDate();
 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
@@ -24,11 +42,22 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             });
     };
 
+
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
         $location.path( path );
         //console.log(this);
         siteFullName.set('siteFullName',this.site.siteFullName);
+    };
+
+
+
+    $scope.getThirtyDaysOfArticles = function(first, last){
+        $http.post('/api/articleGet', [first, last]).
+            success(function(data){
+                $scope.getFeeds();
+                $scope.dates = data;
+            });
     };
 
 
@@ -43,6 +72,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
+
                 $scope.sites = data[0].site;
                 $scope.getStats(data);
                 //console.log(data);
@@ -76,6 +106,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
          }
 
      };
+
 
 
 
