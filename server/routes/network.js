@@ -25,6 +25,17 @@ router.delete('/deletesite/:id', function(req, res, next){
     });
 });
 
+// Edit Site
+router.put('/editsite/:id', function(req, res, next){
+    console.log("Delete Hit! ID: ", req.params.id);
+    Feeds.findByIdAndRemove(req.params.id, req.body, function(err, post){
+        if(err) {
+            console.log("Error on Site Delete: ", err);
+        }
+        res.json(post);
+    });
+});
+
 
 // Find last siteID
 router.get('/lastid', function(req, res, next){

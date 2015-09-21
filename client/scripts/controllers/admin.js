@@ -36,13 +36,6 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, 
         }
     };
 
-    $scope.updateSite = function(site){
-        console.log("My current data: ", site);
-        console.log("All Sites: ", $scope.sites);
-
-
-    };
-
     $scope.removeSite = function() {
         var site = this.site.siteShortName;
         var id = this.site._id;
@@ -57,6 +50,27 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, 
                     loadSites();
                 }
             });
+    };
+
+    $scope.editSite = function() {
+        var site = this.site.siteShortName;
+        var id = this.site._id;
+        console.log("Edit Button Pressed for Site: " + site);
+        console.log("Mongo ID: ", id);
+        $http.put('network/editsite/' + id)
+            .then(function(err, res){
+                if (err) {
+                    console.log("Error on Edit is: ", err);
+                } else {
+                    console.log("Edit Successful: ", res);
+                    loadSites();
+                }
+            });
+    };
+
+    $scope.updateSite = function(site){
+        console.log("My current data: ", site);
+        console.log("All Sites: ", $scope.sites);
     };
 
     function addNewSite(site){

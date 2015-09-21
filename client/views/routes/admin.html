@@ -45,19 +45,49 @@
     </form>
 </section>
 
+<section class="newEditSection">
+    <h2>Edit an Existing Site on the Network</h2>
+    <form novalidate id="neweditForm">
+        <div>
+            <label for="editShortName">Site: </label>
+            <select  ng-model="editFormSelector" ng-change="changedValue()"
+                     data-ng-options="site as site.siteFullName for site in sites">
+                <option value="">Select Site</option>
+            </select>
+        </div>
+        <div>
+            <label for="editShortName">Report Name: </label>
+            <input type="text" ng-model="editForm.editShortName" name="editShortName" id="editShortName" placeholder=""/>
+        </div>
+        <div>
+            <label for="editFullName">Site Name: </label>
+            <input type="text" ng-model="editForm.editFullName" name="editFullName" id="editFullName" placeholder="{{ editFormName }}"/>
+        </div>
+        <div>
+            <label for="rssURL">RSS Feed: </label>
+            <input type="text" ng-model="editForm.editRssURL" name="editRssURL" id="editRssURL" placeholder="{{ editFormUrl }}"/>
+        </div>
+        <div>
+            <input type="submit" id="editSite" class="" ng-click="updateSite(editForm)" value="Update"/>
+        </div>
+    </form>
+</section>
+
 <section class="networklist">
     <h2>Sites</h2>
     <table class="col-xs-12 admin">
         <tr>
-            <th>Report Name</th>
+            <th class="site-short-name">Report Name</th>
             <th>Site Name</th>
             <th>RSS Feed</th>
-            <th>Remove Site</th>
+            <th class="site-edit">Edit</th>
+            <th class="site-delete">Delete</th>
         </tr>
         <tr ng-repeat="site in sites">
-            <td class="site-short-name">{{site.siteShortName}}</td>
+            <td>{{site.siteShortName}}</td>
             <td class="site-name">{{site.siteFullName}}</td>
             <td class="feed-url">{{site.rssURL}}</td>
+            <td><button class="removeButton" ng-click="editSite()">Edit</button> </td>
             <td><button class="removeButton" ng-click="removeSite()">Remove</button> </td>
         </tr>
     </table>
