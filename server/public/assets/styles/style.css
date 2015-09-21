@@ -5,7 +5,8 @@
 html,
 body {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  height: 100%; }
 
 body {
   background-image: url("/assets/images/bg-main.jpg");
@@ -15,6 +16,18 @@ body {
 
 a {
   color: #f56529; }
+
+.page-wrapper {
+  min-height: 100%;
+  margin-bottom: -100px; }
+
+.page-wrapper:after {
+  content: "";
+  display: block; }
+
+footer, .page-wrapper:after {
+  /* .push must be the same height as footer */
+  height: 100px; }
 
 main {
   background-color: #fff;
@@ -26,9 +39,6 @@ main {
 
 #goToAdmin {
   margin-top: 2px; }
-
-#article {
-  border: solid; }
 
 .border {
   border: solid; }
@@ -75,8 +85,7 @@ header {
 /* footer.scss */
 footer {
   background-color: #2f2f2f;
-  color: #fff;
-  padding: 20px 0; }
+  color: #fff; }
 
 /* tables.scss */
 table {
