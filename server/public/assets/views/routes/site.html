@@ -50,7 +50,7 @@
 
                 <tr ng-repeat='day in authorsWithArticles'>
                     <td>{{ day.date }}</td>
-                    <td ng-repeat="author in day.authors" ng-click="openModal('md')"><a href ="">{{author.articles.length}}</a></td>
+                    <td ng-repeat="author in day.authors" ng-click="openModal('md')"><a href ="" ng-class="{red: (author.articles.length==0)}">{{author.articles.length}}</a></td>
                 </tr>
                  <tr>
                     <td></td>

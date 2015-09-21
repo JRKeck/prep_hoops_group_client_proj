@@ -1,4 +1,4 @@
-prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'userAuth', '$modal','siteFullName', function($scope, $http, $location, userAuth, $modal,siteFullName){
+prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$modal','siteFullName', function($scope, $http, $location, $modal,siteFullName){
     console.log('Dashboard script loaded');
     $scope.sites = [];
     $scope.dates = [];
@@ -11,12 +11,42 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
     $scope.dailyAvg = [];
     $scope.max= [];
     $scope.zeroDays= [];
-    $scope.Author = function(date,author, articles){
-        this.date= date;
-        this.author = author;
-        this.articles= articles;
+    //$scope.Author = function(date,author, articles){
+    //    this.date= date;
+    //    this.author = author;
+    //    this.articles= articles;
+    //
+    //};
+//Function to get last parse date and load data for 30 days before
+    $scope.getLastParseDate = function(){
+        $http.get('/parseRSS/getLastDate').
+            success(function(data){
+                $scope.lastParseDate = new Date(data[0].date);
+                var lastParseDate = new Date(data[0].date);
+                $scope.thirtyDaysBefore = new Date(lastParseDate.setDate($scope.lastParseDate.getDate() - 30));
+                var shortFirstDate = $scope.lastParseDate.toISOString();
+                $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
+                var shortSecondDate = $scope.thirtyDaysBefore.toISOString();
+                $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
+                $scope.getThirtyDaysOfArticles($scope.shortSecondDateString, $scope.shortFirstDateString);
+
+            });
 
     };
+    $scope.getLastParseDate();
+
+    $scope.getThirtyDaysOfArticles = function(first, last){
+        $http.post('/api/articleGet', [first, last]).
+            success(function(data){
+                $scope.getFeeds();
+                $scope.dates = data;
+                //console.log("got here");
+                $scope.getAuthors(data);
+
+            });
+
+    };
+
 
   console.log($scope.siteName);
 //Function to get a unique array from  an array with duplicates
@@ -43,7 +73,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
     //Function to get unique authors for a site for requested dates. This module loops through the date range first.
     //Then loops through the sites within the dates. If the site name matches the sitename from the $scope.sitename which is sent from the dasboard site
     //page the module then steps through the articles and pushes all the authors(including duplicates) into an array.
-    //The next part then loops through this authors array and creates an array of unique authors for the given date range.
+    //The next part then loops through this authors array and creates an array of unique authors for the given date range and initializes arrays for total articles, zero days,
+    // daily average and maximum no of articles within a date range.
     $scope.getAuthors= function(data){
        for(var i=0; i<data.length; i++) {
            for (var j = 0; j < data[i].site.length; j++) {
@@ -67,7 +98,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
 
             }
         }
-        console.log($scope.authorsWithArticles);
+        //console.log($scope.authorsWithArticles);
 
         $scope.getAuthorArticles(data);
     };
@@ -115,7 +146,10 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
         $scope.getAuthorStats();
     };
 
+    //Function to get author stats for sitepage
+
     $scope.getAuthorStats = function(){
+
         for(var i=0; i< $scope.authorsWithArticles.length; i++){
             for(var j=0; j<$scope.authorsWithArticles[i].authors.length; j++){
                 if($scope.authorsWithArticles[i].authors[j].articles.length===0){
@@ -133,9 +167,23 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
 
     };
 
+    $scope.clearFields = function(){
+            $scope.sites = [];
+            $scope.dates = [];
+            $scope.feeds = [];
+            $scope.authorsWithArticles=[];
+            $scope.siteName=siteFullName.get('siteFullName');
+            $scope.authors=[];
+            $scope.uniqueAuthors=[];
+            $scope.totalArticles = [];
+            $scope.dailyAvg = [];
+            $scope.max= [];
+            $scope.zeroDays= [];
+    };
 
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
+      $scope.clearFields();
         var shortFirstDate = first.toISOString();
         $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
         var shortSecondDate = last.toISOString();
