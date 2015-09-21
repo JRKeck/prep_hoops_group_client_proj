@@ -1,7 +1,6 @@
  <div class="row">
         <div class="col-md-12 border">
             <h1>Main Dashboard</h1>
-            <a ng-click='logout()' class="btn btn-default">Logout</a>
         </div>
     </div>
 
@@ -37,7 +36,9 @@
                     </p>
                 </div>
 
+                <input type="button" id="runFeeds" class="col-md-1 btn post" ng-click="runFeeds(first, last)" value="Run New Report"/>
                 <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
+
 
             </div>
 

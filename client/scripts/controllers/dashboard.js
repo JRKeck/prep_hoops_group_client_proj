@@ -1,5 +1,5 @@
 
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'AuthService', '$modal', function($scope, $http, $location, AuthService, $modal){
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
