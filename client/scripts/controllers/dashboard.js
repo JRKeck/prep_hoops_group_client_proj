@@ -39,6 +39,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $http.get('/network/getFeeds').
             success(function(data){
                 $scope.feeds = data;
+                console.log("length of feeds" + $scope.feeds.length);
             });
     };
 
@@ -80,11 +81,11 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
         });
     };
-
+//Function to get stats for the main dashboard
      $scope.getStats= function(data){
          $scope.totalSiteArticles=0;
          var zeroDaysSite=0;
-         for (var n=1; n<18; n++) {// Total number of sites = 17 and siteIDs start from 1
+         for (var n=1; n<=$scope.feeds.length; n++) {// Total number of sites from the feeds
              for (var i = 0; i < data.length; i++) {
                  for (var j = 0; j < data[i].site.length; j++) {
                      if (data[i].site[j].siteID === n){
@@ -98,9 +99,8 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
              }
              $scope.totalArticles.push($scope.totalSiteArticles);
-             $scope.dailyAvg.push(($scope.totalSiteArticles/(data.length)));
+             $scope.dailyAvg.push(Math.floor(($scope.totalSiteArticles*100/(data.length)))/100);
              $scope.zeroDays.push(zeroDaysSite);
-             //console.log($scope.totalArticles, $scope.dailyAvg,$scope.zeroDays );
              $scope.totalSiteArticles=0;
              zeroDaysSite=0;
          }

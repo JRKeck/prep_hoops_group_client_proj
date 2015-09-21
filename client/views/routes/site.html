@@ -52,6 +52,30 @@
                     <td>{{ day.date }}</td>
                     <td ng-repeat="author in day.authors" ng-click="openModal('md')"><a href ="">{{author.articles.length}}</a></td>
                 </tr>
+                 <tr>
+                    <td></td>
+                </tr>
+
+                <tr>
+                     <td>Total Articles</td>
+
+                    <td ng-repeat="total in totalArticles track by $index" >{{total}}</td>
+                </tr>
+                <tr>
+                     <td>Daily AVG</td>
+
+                    <td ng-repeat="avg in dailyAvg track by $index" >{{avg}}</td>
+                </tr>
+                 <tr>
+                     <td>Maximum</td>
+
+                    <td ng-repeat="maxNo in max track by $index" >{{maxNo}}</td>
+                </tr>
+                <tr>
+                     <td>Zero Days</td>
+
+                    <td ng-repeat="days in zeroDays track by $index" >{{days}}</td>
+                </tr>
             </table>
         </div>
     </div>

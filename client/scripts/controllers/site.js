@@ -41,9 +41,9 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
     };
 
     //Function to get unique authors for a site for requested dates. This module loops through the date range first.
-    //Then loops through the sites within the dates. If the site name matches the sitename from the $scope.sitename which is sent from the site.html
+    //Then loops through the sites within the dates. If the site name matches the sitename from the $scope.sitename which is sent from the dasboard site
     //page the module then steps through the articles and pushes all the authors(including duplicates) into an array.
-    //The next part then loops through this authors array and creates an array of unique authors
+    //The next part then loops through this authors array and creates an array of unique authors for the given date range.
     $scope.getAuthors= function(data){
        for(var i=0; i<data.length; i++) {
            for (var j = 0; j < data[i].site.length; j++) {
@@ -61,9 +61,13 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
                      for (var a = 0; a < $scope.uniqueAuthors.length; a++) {
                          $scope.authorsWithArticles[i].authors.push({authorName:$scope.uniqueAuthors[a], articles:[]});
                          $scope.totalArticles[a]=0;
+                         $scope.zeroDays[a]=0;
+                         $scope.dailyAvg[a]=0;
+                         $scope.max[a]=0;
+
             }
         }
-        //console.log($scope.authorsWithArticles);
+        console.log($scope.authorsWithArticles);
 
         $scope.getAuthorArticles(data);
     };
@@ -94,7 +98,6 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
                    for (var a=0; a<$scope.uniqueAuthors.length; a++){
                        for (var k = 0; k < data[i].site[j].articles.length; k++) {
                            if(data[i].site[j].articles[k].author===$scope.uniqueAuthors[a]) {
-                               $scope.totalArticles[a]= $scope.totalArticles[a] + 1;
                                if (data[i].date === $scope.authorsWithArticles[i].date) {
                                    $scope.authorsWithArticles[i].authors[a].articles.push(data[i].site[j].articles[k]);
                                }
@@ -109,33 +112,27 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
            }
 
         }
-              console.log($scope.totalArticles);
+        $scope.getAuthorStats();
     };
-     $scope.getAuthorStats= function(data){
-         $scope.totalSiteArticles=0;
-         var zeroDaysSite=0;
-         for (var n=1; n<18; n++) {// Total number of sites = 17 and siteIDs start from 1
-             for (var i = 0; i < data.length; i++) {
-                 for (var j = 0; j < data[i].site.length; j++) {
-                     if (data[i].site[j].siteID === n){
-                             $scope.totalSiteArticles = $scope.totalSiteArticles + data[i].site[j].articles.length;
-                         if(data[i].site[j].articles.length===0){
-                             zeroDaysSite++;
-                         }
 
+    $scope.getAuthorStats = function(){
+        for(var i=0; i< $scope.authorsWithArticles.length; i++){
+            for(var j=0; j<$scope.authorsWithArticles[i].authors.length; j++){
+                if($scope.authorsWithArticles[i].authors[j].articles.length===0){
+                    $scope.zeroDays[j]=$scope.zeroDays[j]+1;
+                }
+                else{
+                    $scope.totalArticles[j]= $scope.totalArticles[j] + $scope.authorsWithArticles[i].authors[j].articles.length;
+                    $scope.dailyAvg[j]=Math.floor($scope.totalArticles[j]*100/($scope.authorsWithArticles.length))/100;
+                    if($scope.authorsWithArticles[i].authors[j].articles.length>$scope.max[j]){
+                        $scope.max[j]=$scope.authorsWithArticles[i].authors[j].articles.length;
                     }
-                 }
+                }
+            }
+        }
 
-             }
-             $scope.totalArticles.push($scope.totalSiteArticles);
-             $scope.dailyAvg.push(($scope.totalSiteArticles/(data.length)));
-             $scope.zeroDays.push(zeroDaysSite);
-             //console.log($scope.totalArticles, $scope.dailyAvg,$scope.zeroDays );
-             $scope.totalSiteArticles=0;
-             zeroDaysSite=0;
-         }
+    };
 
-     };
 
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
