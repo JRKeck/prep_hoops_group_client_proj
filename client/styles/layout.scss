@@ -32,6 +32,14 @@ main {
   background-color: $color-white;
   margin: 20px 20px 40px;
 }
+table {
+  overflow: hidden;
+}
+table td {
+  width: 50px;
+}
+
+
 
 
 
@@ -53,6 +61,9 @@ main {
 #runFeeds {
   width: 200px;
   margin-top: 3px;
+}
+.cell {
+  width: 30px;
 }
 .border {
   border: solid;
