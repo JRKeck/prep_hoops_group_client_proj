@@ -73,6 +73,10 @@ main {
   font-weight: bold;
 }
 
+a:link:after, a:visited:after {
+  content: "";
+}
+
 a.red:link {color: #ff0000; font-style: normal;}
 a.red:active {color: #ff0000; background: #ffffff; font-style: normal;}
 a.red:visited {color: #ff0000; background: #ffffff; font-style: normal;}

@@ -67,6 +67,9 @@ main {
 .search {
   font-weight: bold; }
 
+a:link:after, a:visited:after {
+  content: ""; }
+
 a.red:link {
   color: #ff0000;
   font-style: normal; }
