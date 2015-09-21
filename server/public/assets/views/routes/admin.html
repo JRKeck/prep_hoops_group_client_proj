@@ -1,6 +1,6 @@
 <!--<p>Admin Page!</p>-->
 
-<section class="adminSection">
+<section class="adminSection col-sm-6">
     <h2>Add a New Site to the Network</h2>
     <form novalidate id="adminForm" method="post">
         <div class="error">{{error_message}}</div>
@@ -22,13 +22,13 @@
     </form>
 </section>
 
-<section class="editSection">
+<section class="editSection col-sm-6">
     <h2>Edit an Existing Site on the Network</h2>
     <form novalidate id="editForm">
         <div>
             <label for="editShortName">Site: </label>
             <select  ng-model="editFormSelector" ng-change="changedValue(editFormSelector)"
-                     data-ng-options="site as site.siteFullName for site in sites">
+                     data-ng-options="site as site.siteFullName for site in sitesSelector">
                 <option value="">Select Site</option>
             </select>
         </div>
@@ -57,14 +57,12 @@
             <th class="site-short-name">Report Name</th>
             <th>Site Name</th>
             <th>RSS Feed</th>
-            <th class="site-edit">Edit</th>
             <th class="site-delete">Delete</th>
         </tr>
         <tr ng-repeat="site in sites">
             <td>{{site.siteShortName}}</td>
             <td class="site-name">{{site.siteFullName}}</td>
             <td class="feed-url">{{site.rssURL}}</td>
-            <td><button class="removeButton" ng-click="editSite()">Edit</button> </td>
             <td><button class="removeButton" ng-click="removeSite()">Remove</button> </td>
         </tr>
     </table>

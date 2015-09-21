@@ -5,10 +5,9 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, 
     $scope.adminForm = {};
     // Object to hold fields from editForm
     $scope.editForm = {};
-    $scope.editFormName = '';
-    $scope.editFormUrl = '';
     // Array to hold sites returned from DB
     $scope.sites = [];
+    $scope.sitesSelector = [];
 
     // Var to hold value of last siteID in the DB
     var lastSiteID;
@@ -25,24 +24,13 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, 
             });
     };
 
-    $scope.checkSite = function(reportName){
-        console.log("Report Name: ", reportName);
-        for (var i = 0; i < $scope.sites.length; i++){
-            if (reportName == $scope.sites[i].siteShortName){
-                $scope.editFormName = $scope.sites[i].siteFullName;
-                $scope.editFormUrl = $scope.sites[i].rssURL;
-                console.log("I'm in the if statement!", $scope.editFormName, $scope.editFormUrl);
-            }
-        }
-    };
-
     $scope.removeSite = function() {
         var site = this.site.siteShortName;
         var id = this.site._id;
         console.log("Remove Button Pressed for Site: " + site);
         console.log("Mongo ID: ", id);
         $http.delete('network/deletesite/' + id)
-            .then(function(err, res){
+            .then(function(res, err){
                 if (err) {
                     console.log("Error on Delete is: ", err);
                 } else {
@@ -51,27 +39,25 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, 
                 }
             });
     };
-
+    // Detect edit site selector change
     $scope.changedValue = function(item){
-        console.log(item);
-        $scope.editForm.editShortName = item.siteShortName;
-        $scope.editForm.editFullName = item.siteFullName;
-        $scope.editForm.editRssURL = item.rssURL;
-        $scope.editForm.editSiteID = item.id;
-
+        if(item) {
+            $scope.editForm.editShortName = item.siteShortName;
+            $scope.editForm.editFullName = item.siteFullName;
+            $scope.editForm.editRssURL = item.rssURL;
+            $scope.editForm.editSiteID = item.siteID;
+            $scope.editForm.editID = item._id;
+        }
     };
 
-    $scope.editSite = function() {
-        var site = this.site.siteShortName;
-        var id = this.site._id;
-        console.log("Edit Button Pressed for Site: " + site);
-        console.log("Mongo ID: ", id);
-        $http.put('network/editsite/' + id)
+    $scope.editSite = function(site) {
+        var id = site.editID;
+        $http.put('network/editsite/' + id, site)
             .then(function (err, res) {
-                if (err) {
+                if (err.status != 200) {
                     console.log("Error on Edit is: ", err);
                 } else {
-                    console.log("Edit Successful: ", res);
+                    $scope.editForm = {};
                     loadSites();
                 }
             });
@@ -88,8 +74,9 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, 
     function loadSites(){
         $http.get('network')
             .then(function(res){
-                console.log('loading sites');
+                //console.log('loading sites');
                 $scope.sites = res.data;
+                $scope.sitesSelector = $scope.sites;
             });
     }
 
