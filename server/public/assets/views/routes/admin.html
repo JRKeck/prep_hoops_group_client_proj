@@ -47,7 +47,7 @@
 
 <section class="networklist">
     <h2>Sites</h2>
-    <table class="col-xs-12">
+    <table class="col-xs-12 admin">
         <tr>
             <th>Report Name</th>
             <th>Site Name</th>
@@ -55,9 +55,9 @@
             <th>Remove Site</th>
         </tr>
         <tr ng-repeat="site in sites">
-            <td>{{site.siteShortName}}</td>
-            <td>{{site.siteFullName}}</td>
-            <td>{{site.rssURL}}</td>
+            <td class="site-short-name">{{site.siteShortName}}</td>
+            <td class="site-name">{{site.siteFullName}}</td>
+            <td class="feed-url">{{site.rssURL}}</td>
             <td><button class="removeButton" ng-click="removeSite()">Remove</button> </td>
         </tr>
     </table>

@@ -121,7 +121,8 @@ footer {
 
 /* tables.scss */
 table {
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  table-layout: fixed; }
 
 table, th, td {
   border: 1px solid grey;
@@ -133,3 +134,6 @@ table tr:nth-child(odd) {
 
 table tr:nth-child(even) {
   background-color: #ffffff; }
+
+table.admin .site-short-name {
+  width: 60px; }
