@@ -25,32 +25,9 @@
 <section class="editSection">
     <h2>Edit an Existing Site on the Network</h2>
     <form novalidate id="editForm">
-        <div class="error">{{error_message}}</div>
-        <div>
-            <label for="editShortName">Report Name: </label>
-            <input type="text" ng-model="editForm.editShortName" name="editShortName" id="editShortName" placeholder="Example: MN"/>
-            <button class="checkReport" ng-click="checkSite(editForm.editShortName)">Check</button>
-        </div>
-        <div>
-            <label for="editFullName">Site Name: </label>
-            <input type="text" ng-model="editForm.editFullName" name="editFullName" id="editFullName" placeholder="{{ editFormName }}"/>
-        </div>
-        <div>
-            <label for="rssURL">RSS Feed: </label>
-            <input type="text" ng-model="editForm.editRssURL" name="editRssURL" id="editRssURL" placeholder="{{ editFormUrl }}"/>
-        </div>
-        <div>
-            <input type="submit" id="editSite" class="" ng-click="updateSite(editForm)" value="Submit"/>
-        </div>
-    </form>
-</section>
-
-<section class="newEditSection">
-    <h2>Edit an Existing Site on the Network</h2>
-    <form novalidate id="neweditForm">
         <div>
             <label for="editShortName">Site: </label>
-            <select  ng-model="editFormSelector" ng-change="changedValue()"
+            <select  ng-model="editFormSelector" ng-change="changedValue(editFormSelector)"
                      data-ng-options="site as site.siteFullName for site in sites">
                 <option value="">Select Site</option>
             </select>
@@ -61,14 +38,14 @@
         </div>
         <div>
             <label for="editFullName">Site Name: </label>
-            <input type="text" ng-model="editForm.editFullName" name="editFullName" id="editFullName" placeholder="{{ editFormName }}"/>
+            <input type="text" ng-model="editForm.editFullName" name="editFullName" id="editFullName"/>
         </div>
         <div>
             <label for="rssURL">RSS Feed: </label>
             <input type="text" ng-model="editForm.editRssURL" name="editRssURL" id="editRssURL" placeholder="{{ editFormUrl }}"/>
         </div>
         <div>
-            <input type="submit" id="editSite" class="" ng-click="updateSite(editForm)" value="Update"/>
+            <input type="submit" id="editSite" class="" ng-click="editSite(editForm)" value="Update"/>
         </div>
     </form>
 </section>
