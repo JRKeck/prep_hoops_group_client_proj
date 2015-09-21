@@ -36,6 +36,13 @@ var networksParsed = 0;
 //    }
 //];
 
+// Get call to just get last parse date for use on client side
+router.get('/getLastDate', function(req, res, next){
+    ParseDate.find({}, function(err, obj){
+        res.send(obj)
+    });
+});
+
 // This is the GET call to fire off the parse when localhost:3000/parseRSS is
 // fed into the browser
 router.get('/*', function(req, res, next){
@@ -53,6 +60,7 @@ router.get('/*', function(req, res, next){
 });
 
 module.exports = router;
+
 // Find the last parse date in the DB
 function findLastParseDate(){
     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
