@@ -51,7 +51,7 @@ gulp.task('images', function() {
 
 // Copy Node Modules to Public Vendors
 gulp.task('copy-vendors', function() {
-    gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css','node_modules/bootstrap/dist/css/bootstrap.css.map'])
+    gulp.src(['node_modules/bootstrap/dist/css/bootstrap.min.css', 'node_modules/bootstrap/dist/css/bootstrap.css.map'])
         .pipe(gulp.dest('server/public/vendors/bootstrap'));
     gulp.src(['node_modules/bootstrap/dist/fonts/*'])
         .pipe(gulp.dest('server/public/vendors/fonts'));

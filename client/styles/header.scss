@@ -1,28 +1,33 @@
 /* header.scss */
+$height-header : 75px;
 header {
   background-color: $color-dk-gray;
   color: $color-white;
-  a {
+  .navbar {
+    border-radius: 0;
+  }
+  .navbar-default {
+    background-color: $color-dk-gray;
+    border: none;
+  }
+  .navbar-default .navbar-nav>li>a {
     color: $color-white;
-    &:hover{
+    text-transform: uppercase;
+    &:hover {
       color: $color-accent;
-      text-decoration: none;
+    }
+    @media (min-width: 768px) {
+      padding-top: 35px;
+      height: $height-header;
     }
   }
-  nav {
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      li {
-        display: inline-block;
-        padding: 30px 20px 10px;
-        text-transform: uppercase;
-        &.login {
-          float: right;
-        }
-      }
-    }
+  .navbar-brand {
+    background-image: url("/assets/images/prep-hoops-logo.svg");
+    background-size: 135px;
+    background-repeat: no-repeat;
+    background-position: 10px;
+    width: 180px;
+    height: $height-header;
   }
 }
 

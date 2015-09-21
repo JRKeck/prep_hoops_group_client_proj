@@ -11,15 +11,29 @@
 <body ng-app="prepHoopsApp">
 <div class="page-wrapper">
     <header>
-        <nav>
-            <ul>
-                <li class="logo"><a href="#dashboard">Prep Hoops</a></li>
-                <li><a href="#dashboard">Dashboard</a></li>
-                <li><a href="#site">Sites</a></li>
-                <li><a href="#admin">Admin</a></li>
-                <li class="login"><a href="#login">Logout</a></li>
-            </ul>
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#dashboard"></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" collapse="navCollapsed">
+                <ul class="nav navbar-nav">
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#site">Sites</a></li>
+                    <li><a href="#admin">Admin</a></li>
+                    <li class="logout"><a href="#login">Logout</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </nav>
+
     </header>
     <main ng-view class="container-fluid main">
         <!--Angular views display here-->
