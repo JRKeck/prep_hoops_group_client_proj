@@ -1,6 +1,5 @@
 
 prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
-    console.log('Dashboard script loaded');
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
