@@ -29,7 +29,13 @@ table tr:nth-child(even) {
   margin-top: 2px; }
 
 #article {
+<<<<<<< HEAD
   border: solid; }
+=======
+  border: solid;
+  padding-left: 3px;
+  margin-bottom: 3px; }
+>>>>>>> c2a022e9e82b1e6311b9d021a7ae1526ac00608e
 
 .border {
   border: solid; }
@@ -53,5 +59,27 @@ table tr:nth-child(even) {
 .search {
   font-weight: bold; }
 
+<<<<<<< HEAD
+=======
+a.red:link {
+  color: #ff0000;
+  font-style: normal; }
+
+a.red:active {
+  color: #ff0000;
+  background: #ffffff;
+  font-style: normal; }
+
+a.red:visited {
+  color: #ff0000;
+  background: #ffffff;
+  font-style: normal; }
+
+a.red:hover {
+  color: #ff0000;
+  background: #ffffff;
+  font-style: normal; }
+
+>>>>>>> c2a022e9e82b1e6311b9d021a7ae1526ac00608e
 /* header.scss */
 /* footer.scss */

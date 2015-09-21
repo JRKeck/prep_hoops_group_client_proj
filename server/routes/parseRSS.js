@@ -31,6 +31,12 @@ var networkArray = [
     //    siteFeed: 'http://www.prephoopsiowa.com/news_rss_feed?tags=1160474%2C1160478%2C1160479%2C1160453%2C1164934%2C1164913%2C1164890%2C1164908%2C1161834%2C1330622'
     //}
 ];
+// Get call to just get last parse date for use on client side
+router.get('/getLastDate', function(req, res, next){
+    ParseDate.find({}, function(err, obj){
+        res.send(obj)
+    });
+});
 
 // This is the GET call to fire off the parse when localhost:3000/parseRSS is
 // fed into the browser

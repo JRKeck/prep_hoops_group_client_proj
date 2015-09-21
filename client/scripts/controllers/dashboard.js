@@ -1,9 +1,25 @@
 
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', '$modal', 'AuthService', function($scope, $http, $location, $modal, AuthService){
-    console.log('Dashboard script loaded');
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 'userAuth', '$modal', function($scope, $http, $location, userAuth, $modal){
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
+
+
+    //Function to get last parse date and load data for 30 days before
+    $scope.getLastParseDate = function(){
+        $http.get('/parseRSS/getLastDate').
+            success(function(data){
+                $scope.lastParseDate = new Date(data[0].date);
+                var lastParseDate = new Date(data[0].date);
+                $scope.thirtyDaysBefore = new Date(lastParseDate.setDate($scope.lastParseDate.getDate() - 30));
+                var shortFirstDate = $scope.lastParseDate.toISOString();
+                $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
+                var shortSecondDate = $scope.thirtyDaysBefore.toISOString();
+                $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
+                $scope.getThirtyDaysOfArticles($scope.shortSecondDateString, $scope.shortFirstDateString);
+            });
+    };
+    $scope.getLastParseDate();
 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
@@ -33,6 +49,14 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     };
 
 
+    $scope.getThirtyDaysOfArticles = function(first, last){
+        $http.post('/api/articleGet', [first, last]).
+            success(function(data){
+                $scope.getFeeds();
+                $scope.dates = data;
+            });
+    };
+
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
         var shortFirstDate = first.toISOString();
@@ -44,10 +68,10 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
-                $scope.sites = data[0].site;
-                console.log(data);
         });
     };
+
+    //$scope.getRSS();
 
 
     //Code for DatePicker
