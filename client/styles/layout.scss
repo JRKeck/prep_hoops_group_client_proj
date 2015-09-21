@@ -4,21 +4,40 @@ html,
 body {
   padding: 0;
   margin: 0;
+  height: 100%;
+
 }
-table {
-  margin-bottom: 10px;
+body {
+  background-image: url("/assets/images/bg-main.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-color: #000;
 }
-table, th , td {
-  border: 1px solid grey;
-  border-collapse: collapse;
-  padding: 5px;
+a {
+  color: $color-accent;
 }
-table tr:nth-child(odd) {
-  background-color: #f1f1f1;
+.page-wrapper {
+  min-height: 100%;
+  margin-bottom: -$height-footer;
 }
-table tr:nth-child(even) {
-  background-color: #ffffff;
+.page-wrapper:after {
+  content: "";
+  display: block;
 }
+footer, .page-wrapper:after {
+  /* .push must be the same height as footer */
+  height: $height-footer;
+}
+main {
+  background-color: $color-white;
+  margin: 20px 20px 40px;
+}
+
+
+
+
+
+
 #goToAdmin, #dashboardBanner {
   display: inline-block;
   margin-bottom: 10px;

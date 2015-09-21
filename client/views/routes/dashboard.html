@@ -1,9 +1,11 @@
- <div class="row">
-        <div class="col-md-12 border">
-            <h1>Main Dashboard</h1>
-        </div>
+    <div class="col-md-12">
+        <h1>Main Dashboard</h1>
     </div>
 
+    <div class="col-md-12">
+        <div class="row">
+            <h4 class="col-md-4" id="dashboardBanner">Prep Hoops Network Article Stats</h4>
+        </div>
 
 
     <div class="row">
@@ -34,20 +36,20 @@
                     <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
 
                   </span>
-                    </p>
-                </div>
-
-                <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
-
+                </p>
             </div>
 
-            <table class="col-md-12">
-                <tr>
-                    <td>Date</td>
+            <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
+
+        </div>
+
+        <table class="col-md-12">
+            <tr>
+                <td>Date</td>
 
                     <td ng-repeat="site in feeds" ng-click="go('/site')"><a href ="">{{site.siteShortName}}</a></td>
 
-                    <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
+                <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
 
                 <tr ng-repeat='day in dates'>
                     <td>{{ day.date }}</td>
@@ -74,8 +76,4 @@
                 </tr>
             </table>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 border bottom"></div>
     </div>
