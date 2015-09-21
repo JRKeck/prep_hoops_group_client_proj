@@ -5,21 +5,33 @@
 html,
 body {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  height: 100%; }
 
-table {
-  margin-bottom: 10px; }
+body {
+  background-image: url("/assets/images/bg-main.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-color: #000; }
 
-table, th, td {
-  border: 1px solid grey;
-  border-collapse: collapse;
-  padding: 5px; }
+a {
+  color: #f56529; }
 
-table tr:nth-child(odd) {
-  background-color: #f1f1f1; }
+.page-wrapper {
+  min-height: 100%;
+  margin-bottom: -100px; }
 
-table tr:nth-child(even) {
-  background-color: #ffffff; }
+.page-wrapper:after {
+  content: "";
+  display: block; }
+
+footer, .page-wrapper:after {
+  /* .push must be the same height as footer */
+  height: 100px; }
+
+main {
+  background-color: #fff;
+  margin: 20px 20px 40px; }
 
 #goToAdmin, #dashboardBanner {
   display: inline-block;
@@ -29,7 +41,9 @@ table tr:nth-child(even) {
   margin-top: 2px; }
 
 #article {
-  border: solid; }
+  border: solid;
+  padding-left: 3px;
+  margin-bottom: 3px; }
 
 .border {
   border: solid; }
@@ -53,5 +67,85 @@ table tr:nth-child(even) {
 .search {
   font-weight: bold; }
 
+a.red:link {
+  color: #ff0000;
+  font-style: normal; }
+
+a.red:active {
+  color: #ff0000;
+  background: #ffffff;
+  font-style: normal; }
+
+a.red:visited {
+  color: #ff0000;
+  background: #ffffff;
+  font-style: normal; }
+
+a.red:hover {
+  color: #ff0000;
+  background: #ffffff;
+  font-style: normal; }
+
 /* header.scss */
+header {
+  background-color: #2f2f2f;
+  color: #fff; }
+  header .navbar {
+    border-radius: 0; }
+  header .navbar-default {
+    background-color: #2f2f2f;
+    border: none; }
+  header .navbar-default .navbar-nav > li > a {
+    color: #fff;
+    text-transform: uppercase; }
+    header .navbar-default .navbar-nav > li > a:hover {
+      color: #f56529; }
+    header .navbar-default .navbar-nav > li > a:focus {
+      color: #f56529; }
+    @media (min-width: 768px) {
+      header .navbar-default .navbar-nav > li > a {
+        padding-top: 35px;
+        height: 75px; } }
+  header .navbar-brand {
+    background-image: url("/assets/images/prep-hoops-logo.svg");
+    background-size: 135px;
+    background-repeat: no-repeat;
+    background-position: 10px;
+    width: 180px;
+    height: 75px; }
+
 /* footer.scss */
+footer {
+  background-color: #2f2f2f;
+  color: #fff; }
+
+/* tables.scss */
+table {
+  margin-bottom: 10px;
+  table-layout: fixed; }
+  table a {
+    color: #000; }
+
+table, th, td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+  text-align: center; }
+
+table tr:nth-child(odd) {
+  background-color: #f1f1f1; }
+
+table tr:nth-child(even) {
+  background-color: #ffffff; }
+
+th.site-short-name {
+  width: 60px; }
+
+td.feed-url {
+  word-wrap: break-word; }
+
+th.site-edit, th.site-delete {
+  width: 100px; }
+
+td.date {
+  width: 140px; }

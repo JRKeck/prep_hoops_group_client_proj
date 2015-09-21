@@ -3,22 +3,6 @@ prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', 'Aut
 
     $scope.loginForm = {};
 
-    //$scope.login = function(user){
-    //    return $http.post('/userauth/login', user)
-    //        .success(function(user){
-    //            console.log('login success, return user object from login controller: ');
-    //            console.log(user);
-    //            userAuth.setUser(user);
-    //            $location.path('/dashboard');
-    //        })
-    //        .error(function(err){
-    //            console.log('Login Error');
-    //            $scope.loginForm = {};
-    //            $scope.error_message = 'Username or Password is Incorrect';
-    //        });
-    //
-    //};
-
     $scope.login = function () {
 
         // initial values
@@ -57,7 +41,6 @@ prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', 'Aut
             });
 
     };
-
 
 }]);
 

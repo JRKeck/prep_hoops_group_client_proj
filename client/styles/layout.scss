@@ -4,21 +4,40 @@ html,
 body {
   padding: 0;
   margin: 0;
+  height: 100%;
+
 }
-table {
-  margin-bottom: 10px;
+body {
+  background-image: url("/assets/images/bg-main.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-color: #000;
 }
-table, th , td {
-  border: 1px solid grey;
-  border-collapse: collapse;
-  padding: 5px;
+a {
+  color: $color-accent;
 }
-table tr:nth-child(odd) {
-  background-color: #f1f1f1;
+.page-wrapper {
+  min-height: 100%;
+  margin-bottom: -$height-footer;
 }
-table tr:nth-child(even) {
-  background-color: #ffffff;
+.page-wrapper:after {
+  content: "";
+  display: block;
 }
+footer, .page-wrapper:after {
+  /* .push must be the same height as footer */
+  height: $height-footer;
+}
+main {
+  background-color: $color-white;
+  margin: 20px 20px 40px;
+}
+
+
+
+
+
+
 #goToAdmin, #dashboardBanner {
   display: inline-block;
   margin-bottom: 10px;
@@ -28,7 +47,8 @@ table tr:nth-child(even) {
 }
 #article {
   border: solid;
-
+  padding-left: 3px;
+  margin-bottom: 3px;
 }
 .border {
   border: solid;
@@ -52,3 +72,9 @@ table tr:nth-child(even) {
 .search {
   font-weight: bold;
 }
+
+a.red:link {color: #ff0000; font-style: normal;}
+a.red:active {color: #ff0000; background: #ffffff; font-style: normal;}
+a.red:visited {color: #ff0000; background: #ffffff; font-style: normal;}
+a.red:hover {color: #ff0000; background: #ffffff; font-style: normal;}
+
