@@ -29,7 +29,6 @@ prepHoopsApp.config(['$routeProvider', function($routeProvider){
         });
 }]);
 
-
 //
 prepHoopsApp.factory('AuthService',
     ['$q', '$timeout', '$http',
