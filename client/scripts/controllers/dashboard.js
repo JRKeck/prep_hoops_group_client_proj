@@ -39,6 +39,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $http.get('/network/getFeeds').
             success(function(data){
                 $scope.feeds = data;
+                siteFullName.set('feedsArray', data);
             });
     };
 
@@ -53,8 +54,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
         $location.path( path );
-        //console.log(this);
-        siteFullName.set('siteFullName',this.site.siteFullName);
+        siteFullName.set('siteFullName', this.site.siteFullName);
     };
 
 
@@ -64,6 +64,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
+                $scope.getStats(data);
             });
     };
 
@@ -80,8 +81,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 $scope.getFeeds();
                 $scope.dates = data;
                 $scope.getStats(data);
-                //console.log(data);
-
 
         });
     };

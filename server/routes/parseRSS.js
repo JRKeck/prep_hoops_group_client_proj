@@ -47,14 +47,14 @@ router.get('/getLastDate', function(req, res, next){
 // fed into the browser
 router.get('/*', function(req, res, next){
     console.log('Parsing RSS!');
-    //// Capture the time of Parsing execution
-    //newParseDate = dateToISO(Date.now());
-    //console.log('New parse date: '+newParseDate);
-    //// Check the DB for the last parse date
-    //findLastParseDate();
-    //// Get the RSS Feeds
-    //networkParser();
-    //
+    // Capture the time of Parsing execution
+    newParseDate = dateToISO(Date.now());
+    console.log('New parse date: '+newParseDate);
+    // Check the DB for the last parse date
+    findLastParseDate();
+    // Get the RSS Feeds
+    networkParser();
+
     res.send('Parsing Complete!');
 
 });

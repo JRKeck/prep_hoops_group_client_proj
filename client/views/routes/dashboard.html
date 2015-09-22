@@ -12,7 +12,7 @@
         <div class="col-md-12 border">
             <div class="row">
                 <h4 class="col-md-4" id="dashboardBanner">Prep Hoops Network Article Stats</h4>
-                <input type="button" id="runFeeds" class="col-md-1 btn post" ng-click="runParse()" value="Run New Report"/>
+                <input type="button" id="runFeeds" class="col-md-1 btn post" ng-click="runParse()" value="Refresh Database"/>
             </div>
 
             <div class="row">
@@ -47,13 +47,11 @@
             <tr>
 
                 <td class="date">Date</td>
-                    <td class="cell" ng-repeat="site in feeds" ng-click="go('/site')"><a href ="">{{site.siteShortName}}</a></td>
-
-                <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
-
+                    <td ng-repeat="site in feeds" ng-click="go('/site')"><a href ="">{{site.siteShortName}}</a></td>
+            </tr>
                 <tr ng-repeat='day in dates'>
                     <td class="date">{{ day.date }}</td>
-                    <td class="cell" ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="" ng-class="{red: (site.articles.length==0)}">{{site.articles.length}}</a></td>
+                    <td ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="" ng-class="{red: (site.articles.length==0)}">{{site.articles.length}}</a></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -76,4 +74,5 @@
                 </tr>
             </table>
         </div>
+    </div>
     </div>

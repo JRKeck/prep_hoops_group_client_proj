@@ -16,7 +16,7 @@
                 <p class="search col-md-1">From:</p>
                 <div class="col-md-4 datepicker">
                     <p class="input-group">
-                        <input type="date" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                        <input type="text" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
 
                     <button type="button" class="btn btn-default" ng-click="open($event, 'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -27,7 +27,7 @@
                 <p class="search col-md-1">To:</p>
                 <div class="col-md-4 datepicker">
                     <p class="input-group">
-                        <input type="date" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                        <input type="text" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
 
                     <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -42,7 +42,7 @@
 
              <table class="col-md-12 table-sitepage">
                 <tr>
-                    <td class="date">Date</td>
+                    <td class="cell">Date</td>
 
                     <td ng-repeat="author in uniqueAuthors" >{{author}}</td>
 

@@ -1,4 +1,4 @@
-prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'userAuth', '$modal','siteFullName', function($scope, $http, $location, userAuth, $modal,siteFullName){
+prepHoopsApp.controller('SiteController', ['$scope', '$rootScope', '$http', '$location', '$modal','siteFullName', function($scope, $rootScope, $http, $location, $modal,siteFullName){
     console.log('Dashboard script loaded');
     $scope.sites = [];
     $scope.dates = [];
@@ -18,7 +18,14 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', 'user
 
     };
 
-  console.log($scope.siteName);
+//Function to get new site name from dropdown control
+    $scope.$on('siteChanged',
+            function (evt, newSite) {
+
+                $scope.siteName =
+                    newSite;
+            });
+
 //Function to get a unique array from  an array with duplicates
     $scope.onlyUnique= function (value, index, self) {
     return self.indexOf(value) === index;
