@@ -47,8 +47,14 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
 
     };
 
+//Function to get new site name from dropdown control
+    $scope.$on('siteChanged',
+            function (evt, newSite) {
 
-  console.log($scope.siteName);
+                $scope.siteName =
+                    newSite;
+            });
+
 //Function to get a unique array from  an array with duplicates
     $scope.onlyUnique= function (value, index, self) {
     return self.indexOf(value) === index;
