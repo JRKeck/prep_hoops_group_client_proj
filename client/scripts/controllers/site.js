@@ -21,6 +21,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     $scope.getLastParseDate = function(){
         $http.get('/parseRSS/getLastDate').
             success(function(data){
+                $scope.clearFields();
                 $scope.lastParseDate = new Date(data[0].date);
                 var lastParseDate = new Date(data[0].date);
                 $scope.thirtyDaysBefore = new Date(lastParseDate.setDate($scope.lastParseDate.getDate() - 30));
@@ -29,7 +30,6 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                 var shortSecondDate = $scope.thirtyDaysBefore.toISOString();
                 $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
                 $scope.getThirtyDaysOfArticles($scope.shortSecondDateString, $scope.shortFirstDateString);
-
             });
 
     };
@@ -51,8 +51,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     $scope.$on('siteChanged',
             function (evt, newSite) {
 
-                $scope.siteName =
-                    newSite;
+                $scope.siteName = newSite;
+                $scope.getLastParseDate();
             });
 
 //Function to get a unique array from  an array with duplicates
