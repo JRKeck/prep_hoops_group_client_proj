@@ -5,6 +5,13 @@ table {
   a {
     color: #000;
   }
+  a:link:after, a:visited:after {
+    content: "";
+  }
+  a.red:link {color: #ff0000; font-style: normal;}
+  a.red:active {color: #ff0000; background: #ffffff; font-style: normal;}
+  a.red:visited {color: #ff0000; background: #ffffff; font-style: normal;}
+  a.red:hover {color: #ff0000; background: #ffffff; font-style: normal;}
 }
 table, th , td {
   border: 1px solid grey;

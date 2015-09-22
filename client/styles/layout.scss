@@ -29,9 +29,9 @@ footer, .page-wrapper:after {
   height: $height-footer;
 }
 main {
-  background-color: $color-white;
   margin: 20px 20px 40px;
 }
+
 
 
 
@@ -66,19 +66,9 @@ main {
   border-radius: 32px;
   color: black;
 }
-.datepicker {
-  display: inline;
-}
-.search {
-  font-weight: bold;
-}
 
-a:link:after, a:visited:after {
-  content: "";
-}
 
-a.red:link {color: #ff0000; font-style: normal;}
-a.red:active {color: #ff0000; background: #ffffff; font-style: normal;}
-a.red:visited {color: #ff0000; background: #ffffff; font-style: normal;}
-a.red:hover {color: #ff0000; background: #ffffff; font-style: normal;}
+
+
+
 

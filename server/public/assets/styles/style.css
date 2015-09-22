@@ -30,7 +30,6 @@ footer, .page-wrapper:after {
   height: 100px; }
 
 main {
-  background-color: #fff;
   margin: 20px 20px 40px; }
 
 #goToAdmin, #dashboardBanner {
@@ -61,33 +60,21 @@ main {
   border-radius: 32px;
   color: black; }
 
+/* content.scss */
+.content {
+  background-color: #fff;
+  padding-top: 20px;
+  padding-bottom: 20px; }
+  .content h1 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 28px; }
+
 .datepicker {
   display: inline; }
 
 .search {
   font-weight: bold; }
-
-a:link:after, a:visited:after {
-  content: ""; }
-
-a.red:link {
-  color: #ff0000;
-  font-style: normal; }
-
-a.red:active {
-  color: #ff0000;
-  background: #ffffff;
-  font-style: normal; }
-
-a.red:visited {
-  color: #ff0000;
-  background: #ffffff;
-  font-style: normal; }
-
-a.red:hover {
-  color: #ff0000;
-  background: #ffffff;
-  font-style: normal; }
 
 /* header.scss */
 header {
@@ -128,6 +115,23 @@ table {
   table-layout: fixed; }
   table a {
     color: #000; }
+  table a:link:after, table a:visited:after {
+    content: ""; }
+  table a.red:link {
+    color: #ff0000;
+    font-style: normal; }
+  table a.red:active {
+    color: #ff0000;
+    background: #ffffff;
+    font-style: normal; }
+  table a.red:visited {
+    color: #ff0000;
+    background: #ffffff;
+    font-style: normal; }
+  table a.red:hover {
+    color: #ff0000;
+    background: #ffffff;
+    font-style: normal; }
 
 table, th, td {
   border: 1px solid grey;
