@@ -44,6 +44,13 @@ main {
   padding-left: 3px;
   margin-bottom: 3px; }
 
+#runFeeds {
+  width: 200px;
+  margin-top: 3px; }
+
+.dropdown {
+  position: relative; }
+
 .border {
   border: solid; }
 
@@ -135,6 +142,8 @@ table {
     color: #ff0000;
     background: #ffffff;
     font-style: normal; }
+  table tr.spacer {
+    height: 15px; }
 
 table, th, td {
   border: 1px solid grey;
