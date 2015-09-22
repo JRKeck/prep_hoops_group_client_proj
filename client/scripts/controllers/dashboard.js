@@ -40,7 +40,14 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $http.get('/network/getFeeds').
             success(function(data){
                 $scope.feeds = data;
+                siteFullName.set('feedsArray', data);
+            });
+    };
 
+    $scope.runParse = function(){
+        $http.get('/parseRSS').
+            success(function(req, res){
+                console.log(res);
             });
     };
 
@@ -48,9 +55,8 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
         $location.path( path );
-        console.log(this);
         siteFullName.set('siteFullName',this.site.siteFullName);
-        siteID.set('siteID',this.site.siteID);
+
     };
 
 
@@ -60,7 +66,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
-                //console.log("got here");
                 $scope.getStats(data);
 
             });
@@ -79,10 +84,7 @@ $scope.getFeeds();
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
-                $scope.sites = data[0].site;
                 $scope.getStats(data);
-                //console.log(data);
-
 
         });
     };
@@ -99,6 +101,7 @@ $scope.getFeeds();
 
 //Function to get stats for the main dashboard
      $scope.getStats= function(data){
+
          $scope.clearFields();
          $scope.articlesPerDay=0;
          var zeroDaysSite=0;

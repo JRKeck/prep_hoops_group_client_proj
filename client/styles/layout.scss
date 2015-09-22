@@ -33,11 +33,6 @@ main {
   margin: 20px 20px 40px;
 }
 
-
-
-
-
-
 #goToAdmin, #dashboardBanner {
   display: inline-block;
   margin-bottom: 10px;
@@ -49,6 +44,13 @@ main {
   border: solid;
   padding-left: 3px;
   margin-bottom: 3px;
+}
+#runFeeds {
+  width: 200px;
+  margin-top: 3px;
+}
+.dropdown {
+  position: relative;
 }
 .border {
   border: solid;
@@ -71,6 +73,10 @@ main {
 }
 .search {
   font-weight: bold;
+}
+
+a:link:after, a:visited:after {
+  content: "";
 }
 
 a.red:link {color: #ff0000; font-style: normal;}

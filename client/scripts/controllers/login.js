@@ -1,4 +1,4 @@
-prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', 'userAuth', function($scope, $http, $location, userAuth){
+prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', function($scope, $http, $location){
     console.log("Login Controller Loaded");
 
     $scope.loginForm = {};
