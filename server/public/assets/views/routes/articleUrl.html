@@ -1,7 +1,7 @@
 <div ng-repeat="article in modalArticles">
-    <div id="article">
-        <p>{{article.author}}</p>
-        <p><a href="{{article.url}}" target="_blank">{{article.title}}</a></p>
+    <div class="modal-article">
+        <p class="title"><a href="{{article.url}}" target="_blank">{{article.title}}</a></p>
+        <p class="author">by: {{article.author}}</p>
     </div>
 </div>
 <div class="modal-footer">

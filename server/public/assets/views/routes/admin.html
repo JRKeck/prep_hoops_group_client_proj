@@ -1,70 +1,71 @@
-<!--<p>Admin Page!</p>-->
+<div class="col-md-12 content">
 
-<section class="adminSection col-sm-6">
-    <h2>Add a New Site to the Network</h2>
-    <form novalidate id="adminForm" method="post">
-        <div class="error">{{error_message}}</div>
-        <div>
-            <label for="siteFullName">Site Name: </label>
-            <input type="text" ng-model="adminForm.siteFullName" name="siteFullName" id="siteFullName" placeholder="test"/>
-        </div>
-        <div>
-            <label for="siteShortName">Report Code: </label>
-            <input type="text" ng-model="adminForm.siteShortName" name="siteShortName" id="siteShortName"/>
-        </div>
-        <div>
-            <label for="rssURL">RSS Feed: </label>
-            <input type="text" ng-model="adminForm.rssURL" name="rssURL" id="rssURL"/>
-        </div>
-        <div>
-            <input type="submit" id="addsite" class="" ng-click="assignSiteID(adminForm)" value="Submit"/>
-        </div>
-    </form>
-</section>
+    <section class="adminSection col-sm-6">
+        <h2>Add a New Site to the Network</h2>
+        <form novalidate id="adminForm" method="post">
+            <div class="error">{{error_message}}</div>
+            <div>
+                <label for="siteFullName">Site Name: </label>
+                <input type="text" ng-model="adminForm.siteFullName" name="siteFullName" id="siteFullName" placeholder="test"/>
+            </div>
+            <div>
+                <label for="siteShortName">Report Code: </label>
+                <input type="text" ng-model="adminForm.siteShortName" name="siteShortName" id="siteShortName"/>
+            </div>
+            <div>
+                <label for="rssURL">RSS Feed: </label>
+                <input type="text" ng-model="adminForm.rssURL" name="rssURL" id="rssURL"/>
+            </div>
+            <div>
+                <input type="submit" id="addsite" class="" ng-click="assignSiteID(adminForm)" value="Submit"/>
+            </div>
+        </form>
+    </section>
 
-<section class="editSection col-sm-6">
-    <h2>Edit an Existing Site on the Network</h2>
-    <form novalidate id="editForm">
-        <div>
-            <label for="editShortName">Site: </label>
-            <select  ng-model="editFormSelector" ng-change="changedValue(editFormSelector)"
-                     data-ng-options="site as site.siteFullName for site in sitesSelector">
-                <option value="">Select Site</option>
-            </select>
-        </div>
-        <div>
-            <label for="editShortName">Report Name: </label>
-            <input type="text" ng-model="editForm.editShortName" name="editShortName" id="editShortName" placeholder=""/>
-        </div>
-        <div>
-            <label for="editFullName">Site Name: </label>
-            <input type="text" ng-model="editForm.editFullName" name="editFullName" id="editFullName"/>
-        </div>
-        <div>
-            <label for="rssURL">RSS Feed: </label>
-            <input type="text" ng-model="editForm.editRssURL" name="editRssURL" id="editRssURL" placeholder="{{ editFormUrl }}"/>
-        </div>
-        <div>
-            <input type="submit" id="editSite" class="" ng-click="editSite(editForm)" value="Update"/>
-        </div>
-    </form>
-</section>
+    <section class="editSection col-sm-6">
+        <h2>Edit an Existing Site on the Network</h2>
+        <form novalidate id="editForm">
+            <div>
+                <label for="editShortName">Site: </label>
+                <select  ng-model="editFormSelector" ng-change="changedValue(editFormSelector)"
+                         data-ng-options="site as site.siteFullName for site in sitesSelector">
+                    <option value="">Select Site</option>
+                </select>
+            </div>
+            <div>
+                <label for="editShortName">Report Name: </label>
+                <input type="text" ng-model="editForm.editShortName" name="editShortName" id="editShortName" placeholder=""/>
+            </div>
+            <div>
+                <label for="editFullName">Site Name: </label>
+                <input type="text" ng-model="editForm.editFullName" name="editFullName" id="editFullName"/>
+            </div>
+            <div>
+                <label for="rssURL">RSS Feed: </label>
+                <input type="text" ng-model="editForm.editRssURL" name="editRssURL" id="editRssURL" placeholder="{{ editFormUrl }}"/>
+            </div>
+            <div>
+                <input type="submit" id="editSite" class="" ng-click="editSite(editForm)" value="Update"/>
+            </div>
+        </form>
+    </section>
 
-<section class="networklist">
-    <h2>Sites</h2>
-    <table class="col-xs-12 admin">
-        <tr>
-            <th class="site-short-name">Report Name</th>
-            <th>Site Name</th>
-            <th>RSS Feed</th>
-            <!--<th class="site-delete">Delete</th>-->
-        </tr>
-        <tr ng-repeat="site in sites">
-            <td>{{site.siteShortName}}</td>
-            <td class="site-name">{{site.siteFullName}}</td>
-            <td class="feed-url">{{site.rssURL}}</td>
-            <!--<td><button class="removeButton" ng-click="removeSite()">Remove</button> </td>-->
-        </tr>
-    </table>
+    <section class="networklist">
+        <h2>Sites</h2>
+        <table class="col-xs-12 admin">
+            <tr>
+                <th class="site-short-name">Report Name</th>
+                <th>Site Name</th>
+                <th>RSS Feed</th>
+                <!--<th class="site-delete">Delete</th>-->
+            </tr>
+            <tr ng-repeat="site in sites">
+                <td>{{site.siteShortName}}</td>
+                <td class="site-name">{{site.siteFullName}}</td>
+                <td class="feed-url">{{site.rssURL}}</td>
+                <!--<td><button class="removeButton" ng-click="removeSite()">Remove</button> </td>-->
+            </tr>
+        </table>
 
-</section>
+    </section>
+</div>
