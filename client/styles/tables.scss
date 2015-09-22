@@ -19,7 +19,17 @@ table tr:nth-child(even) {
   background-color: #ffffff;
 }
 
-//// Page specific table styles
+/// Admin Table
+  th.site-short-name {
+    width: 60px;
+  }
+  td.feed-url {
+    word-wrap: break-word;
+  }
+  th.site-edit, th.site-delete {
+    width: 100px;
+  }
+//// Dashboard / Site Table
 td.date {
   width: 140px;
 }

@@ -33,12 +33,6 @@ main {
   background-color: #fff;
   margin: 20px 20px 40px; }
 
-table {
-  overflow: hidden; }
-
-table td {
-  width: 50px; }
-
 #goToAdmin, #dashboardBanner {
   display: inline-block;
   margin-bottom: 10px; }
@@ -54,12 +48,6 @@ table td {
 #runFeeds {
   width: 200px;
   margin-top: 3px; }
-
-.cell {
-  width: 30px; }
-
-.date {
-  width: 50px; }
 
 .dropdown {
   position: relative; }
@@ -85,6 +73,9 @@ table td {
 
 .search {
   font-weight: bold; }
+
+a:link:after, a:visited:after {
+  content: ""; }
 
 a.red:link {
   color: #ff0000;
@@ -156,6 +147,15 @@ table tr:nth-child(odd) {
 
 table tr:nth-child(even) {
   background-color: #ffffff; }
+
+th.site-short-name {
+  width: 60px; }
+
+td.feed-url {
+  word-wrap: break-word; }
+
+th.site-edit, th.site-delete {
+  width: 100px; }
 
 td.date {
   width: 140px; }
