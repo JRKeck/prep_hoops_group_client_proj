@@ -198,8 +198,11 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                 $scope.dates = data;
                 $scope.sites = data[0].site;
                 $scope.getAllAuthors(data);
-            });
-    };
+                //$scope.getSites(data);
+
+
+        });
+
 
     //Code for DatePicker
 
