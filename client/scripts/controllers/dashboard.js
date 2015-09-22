@@ -9,6 +9,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.zeroDays= [];
 
 
+
     //Function to get last parse date and load data for 30 days before
     $scope.getLastParseDate = function(){
         $http.get('/parseRSS/getLastDate').
@@ -46,7 +47,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.runParse = function(){
         $http.get('/parseRSS').
             success(function(req, res){
-                console.log(res);
+                //console.log(res);
             });
     };
 
@@ -54,7 +55,8 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
         $location.path( path );
-        siteFullName.set('siteFullName', this.site.siteFullName);
+        siteFullName.set('siteFullName',this.site.siteFullName);
+
     };
 
 
@@ -87,19 +89,22 @@ $scope.getFeeds();
         });
     };
 
+    //Function to clear fields
     $scope.clearFields = function(){
             $scope.totalSiteArticles=0;
             $scope.totalArticles = [];
             $scope.dailyAvg = [];
             $scope.percentPaid= [];
             $scope.zeroDays= [];
+            $scope.articlesPerDay=0
     };
 
 //Function to get stats for the main dashboard
      $scope.getStats= function(data){
-
          $scope.clearFields();
+         $scope.articlesPerDay=0;
          var zeroDaysSite=0;
+         $scope.articlesPerDayArray=[];
          for (var n=1; n<=$scope.feeds.length; n++) {// Total number of sites from the feeds
              for (var i = 0; i < data.length; i++) {
                  for (var j = 0; j < data[i].site.length; j++) {
@@ -110,9 +115,13 @@ $scope.getFeeds();
                          }
 
                     }
+                    $scope.articlesPerDay=$scope.articlesPerDay+data[i].site[j].articles.length;
                  }
 
+                $scope.articlesPerDayArray[i]=$scope.articlesPerDay;
+                 $scope.articlesPerDay=0;
              }
+             //console.log($scope.articlesPerDayArray);
              $scope.totalArticles.push($scope.totalSiteArticles);
              $scope.dailyAvg.push(Math.floor(($scope.totalSiteArticles*100/(data.length)))/100);
              $scope.zeroDays.push(zeroDaysSite);

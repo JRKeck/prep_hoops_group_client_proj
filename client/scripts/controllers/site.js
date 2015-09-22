@@ -1,5 +1,4 @@
 prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$modal','siteFullName', function($scope, $http, $location, $modal,siteFullName){
-    console.log('Dashboard script loaded');
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
@@ -11,16 +10,26 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     $scope.dailyAvg = [];
     $scope.max= [];
     $scope.zeroDays= [];
-    //$scope.Author = function(date,author, articles){
-    //    this.date= date;
-    //    this.author = author;
-    //    this.articles= articles;
-    //
-    //};
+
+    //function to get only the selected site for all the date range selected
+    $scope.getSites= function(data) {
+        for(var i=0; i<data.length; i++) {
+            for (var j = 0; j < data[i].site.length; j++) {
+                if (data[i].site[j].siteName === $scope.siteName) {
+                        $scope.sites.push(data[i].site[j]);
+
+                }
+            }
+        }
+        //console.log($scope.sites);
+    };
+
+    //$scope.getSites();
 //Function to get last parse date and load data for 30 days before
     $scope.getLastParseDate = function(){
         $http.get('/parseRSS/getLastDate').
             success(function(data){
+                $scope.clearFields();
                 $scope.lastParseDate = new Date(data[0].date);
                 var lastParseDate = new Date(data[0].date);
                 $scope.thirtyDaysBefore = new Date(lastParseDate.setDate($scope.lastParseDate.getDate() - 30));
@@ -29,19 +38,20 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                 var shortSecondDate = $scope.thirtyDaysBefore.toISOString();
                 $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
                 $scope.getThirtyDaysOfArticles($scope.shortSecondDateString, $scope.shortFirstDateString);
-
             });
 
     };
-    $scope.getLastParseDate();
+    $scope.getLastParseDate();// Run the parse
+
+    //Function to get thirty days worth of articles
 
     $scope.getThirtyDaysOfArticles = function(first, last){
         $http.post('/api/articleGet', [first, last]).
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
-                //console.log("got here");
-                $scope.getAuthors(data);
+                $scope.getAllAuthors(data);
+                //$scope.getSites(data);
 
             });
 
@@ -51,8 +61,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     $scope.$on('siteChanged',
             function (evt, newSite) {
 
-                $scope.siteName =
-                    newSite;
+                $scope.siteName = newSite;
+                $scope.getLastParseDate();
             });
 
 //Function to get a unique array from  an array with duplicates
@@ -79,9 +89,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     //Function to get unique authors for a site for requested dates. This module loops through the date range first.
     //Then loops through the sites within the dates. If the site name matches the sitename from the $scope.sitename which is sent from the dasboard site
     //page the module then steps through the articles and pushes all the authors(including duplicates) into an array.
-    //The next part then loops through this authors array and creates an array of unique authors for the given date range and initializes arrays for total articles, zero days,
-    // daily average and maximum no of articles within a date range.
-    $scope.getAuthors= function(data){
+
+    $scope.getAllAuthors= function(data){
        for(var i=0; i<data.length; i++) {
            for (var j = 0; j < data[i].site.length; j++) {
                if (data[i].site[j].siteName === $scope.siteName) {
@@ -92,42 +101,30 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                         }
                     }
                 }
-         $scope.uniqueAuthors=$scope.authors.filter($scope.onlyUnique);
-            for(i=0; i<data.length; i++) {
-               $scope.authorsWithArticles.push({date:data[i].date,authors:[]});
-                     for (var a = 0; a < $scope.uniqueAuthors.length; a++) {
-                         $scope.authorsWithArticles[i].authors.push({authorName:$scope.uniqueAuthors[a], articles:[]});
-                         $scope.totalArticles[a]=0;
-                         $scope.zeroDays[a]=0;
-                         $scope.dailyAvg[a]=0;
-                         $scope.max[a]=0;
+        $scope.getUniqueAuthors(data);
+    };
 
+ //This function loops through the getAuthors array and creates an array of unique author objects with a key value
+ // pair of author name and an array of articles for the given date range. Also it initializes arrays for total articles, zero days,
+    // daily average and maximum no of articles within a date range.
+    $scope.getUniqueAuthors= function(data) {
+        $scope.uniqueAuthors = $scope.authors.filter($scope.onlyUnique);
+        for (var i = 0; i < data.length; i++) {
+            $scope.authorsWithArticles.push({date: data[i].date, authors: []});
+            for (var a = 0; a < $scope.uniqueAuthors.length; a++) {
+                $scope.authorsWithArticles[i].authors.push({authorName: $scope.uniqueAuthors[a], articles: []});
+                $scope.totalArticles[a] = 0;
+                $scope.zeroDays[a] = 0;
+                $scope.dailyAvg[a] = 0;
+                $scope.max[a] = 0;
             }
-        }
-        //console.log($scope.authorsWithArticles);
 
+        }
         $scope.getAuthorArticles(data);
     };
 
-    //$scope.getAuthorArticles = function(data){
-    //    for(var i=0; i<data.length; i++) {
-    //       for (var j = 0; j < data[i].site.length; j++) {
-    //           if (data[i].site[j].siteName === $scope.siteName) {
-    //               for (var a=0; a<$scope.uniqueAuthors.length; a++){
-    //                   for (var k = 0; k < data[i].site[j].articles.length; k++) {
-    //                       if(data[i].site[j].articles[k].author===$scope.uniqueAuthors[a] && data[i].date ===$scope.authorsWithArticles[i].date) {
-    //                           $scope.authorsWithArticles[i].authors[a].articles.push(data[i].site[j].articles[k]);
-    //                       }
-    //                   }
-    //
-    //               }
-    //           }
-    //       }
-    //    }
-    //          console.log($scope.authorsWithArticles);
-    //};
 
-//Function to create and array of author article objects
+//Function to push articles into the array of author article objects
     $scope.getAuthorArticles = function(data){
         for(var i=0; i<data.length; i++) {
            for (var j = 0; j < data[i].site.length; j++) {
@@ -153,9 +150,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     };
 
     //Function to get author stats for sitepage
-
     $scope.getAuthorStats = function(){
-
         for(var i=0; i< $scope.authorsWithArticles.length; i++){
             for(var j=0; j<$scope.authorsWithArticles[i].authors.length; j++){
                 if($scope.authorsWithArticles[i].authors[j].articles.length===0){
@@ -172,6 +167,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
         }
 
     };
+
+    // clear fields function
 
     $scope.clearFields = function(){
             $scope.sites = [];
@@ -200,17 +197,9 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                 $scope.getFeeds();
                 $scope.dates = data;
                 $scope.sites = data[0].site;
-                $scope.getAuthors(data);
-                //for(var i=0; i<data.length; i++) {
-                //    for (var j = 0; j < data[i].site.length; j++) {
-                //        if (data[i].site[j].siteName === $scope.siteName) {
-                //            for (k = 0; k < data[i].site[j].articles.length; k++) {
-                //                $scope.authors.push(data[i].site[j].articles[k].author);
-                //
-                //            }
-                //        }
-                //    }
-                //}
+                $scope.getAllAuthors(data);
+                $scope.getSites(data);
+
 
         });
     };
@@ -260,7 +249,25 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                 }
             }
         )
-    }
+    };
+      //$scope.getAuthorArticles = function(data){
+    //    for(var i=0; i<data.length; i++) {
+    //       for (var j = 0; j < data[i].site.length; j++) {
+    //           if (data[i].site[j].siteName === $scope.siteName) {
+    //               for (var a=0; a<$scope.uniqueAuthors.length; a++){
+    //                   for (var k = 0; k < data[i].site[j].articles.length; k++) {
+    //                       if(data[i].site[j].articles[k].author===$scope.uniqueAuthors[a] && data[i].date ===$scope.authorsWithArticles[i].date) {
+    //                           $scope.authorsWithArticles[i].authors[a].articles.push(data[i].site[j].articles[k]);
+    //                       }
+    //                   }
+    //
+    //               }
+    //           }
+    //       }
+    //    }
+    //          console.log($scope.authorsWithArticles);
+    //};;
+
 
 }]);
 
