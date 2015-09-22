@@ -32,6 +32,10 @@ footer, .page-wrapper:after {
 main {
   margin: 20px 20px 40px; }
 
+.col-center {
+  float: none;
+  margin: 0 auto; }
+
 #goToAdmin, #dashboardBanner {
   display: inline-block;
   margin-bottom: 10px; }
