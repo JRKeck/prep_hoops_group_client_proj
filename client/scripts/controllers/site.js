@@ -21,7 +21,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                 }
             }
         }
-        console.log($scope.sites);
+        //console.log($scope.sites);
     };
 
     //$scope.getSites();

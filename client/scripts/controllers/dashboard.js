@@ -47,7 +47,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.runParse = function(){
         $http.get('/parseRSS').
             success(function(req, res){
-                console.log(res);
+                //console.log(res);
             });
     };
 
@@ -101,7 +101,6 @@ $scope.getFeeds();
 
 //Function to get stats for the main dashboard
      $scope.getStats= function(data){
-
          $scope.clearFields();
          $scope.articlesPerDay=0;
          var zeroDaysSite=0;
@@ -122,7 +121,7 @@ $scope.getFeeds();
                 $scope.articlesPerDayArray[i]=$scope.articlesPerDay;
                  $scope.articlesPerDay=0;
              }
-             console.log($scope.articlesPerDayArray);
+             //console.log($scope.articlesPerDayArray);
              $scope.totalArticles.push($scope.totalSiteArticles);
              $scope.dailyAvg.push(Math.floor(($scope.totalSiteArticles*100/(data.length)))/100);
              $scope.zeroDays.push(zeroDaysSite);
