@@ -40,7 +40,6 @@ prepHoopsApp.factory('siteFullName', function(){
             return siteFullName[key];
         },
         set : function(key, value){
-            //console.log(value);
             siteFullName[key]= value;
         }
     };
@@ -60,7 +59,6 @@ prepHoopsApp.controller('DropdownCtrl', ['$scope', '$rootScope', '$http', '$log'
     $scope.go = function ( path ) {
         $scope.getFeeds();
         $location.path( path );
-        //console.log(this);
         $scope.selectedSite = this.site.siteFullName;
         siteFullName.set('siteFullName', this.site.siteFullName);
     };
