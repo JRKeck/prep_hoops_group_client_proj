@@ -59,15 +59,12 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             });
     };
 
-
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
         $location.path( path );
         siteFullName.set('siteFullName',this.site.siteFullName);
 
     };
-
-
 
     $scope.getThirtyDaysOfArticles = function(first, last){
         $http.post('/api/articleGet', [first, last]).
@@ -80,7 +77,8 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
     };
 
-$scope.getFeeds();
+    $scope.getFeeds();
+
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
         var shortFirstDate = first.toISOString();
