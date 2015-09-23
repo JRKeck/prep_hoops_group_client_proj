@@ -48,6 +48,7 @@ module.exports = router;
 // Find the last parse date in the DB
 function findLastParseDate(){
     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
+        console.log('date id', obj.id);
         if (err){
             console.log('Error finding last parse date');
         }
@@ -146,7 +147,10 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
 
                 if (holdingArray.length > 0){
                     //console.log(holdingArray);
-                    ParseDate.findByIdAndUpdate(obj.id, {date: newParseDate}, function (err, post) {
+                    ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
+                        ParseDate.findByIdAndUpdate(obj.id, {date: newParseDate}, function (err, post) {
+                            console.log('New parse date is', newParseDate);
+                        });
                     });
                     saveArticle(holdingArray, 0);
                     holdingArray = [];
