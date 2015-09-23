@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', '$modal','siteFullName', 'AuthService', function($scope, $http, $location, $modal, siteFullName, AuthService){
     $scope.sites = [];
     $scope.dates = [];
