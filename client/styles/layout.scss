@@ -16,6 +16,9 @@ body {
 a {
   color: $color-accent;
 }
+h1,h2,h3,h4,h5,h6 {
+  font-family: $font-san-serif;
+}
 .page-wrapper {
   min-height: 100%;
   margin-bottom: -$height-footer;
@@ -46,10 +49,6 @@ main {
   border: solid;
   padding-left: 3px;
   margin-bottom: 3px;
-}
-#runFeeds {
-  width: 200px;
-  margin-top: 3px;
 }
 .dropdown {
   position: relative;
