@@ -76,8 +76,7 @@ function findLastParseDate(){
         else {
             lastParseDate = (dateToISO(obj.date));
             console.log(obj.id);
-            ParseDate.findByIdAndUpdate(obj.id, {date: newParseDate}, function (err, post) {
-            })
+
 
         }
         console.log('Last parse date: '+lastParseDate);
@@ -163,6 +162,8 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
 
                 if (holdingArray.length > 0){
                     //console.log(holdingArray);
+                    ParseDate.findByIdAndUpdate(obj.id, {date: newParseDate}, function (err, post) {
+                    });
                     saveArticle(holdingArray, 0);
                     holdingArray = [];
                 }
