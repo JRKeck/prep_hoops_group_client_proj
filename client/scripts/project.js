@@ -133,6 +133,7 @@ prepHoopsApp.factory('siteFullName', function(){
     };
 });
 
+
 prepHoopsApp.controller('DropdownCtrl', ['$scope', '$rootScope', '$http', '$log', '$location', 'siteFullName', function ($scope, $rootScope, $http, $log, $location, siteFullName) {
 
     $scope.feeds = [];
@@ -174,3 +175,19 @@ prepHoopsApp.controller('DropdownCtrl', ['$scope', '$rootScope', '$http', '$log'
     };
 
 }]);
+
+prepHoopsApp.controller('logoutController', ['$scope', '$location', 'AuthService',
+        function ($scope, $location, AuthService) {
+
+            $scope.logout = function () {
+
+                console.log(AuthService.getUserStatus());
+
+                // call logout from service
+                AuthService.logout()
+                    .then(function () {
+                        $location.path('/login');
+                    });
+
+            };
+        }]);
