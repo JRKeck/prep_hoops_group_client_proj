@@ -30,8 +30,11 @@ footer, .page-wrapper:after {
   height: 100px; }
 
 main {
-  background-color: #fff;
   margin: 20px 20px 40px; }
+
+.col-center {
+  float: none;
+  margin: 0 auto; }
 
 #goToAdmin, #dashboardBanner {
   display: inline-block;
@@ -44,6 +47,13 @@ main {
   border: solid;
   padding-left: 3px;
   margin-bottom: 3px; }
+
+#runFeeds {
+  width: 200px;
+  margin-top: 3px; }
+
+.dropdown {
+  position: relative; }
 
 .border {
   border: solid; }
@@ -61,30 +71,27 @@ main {
   border-radius: 32px;
   color: black; }
 
+/* content.scss */
+.content {
+  background-color: #fff;
+  padding-top: 20px;
+  padding-bottom: 20px; }
+  .content h1 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 28px; }
+
+.refresh-database {
+  float: right; }
+
+.date-search {
+  margin-bottom: 10px; }
+
 .datepicker {
   display: inline; }
 
 .search {
   font-weight: bold; }
-
-a.red:link {
-  color: #ff0000;
-  font-style: normal; }
-
-a.red:active {
-  color: #ff0000;
-  background: #ffffff;
-  font-style: normal; }
-
-a.red:visited {
-  color: #ff0000;
-  background: #ffffff;
-  font-style: normal; }
-
-a.red:hover {
-  color: #ff0000;
-  background: #ffffff;
-  font-style: normal; }
 
 /* header.scss */
 header {
@@ -114,6 +121,17 @@ header {
     width: 180px;
     height: 75px; }
 
+/* modal.scss */
+.modal-content {
+  padding: 20px 30px 0px; }
+
+.modal-article p.title {
+  font-size: 18px;
+  margin-bottom: 0px; }
+
+.modal-article p.author {
+  margin-left: 10px; }
+
 /* footer.scss */
 footer {
   background-color: #2f2f2f;
@@ -125,6 +143,25 @@ table {
   table-layout: fixed; }
   table a {
     color: #000; }
+  table a:link:after, table a:visited:after {
+    content: ""; }
+  table a.red:link {
+    color: #ff0000;
+    font-style: normal; }
+  table a.red:active {
+    color: #ff0000;
+    background: #ffffff;
+    font-style: normal; }
+  table a.red:visited {
+    color: #ff0000;
+    background: #ffffff;
+    font-style: normal; }
+  table a.red:hover {
+    color: #ff0000;
+    background: #ffffff;
+    font-style: normal; }
+  table tr.spacer {
+    height: 15px; }
 
 table, th, td {
   border: 1px solid grey;

@@ -1,6 +1,5 @@
+<<<<<<< HEAD
 prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', '$modal','siteFullName', 'AuthService', function($scope, $http, $location, $modal, siteFullName, AuthService){
-    console.log('Dashboard script loaded');
-
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
@@ -21,7 +20,9 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 var shortSecondDate = $scope.thirtyDaysBefore.toISOString();
                 $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
                 $scope.getThirtyDaysOfArticles($scope.shortSecondDateString, $scope.shortFirstDateString);
+
             });
+
     };
     $scope.getLastParseDate();
 
@@ -37,6 +38,14 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $http.get('/network/getFeeds').
             success(function(data){
                 $scope.feeds = data;
+                siteFullName.set('feedsArray', data);
+            });
+    };
+
+    $scope.runParse = function(){
+        $http.get('/parseRSS').
+            success(function(req, res){
+                //console.log(res);
             });
     };
 
@@ -55,8 +64,8 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
         $location.path( path );
-        //console.log(this);
         siteFullName.set('siteFullName',this.site.siteFullName);
+
     };
 
 
@@ -66,10 +75,13 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
+                $scope.getStats(data);
+
             });
+
     };
 
-
+$scope.getFeeds();
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
         var shortFirstDate = first.toISOString();
@@ -81,19 +93,28 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
-
-                $scope.sites = data[0].site;
                 $scope.getStats(data);
-                //console.log(data);
-
 
         });
     };
 
+    //Function to clear fields
+    $scope.clearFields = function(){
+            $scope.totalSiteArticles=0;
+            $scope.totalArticles = [];
+            $scope.dailyAvg = [];
+            $scope.percentPaid= [];
+            $scope.zeroDays= [];
+            $scope.articlesPerDay=0
+    };
+
+//Function to get stats for the main dashboard
      $scope.getStats= function(data){
-         $scope.totalSiteArticles=0;
+         $scope.clearFields();
+         $scope.articlesPerDay=0;
          var zeroDaysSite=0;
-         for (var n=1; n<18; n++) {// Total number of sites = 17 and siteIDs start from 1
+         $scope.articlesPerDayArray=[];
+         for (var n=1; n<=$scope.feeds.length; n++) {// Total number of sites from the feeds
              for (var i = 0; i < data.length; i++) {
                  for (var j = 0; j < data[i].site.length; j++) {
                      if (data[i].site[j].siteID === n){
@@ -103,15 +124,18 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                          }
 
                     }
+                    $scope.articlesPerDay=$scope.articlesPerDay+data[i].site[j].articles.length;
                  }
 
+                $scope.articlesPerDayArray[i]=$scope.articlesPerDay;
+                 $scope.articlesPerDay=0;
              }
+             //console.log($scope.articlesPerDayArray);
              $scope.totalArticles.push($scope.totalSiteArticles);
-             $scope.dailyAvg.push(($scope.totalSiteArticles/(data.length)));
+             $scope.dailyAvg.push(Math.floor(($scope.totalSiteArticles*100/(data.length)))/100);
              $scope.zeroDays.push(zeroDaysSite);
-             //console.log($scope.totalArticles, $scope.dailyAvg,$scope.zeroDays );
-             $scope.totalSiteArticles=0;
-             zeroDaysSite=0;
+             $scope.totalSiteArticles=0;// reset before loop
+             zeroDaysSite=0;//reset before loop
          }
 
      };

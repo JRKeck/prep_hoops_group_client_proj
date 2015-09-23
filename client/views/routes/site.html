@@ -1,61 +1,86 @@
-    <div class="row">
-        <div class="col-md-12 border">
-            <h1>Site Dashboard</h1>
-        </div>
-    </div>
-
-
+<div class="col-md-12 content">
+    <h1>{{siteName}}</h1>
 
     <div class="row">
-        <div class="col-md-12 border">
-            <div class="row">
-                <h4 class="col-md-4" id="dashboardBanner">{{siteName}}</h4>
-            </div>
+        <div class="col-md-12">
 
-            <div class="row">
+            <div class="date-search row">
                 <p class="search col-md-1">From:</p>
-                <div class="col-md-4 datepicker">
+
+                <div class="col-md-4 col-xs-12 datepicker">
                     <p class="input-group">
-                        <input type="date" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+
+                        <input type="text" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
 
-                    <button type="button" class="btn btn-default" ng-click="open($event, 'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="open($event, 'opened1')"><i
+                                class="glyphicon glyphicon-calendar"></i>
+                        </button>
 
-                  </span>
+                      </span>
                     </p>
                 </div>
                 <p class="search col-md-1">To:</p>
-                <div class="col-md-4 datepicker">
+
+                <div class="col-md-4 col-xs-12 datepicker">
                     <p class="input-group">
-                        <input type="date" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+
+                        <input type="text" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
 
-                    <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
 
-                  </span>
+                      </span>
                     </p>
                 </div>
 
-                <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
+                <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)"
+                       value="Submit"/>
 
             </div>
+            <div class="table-responsive">
+                <table class="col-xs-12 table-sitepage">
+                    <tr>
+                        <td>Date</td>
 
-             <table class="col-md-12 table-sitepage">
-                <tr>
-                    <td class="date">Date</td>
+                        <td ng-repeat="author in uniqueAuthors">{{author}}</td>
 
-                    <td ng-repeat="author in uniqueAuthors" >{{author}}</td>
+                        <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>-->
+                    </tr>
 
-                    <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
+                    <tr ng-repeat='day in authorsWithArticles'>
+                        <td>{{ day.date }}</td>
+                        <td ng-repeat="author in day.authors" ng-click="openModal('md')"><a href=""
+                                                                                            ng-class="{red: (author.articles.length==0)}">{{author.articles.length}}</a>
+                        </td>
+                    </tr>
+                    <tr class="spacer">
+                    </tr>
 
-                <tr ng-repeat='day in authorsWithArticles'>
-                    <td>{{ day.date }}</td>
-                    <td ng-repeat="author in day.authors" ng-click="openModal('md')"><a href ="">{{author.articles.length}}</a></td>
-                </tr>
-            </table>
+                    <tr>
+                        <td>Total Articles</td>
+
+                        <td ng-repeat="total in totalArticles track by $index">{{total}}</td>
+                    </tr>
+                    <tr>
+                        <td>Daily AVG</td>
+
+                        <td ng-repeat="avg in dailyAvg track by $index">{{avg}}</td>
+                    </tr>
+                    <tr>
+                        <td>Maximum</td>
+
+                        <td ng-repeat="maxNo in max track by $index">{{maxNo}}</td>
+                    </tr>
+                    <tr>
+                        <td>Zero Days</td>
+
+                        <td ng-repeat="days in zeroDays track by $index">{{days}}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 border bottom"></div>
-    </div>
+</div>

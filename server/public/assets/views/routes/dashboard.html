@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="row">
     <div class="col-md-12">
         <h1>Main Dashboard</h1>
@@ -11,15 +12,16 @@
     </div>
 
 
+=======
+<div class="col-md-12 content">
+    <input type="button" id="runFeeds" class="btn post refresh-database" ng-click="runParse()" value="Refresh Database"/>
+    <h1>Prep Hoops Network Article Stats</h1>
+>>>>>>> master
     <div class="row">
-        <div class="col-md-12 border">
-            <div class="row">
-                <h4 class="col-md-4" id="dashboardBanner">Prep Hoops Network Article Stats</h4>
-            </div>
-
-            <div class="row">
+        <div class="col-md-12">
+            <div class="date-search row">
                 <p class="search col-md-1">From:</p>
-                <div class="col-md-4 datepicker">
+                <div class="col-md-4 col-xs-12 datepicker">
                     <p class="input-group">
                         <input type="text" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
@@ -30,16 +32,15 @@
                     </p>
                 </div>
                 <p class="search col-md-1">To:</p>
-                <div class="col-md-4 datepicker">
+                <div class="col-md-4 col-xs-12 datepicker">
                     <p class="input-group">
                         <input type="text" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
                   <span class="input-group-btn">
-
                     <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
-
                   </span>
                     </p>
                 </div>
+<<<<<<< HEAD
 
                 <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
 
@@ -48,17 +49,29 @@
             <table class="col-md-12 table-dashboard">
                 <tr>
                     <td class="date">Date</td>
+=======
+                <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
+            </div>
 
+            <table class="col-md-12 table-dashboard">
+                <tr>
+>>>>>>> master
+
+                    <td class="date">Date</td>
                     <td ng-repeat="site in feeds" ng-click="go('/site')"><a href ="">{{site.siteShortName}}</a></td>
+<<<<<<< HEAD
 
                     <!--<td ng-repeat="site in siteIds"><a href="" ng-click="openModal('lg')">{{ site[1][0].length }}</a></td>--></tr>
 
-                <tr ng-repeat='day in dates'>
-                    <td>{{ day.date }}</td>
-                    <td ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="" ng-class="{red: (site.articles.length==0)}">{{site.articles.length}}</a></td>
+=======
                 </tr>
-                <tr>
-                    <td></td>
+>>>>>>> master
+                <tr ng-repeat='day in dates'>
+                    <td class="date">{{ day.date }}</td>
+                    <td ng-repeat="site in day.site" ng-click="openModal('md')"><a href ="" ng-class="{red: (site.articles.length==0)}">{{site.articles.length}}</a></td>
+
+                </tr>
+                <tr class="spacer">
                 </tr>
 
                 <tr>
@@ -79,3 +92,5 @@
             </table>
         </div>
     </div>
+</div>
+

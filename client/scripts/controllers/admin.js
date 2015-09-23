@@ -1,4 +1,4 @@
-prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, $http){
+prepHoopsApp.controller('AdminController', ['$scope', '$http', '$modal', function($scope, $http, $modal){
     console.log("Admin Controller Loaded");
 
     // Object to hold fields from adminForm
@@ -24,21 +24,6 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, 
             });
     };
 
-    $scope.removeSite = function() {
-        var site = this.site.siteShortName;
-        var id = this.site._id;
-        console.log("Remove Button Pressed for Site: " + site);
-        console.log("Mongo ID: ", id);
-        $http.delete('network/deletesite/' + id)
-            .then(function(res, err){
-                if (err) {
-                    console.log("Error on Delete is: ", err);
-                } else {
-                    console.log("Delete Successful: ", res);
-                    loadSites();
-                }
-            });
-    };
     // Detect edit site selector change
     $scope.changedValue = function(item){
         if(item) {
@@ -80,4 +65,35 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', function($scope, 
             });
     }
 
+    $scope.removeSite = function() {
+        var site = this.site.siteShortName;
+        var id = this.site._id;
+        console.log("Remove Button Pressed for Site: " + site);
+        console.log("Mongo ID: ", id);
+        $scope.animationsEnabled = true;
+
+
+        $http.delete('network/deletesite/' + id)
+            .then(function(res, err){
+                if (err) {
+                    console.log("Error on Delete is: ", err);
+                } else {
+                    console.log("Delete Successful: ", res);
+                    loadSites();
+                }
+            });
+    };
+}]);
+
+// Controller for the Delete Site Modal
+prepHoopsApp.controller('SiteDeleteInstanceController', ['$scope', '$modalInstance', function($scope, $modalInstance){
+    $scope.ok = function () {
+        // insert delete stuff here
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        // return to admin screen
+        $modalInstance.close();
+    }
 }]);

@@ -29,7 +29,6 @@ prepHoopsApp.config(['$routeProvider', function($routeProvider){
         });
 }]);
 
-//
 prepHoopsApp.factory('AuthService',
     ['$q', '$timeout', '$http',
         function ($q, $timeout, $http) {
@@ -83,6 +82,7 @@ prepHoopsApp.factory('AuthService',
                         deferred.reject();
                     });
 
+
                 // return promise object
                 return deferred.promise;
 
@@ -125,12 +125,52 @@ prepHoopsApp.factory('siteFullName', function(){
 
     return {
         get : function(key){
-            //console.log(siteFullName[key]);
             return siteFullName[key];
         },
         set : function(key, value){
-            //console.log('value');
             siteFullName[key]= value;
         }
     };
 });
+
+prepHoopsApp.controller('DropdownCtrl', ['$scope', '$rootScope', '$http', '$log', '$location', 'siteFullName', function ($scope, $rootScope, $http, $log, $location, siteFullName) {
+
+    $scope.feeds = [];
+    $scope.getFeeds = function(){
+        $http.get('/network/getFeeds').
+            success(function(data){
+                $scope.feeds = data;
+            });
+    };
+    $scope.getFeeds();
+
+    $scope.go = function ( path ) {
+        $scope.getFeeds();
+        $location.path( path );
+        $scope.selectedSite = this.site.siteFullName;
+        siteFullName.set('siteFullName', this.site.siteFullName);
+    };
+
+    $scope.$watch('selectedSite', function () {
+
+        $rootScope.$broadcast('siteChanged',
+
+            $scope.selectedSite);
+
+    });
+
+    $scope.status = {
+        isopen: false
+    };
+
+    $scope.toggled = function(open) {
+        $log.log('Dropdown is now: ', open);
+    };
+
+    $scope.toggleDropdown = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.status.isopen = !$scope.status.isopen;
+    };
+
+}]);
