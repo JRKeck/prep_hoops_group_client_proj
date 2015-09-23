@@ -24,6 +24,7 @@
                   </span>
                     </p>
                 </div>
+
                 <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)" value="Submit"/>
             </div>
 
@@ -32,6 +33,7 @@
 
                     <td class="date">Date</td>
                     <td ng-repeat="site in feeds" ng-click="go('/site')"><a href ="">{{site.siteShortName}}</a></td>
+
                 </tr>
                 <tr ng-repeat='day in dates'>
                     <td class="date">{{ day.date }}</td>

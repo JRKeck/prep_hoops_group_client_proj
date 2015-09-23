@@ -234,7 +234,6 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     $scope.animationsEnabled = true;
     $scope.openModal = function(size){
 
-        console.log(this);
         $scope.selectedArticles = this.author.articles;
         var modalInstance = $modal.open(
             {
