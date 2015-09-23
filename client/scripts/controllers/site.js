@@ -185,15 +185,15 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     };
 
     //Function to call RSS feed dump into database & pull back articles for requested dates
-    $scope.getRSS = function (first, last){
-      $scope.clearFields();
+    $scope.getRSS = function (first, last) {
+        $scope.clearFields();
         var shortFirstDate = first.toISOString();
         $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
         var shortSecondDate = last.toISOString();
         $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
 
         $http.post('/api/articleGet', [$scope.shortFirstDateString, $scope.shortSecondDateString]).
-            success(function(data){
+            success(function (data) {
                 $scope.getFeeds();
                 $scope.dates = data;
                 $scope.sites = data[0].site;
@@ -201,7 +201,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                 //$scope.getSites(data);
 
 
-        });
+            });
+    };
 
 
     //Code for DatePicker

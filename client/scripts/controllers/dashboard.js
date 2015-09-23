@@ -22,9 +22,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 var shortSecondDate = $scope.thirtyDaysBefore.toISOString();
                 $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
                 $scope.getThirtyDaysOfArticles($scope.shortSecondDateString, $scope.shortFirstDateString);
-
             });
-
     };
     $scope.getLastParseDate();
 
@@ -44,10 +42,11 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             });
     };
 
+    //Runs parse to refresh database and reloads dashboard with new info
     $scope.runParse = function(){
         $http.get('/parseRSS').
-            success(function(req, res){
-                //console.log(res);
+            success(function(){
+                $scope.getLastParseDate();
             });
     };
 
@@ -67,7 +66,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 $scope.getFeeds();
                 $scope.dates = data;
                 $scope.getStats(data);
-
             });
 
     };
