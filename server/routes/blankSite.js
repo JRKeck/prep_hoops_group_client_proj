@@ -16,7 +16,8 @@ function getDate(){
         }
         var lastParse = lastDate[0].date;
         var currentDate = new Date();
-        var startDate = new Date("August 1, 2015 01:00:00");
+        var startDate = new Date("September 20, 2015 01:00:00");
+        console.log(currentDate - startDate);
         //var a = currentDate.setDate(currentDate.getDate() -30);
         //var newDate = new Date(a);
         var month = new Array();

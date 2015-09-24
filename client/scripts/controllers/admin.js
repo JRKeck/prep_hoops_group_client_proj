@@ -65,35 +65,49 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', '$modal', functio
             });
     }
 
-    $scope.removeSite = function() {
+    $scope.removeSite = function(size) {
         var site = this.site.siteShortName;
         var id = this.site._id;
         console.log("Remove Button Pressed for Site: " + site);
         console.log("Mongo ID: ", id);
         $scope.animationsEnabled = true;
+        $scope.idToDelete = this.site._id;
+        var modalInstance = $modal.open(
+            {
+                animation: $scope.animationsEnabled,
+                templateUrl: '/assets/views/routes/adminDelete.html',
+                controller: 'SiteDeleteInstanceController',
+                size: size,
+                resolve: {
+                    idToDelete: function() {
+                        return $scope.idToDelete;
+                    }
+                }
+            }
+        );
+    };
+}]);
 
-
-        $http.delete('network/deletesite/' + id)
+// Controller for the Delete Site Modal
+prepHoopsApp.controller('SiteDeleteInstanceController', ['$scope', '$http', '$modalInstance', 'idToDelete', function($scope, $http, $modalInstance, idToDelete){
+    $scope.confirmRemove = function () {
+        // insert delete stuff here
+        console.log("You clicked the OK Button!");
+        $http.delete('network/deletesite/' + idToDelete)
             .then(function(res, err){
                 if (err) {
                     console.log("Error on Delete is: ", err);
                 } else {
                     console.log("Delete Successful: ", res);
-                    loadSites();
+
                 }
             });
-    };
-}]);
-
-// Controller for the Delete Site Modal
-prepHoopsApp.controller('SiteDeleteInstanceController', ['$scope', '$modalInstance', function($scope, $modalInstance){
-    $scope.ok = function () {
-        // insert delete stuff here
         $modalInstance.close();
     };
 
     $scope.cancel = function () {
         // return to admin screen
         $modalInstance.close();
-    }
+    };
 }]);
+//

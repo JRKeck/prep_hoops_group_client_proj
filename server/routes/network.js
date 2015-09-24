@@ -38,11 +38,11 @@ router.post('/addsite', function(req,res,next) {
         console.log("Structure? ", date[0].site[0]);
         for(var i = 0; i < date.length; i++){
             date[i].site.push(sitePush);
-            date[i].save(function(err, date){
+            date[i].save(function(err){
                 if (err) {
                     console.log("You messed up the Database! ", err);
                 } else {
-                    console.log("Site written to Date: ", date);
+                    console.log("Site written to Date.");
                 }
             });
         }
