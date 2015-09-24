@@ -89,7 +89,7 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', '$modal', functio
 }]);
 
 // Controller for the Delete Site Modal
-prepHoopsApp.controller('SiteDeleteInstanceController', ['$scope', '$http', '$modalInstance', 'idToDelete', function($scope, $http, $modalInstance, idToDelete){
+prepHoopsApp.controller('SiteDeleteInstanceController', ['$scope', '$http', '$modalInstance', '$location', 'idToDelete', function($scope, $http, $modalInstance, $location, idToDelete){
     $scope.confirmRemove = function () {
         // insert delete stuff here
         console.log("You clicked the OK Button!");
@@ -99,6 +99,7 @@ prepHoopsApp.controller('SiteDeleteInstanceController', ['$scope', '$http', '$mo
                     console.log("Error on Delete is: ", err);
                 } else {
                     console.log("Delete Successful: ", res);
+                    $location.path('/dashboard');
 
                 }
             });
@@ -110,4 +111,3 @@ prepHoopsApp.controller('SiteDeleteInstanceController', ['$scope', '$http', '$mo
         $modalInstance.close();
     };
 }]);
-//
