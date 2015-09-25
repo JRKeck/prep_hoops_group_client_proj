@@ -67,7 +67,6 @@ prepHoopsApp.factory('AuthService',
                     // handle success
                     .success(function (data, status) {
                         if(status === 200 && data.status){
-                            console.log('success');
                             user = true;
                             deferred.resolve();
                         } else {
