@@ -27,6 +27,7 @@ prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', 'Aut
     };
 
     $scope.logout = function () {
+
     // call logout from service
     AuthService.logout()
         .then(function () {
