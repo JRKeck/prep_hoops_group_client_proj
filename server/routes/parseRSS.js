@@ -154,13 +154,13 @@ function dateCollectionUpdate(rssFeeds) {
                         dateArticleToAdd.site.push(sitePush);
                     }
                     console.log(dateArticleToAdd);
-                    //Articles.create(dateArticleToAdd, function (err, post) {
-                    //    if (err) {
-                    //        console.log("Error on Article Create: ", err);
-                    //    } else {
-                    //        console.log(post);
-                    //    }
-                    //});
+                    Articles.create(dateArticleToAdd, function (err, post) {
+                        if (err) {
+                            console.log("Error on Article Create: ", err);
+                        } else {
+                            console.log(post);
+                        }
+                    });
                     currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1));
                     if((i+1) === daysSinceLastCollection){
                         console.log("Current Date at end of loop: ", currentDate);
@@ -170,6 +170,8 @@ function dateCollectionUpdate(rssFeeds) {
                         console.log("Current Date at end of loop: ", currentDate);
                     }
                 }
+            } else {
+                networkParser(rssFeeds);
             }
         }
     });
@@ -252,7 +254,7 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                             console.log('New parse date is', newParseDate);
                         });
                     });
-                    //saveArticle(holdingArray, 0);
+                    saveArticle(holdingArray, 0);
                     holdingArray = [];
                 }
             }
