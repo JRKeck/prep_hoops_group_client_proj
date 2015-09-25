@@ -57,13 +57,13 @@
                 <th class="site-short-name">Report Name</th>
                 <th>Site Name</th>
                 <th>RSS Feed</th>
-                <!--<th class="site-delete">Delete</th>-->
+                <th class="site-delete">Delete</th>
             </tr>
             <tr ng-repeat="site in sites">
                 <td>{{site.siteShortName}}</td>
                 <td class="site-name">{{site.siteFullName}}</td>
                 <td class="feed-url">{{site.rssURL}}</td>
-                <!--<td><button class="removeButton" ng-click="removeSite()">Remove</button> </td>-->
+                <td><button class="removeButton" ng-click="removeSite('lg')">Remove</button> </td>
             </tr>
         </table>
 
