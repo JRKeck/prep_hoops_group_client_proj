@@ -39,7 +39,7 @@ router.get('/*', function(req, res, next){
     // Get the RSS Feeds
     networkParser();
 
-    res.send('Parsing Complete!');
+    res.send('Parsing RSS');
 
 });
 
@@ -109,18 +109,21 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                 var shortDate = date.substr(0, date.indexOf('T'));
 
                 // Get article ID
-                var articleID = getSportNginArticleID(el.link[0]);
+                var articleID = getArticleID(el);
 
-                // Store the parsed info in an obj
+                // Get author
+                var author = getAuthor(el);
+
+                //// Store the parsed info in an obj
                 var articleObj = {};
 
-                // Add data to obj that will be sent to mongoose
+                //// Add data to obj that will be sent to mongoose
                 articleObj.pubDate = date;
                 articleObj.shortDate = shortDate;
                 articleObj.siteID = siteID;
                 articleObj.siteName = siteName;
                 articleObj.title = el.title[0];
-                articleObj.author = el.author[0];
+                articleObj.author = author;
                 articleObj.url = el.link[0];
                 articleObj.articleID = articleID;
 
@@ -129,10 +132,6 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                     console.log(articleObj.pubDate +' is newer than '+ lastParseDate);
                     holdingArray.push(articleObj);
                 }
-                else {
-                    console.log('article is older than the last parse date');
-                }
-                // console.log("Holding Array Items: ", holdingArray.length);
                 articleCount++;
             }
             networksParsed++;
@@ -152,7 +151,7 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                             console.log('New parse date is', newParseDate);
                         });
                     });
-                    saveArticle(holdingArray, 0);
+                    //saveArticle(holdingArray, 0);
                     holdingArray = [];
                 }
             }
@@ -171,4 +170,27 @@ function getSportNginArticleID(url){
     // Remove everything after the ?
     articleID = articleID.substr(0, articleID.indexOf('?'));
     return articleID;
+}
+
+// Get article author
+function getAuthor(el){
+    if(el['dc:creator']){
+        var articleAuthor = el['dc:creator'];
+        articleAuthor = articleAuthor.toString();
+    }
+    else {
+        articleAuthor = el.author[0];
+    }
+    return articleAuthor;
+}
+
+// Get article ID
+function getArticleID(el){
+    if(el.link[0]) {
+        var findID = getSportNginArticleID(el.link[0]);
+    }
+    else {
+        findID = '';
+    }
+    return findID;
 }
