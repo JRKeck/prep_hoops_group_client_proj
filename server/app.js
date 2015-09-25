@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var indexRoute = require('./routes/index');
 var apiRoute = require('./routes/api');
 var parseRssRoute = require('./routes/parseRSS');
-var blankSiteRoute = require('./routes/blankSite');
 var userAuthRoute = require('./routes/userAuth');
 var networkRoute = require('./routes/network');
 
@@ -24,10 +23,6 @@ var mongoose = require("mongoose");
 // Turn on the debug feature for mongoose - additional information sent to server console
 mongoose.set("debug",true);
 
-
-////Local DB
-//var mongoURI = "";
-//
 //Mongo Labs DB
  var mongoURI = "mongodb://prephoopsAdmin:PHoopsAdmin@ds039073.mongolab.com:39073/prep_hoops_articledb";
 
@@ -68,7 +63,6 @@ passport.use('local', new localStrategy({ passReqToCallback : true, usernameFiel
 app.use('/userauth', userAuthRoute);
 app.use('/network', networkRoute);
 app.use('/parserss', parseRssRoute);
-app.use('/blanksite', blankSiteRoute);
 app.use('/api', apiRoute);
 app.use('/', indexRoute);
 
