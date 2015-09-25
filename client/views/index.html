@@ -34,7 +34,7 @@
                         </ul>
                     </li>
                     <li><a href="#admin">Admin</a></li>
-                    <li class="logout"><a href="#login">Logout</a></li>
+                    <li ng-controller="logoutController" class="logout"><a href="" ng-click='logout()'>Logout</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -53,7 +53,6 @@
 <script type="text/javascript" src="/vendors/angular/angular.min.js"></script>
 <script type="text/javascript" src="/vendors/angular-route/angular-route.min.js"></script>
 <script type="text/javascript" src="/vendors/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script type="text/javascript" src="/vendors/angular-ui-bootstrap/ui-bootstrap-csp.css"></script>
 <script type="text/javascript" src="/vendors/angular-animate/angular-animate.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/project.min.js"></script>
 <script type="text/javascript" src="/assets/scripts/controllers/login.min.js"></script>

@@ -1,5 +1,4 @@
-
-prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', '$modal','siteFullName', function($scope, $http, $location, $modal,siteFullName){
+prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', '$modal','siteFullName', 'AuthService', function($scope, $http, $location, $modal, siteFullName, AuthService){
     $scope.sites = [];
     $scope.dates = [];
     $scope.feeds = [];
@@ -7,8 +6,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.dailyAvg = [];
     $scope.percentPaid= [];
     $scope.zeroDays= [];
-
-
 
     //Function to get last parse date and load data for 30 days before
     $scope.getLastParseDate = function(){
@@ -31,7 +28,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
             $scope.dayOfWeek = date.getDay();
-            //console.log($scope.dayOfWeek);
+
     };
 
     //Gets short names from feeds for table headers
@@ -47,10 +44,19 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.runParse = function(){
         $http.get('/parseRSS').
             success(function(req, res){
-                //console.log(res);
             });
     };
 
+    $scope.logout = function () {
+
+        console.log(AuthService.getUserStatus());
+
+        // call logout from service
+        AuthService.logout()
+            .then(function () {
+                $location.path('/login');
+            });
+    };
 
     //Function to make admin button redirect to site page
     $scope.go = function ( path ) {
@@ -58,8 +64,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         siteFullName.set('siteFullName',this.site.siteFullName);
 
     };
-
-
 
     $scope.getThirtyDaysOfArticles = function(first, last){
         $http.post('/api/articleGet', [first, last]).
@@ -72,7 +76,8 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
     };
 
-$scope.getFeeds();
+    $scope.getFeeds();
+
     //Function to call RSS feed dump into database & pull back articles for requested dates
     $scope.getRSS = function (first, last){
         var shortFirstDate = first.toISOString();
@@ -121,7 +126,6 @@ $scope.getFeeds();
                 $scope.articlesPerDayArray[i]=$scope.articlesPerDay;
                  $scope.articlesPerDay=0;
              }
-             //console.log($scope.articlesPerDayArray);
              $scope.totalArticles.push($scope.totalSiteArticles);
              $scope.dailyAvg.push(Math.floor(($scope.totalSiteArticles*100/(data.length)))/100);
              $scope.zeroDays.push(zeroDaysSite);
@@ -130,9 +134,6 @@ $scope.getFeeds();
          }
 
      };
-
-
-
 
     //Code for DatePicker
 
