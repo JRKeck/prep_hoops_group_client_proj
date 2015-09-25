@@ -34,12 +34,10 @@ router.get('/getLastDate', function(req, res, next){
 // This is the GET call to fire off the parse when localhost:3000/parseRSS is
 // fed into the browser
 router.get('/*', function(req, res, next){
-    console.log('Parsing RSS!');
     // Find the Last Parse Date
     findLastParseDate();
     // Capture the time of Parsing execution
     newParseDate = dateToISO(Date.now());
-    console.log('New parse date: '+newParseDate);
     res.send('Parsing RSS');
 });
 
@@ -48,7 +46,6 @@ module.exports = router;
 // Find the last parse date in the DB
 function findLastParseDate(){
     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
-        console.log('In findLastParseDate - id:', obj.id);
         if (err){
             console.log('Error finding last parse date: ', err);
         }
@@ -61,12 +58,9 @@ function findLastParseDate(){
         else {
             // Working Variable for Parse
             lastParseDate = (dateToISO(obj.date));
-            console.log("Last Parse Date: ", lastParseDate);
-            console.log("Sending to Get Sites");
             // Get the RSS Feeds
             getSites();
         }
-        console.log('Last parse date: '+lastParseDate);
     });
 }
 
@@ -75,12 +69,10 @@ function getSites() {
     Feeds.find({}, function (err, sites) {
         if (err) {
             console.log("Error in pull sites from database ", err);
+        } else {
+            rssFeeds = sites;
+            dateCollectionUpdate(rssFeeds);
         }
-        //console.log(sites);
-        console.log("Number of Sites: ", sites.length);
-        console.log("Sending to dateCollectionUpdate.");
-        rssFeeds = sites;
-        dateCollectionUpdate(rssFeeds);
     });
 }
 
@@ -95,8 +87,6 @@ function dateCollectionUpdate(rssFeeds) {
             var lastCollectionDate = new Date(tempLastCollectionDate.setDate(tempLastCollectionDate.getDate() + 1));
             var MS_PER_DAY = 1000 * 60 * 60 * 24;
             var currentDate = new Date();
-            console.log("Last Article Date Colleciton: ", lastCollectionDate);
-            console.log("Current Date: ", currentDate);
 
             // a and b are javascript Date objects
             function dateDiffInDays(a, b) {
@@ -108,7 +98,6 @@ function dateCollectionUpdate(rssFeeds) {
             }
 
             var daysSinceLastCollection = dateDiffInDays(lastCollectionDate, currentDate);
-            console.log("Days Since Last Parse: ", daysSinceLastCollection);
 
             var month = new Array();
             month[0] = "-01-";
@@ -126,7 +115,6 @@ function dateCollectionUpdate(rssFeeds) {
 
             if (daysSinceLastCollection > 0) {
                 for (var i = 0; i < daysSinceLastCollection; i++) {
-                    console.log("We need to create collection(s)!  Current Date is: ", currentDate);
                     var currentDateDayTemp = (currentDate.getDate()).toString();
                     if (currentDateDayTemp < 10) {
                         var currentDateDay = "0" + currentDateDayTemp;
@@ -136,14 +124,12 @@ function dateCollectionUpdate(rssFeeds) {
                     var currentDateMonth = month[currentDate.getMonth()];
                     var currentDateYear = ((currentDate.getYear()) + 1900).toString();
                     var currentDateString = currentDateYear + currentDateMonth + currentDateDay;
-                    console.log("Current Date String: " + currentDateString);
 
                     var dateArticleToAdd = {
                         date: currentDateString,
                         site: []
                     };
-                    console.log("Preparing to create sites in date: " + currentDateString);
-                    console.log("Number of sites to add: ", rssFeeds.length);
+
                     for (var j = 0; j < rssFeeds.length; j++) {
                         var sitePush = {
                             siteName: rssFeeds[j].siteFullName,
@@ -153,12 +139,10 @@ function dateCollectionUpdate(rssFeeds) {
                         };
                         dateArticleToAdd.site.push(sitePush);
                     }
-                    console.log(dateArticleToAdd);
+
                     Articles.create(dateArticleToAdd, function (err, post) {
                         if (err) {
                             console.log("Error on Article Create: ", err);
-                        } else {
-                            console.log(post);
                         }
                     });
                     currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1));
@@ -179,7 +163,6 @@ function dateCollectionUpdate(rssFeeds) {
 
 // Loop through each RSS Feed in the Network
 function networkParser(sites){
-    console.log("Number of Sites: ", sites.length);
     // For each Feed in the network send it to the parser
     for(i = 0; i < sites.length; i++){
         var el = sites[i];
@@ -232,7 +215,6 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
 
                 // If the articles pubDate is newer than the last parse date push it to array
                 if (articleObj.pubDate > lastParseDate) {
-                    console.log(articleObj.pubDate +' is newer than '+ lastParseDate);
                     holdingArray.push(articleObj);
                 }
                 articleCount++;
@@ -248,7 +230,6 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                 articleCount = 0;
 
                 if (holdingArray.length > 0){
-                    //console.log(holdingArray);
                     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
                         ParseDate.findByIdAndUpdate(obj.id, {date: newParseDate}, function (err, post) {
                             console.log('New parse date is', newParseDate);

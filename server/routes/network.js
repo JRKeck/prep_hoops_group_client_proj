@@ -27,22 +27,17 @@ router.post('/addsite', function(req,res,next) {
         if (err)
             next(err);
         else
-            console.log('Site Added!');
             res.send('Site Added to Feeds Database');
     });
     Articles.find({}, function(err, date){
         if (err) {
             console.log("Error pulling date array from Articles Container: ", err);
         }
-        console.log("Number of Dates: ", date.length);
-        console.log("Structure? ", date[0].site[0]);
         for(var i = 0; i < date.length; i++){
             date[i].site.push(sitePush);
             date[i].save(function(err){
                 if (err) {
-                    console.log("You messed up the Database! ", err);
-                } else {
-                    console.log("Site written to Date.");
+                    console.log("Site not written correctly! ", err);
                 }
             });
         }
@@ -73,16 +68,12 @@ router.delete('/deletesite/:id', function(req, res, next){
             console.log("Error pulling date array from Articles Container: ", err);
         }
         for(var i = 0; i < date.length; i++){
-            console.log("Site to delete: ", deleteSiteID);
-            console.log("Date Object: ", date[i]);
             var siteArrayIndex = date[i].site.getIndexBy("siteID", deleteSiteID);
-            console.log("Site Array Index: ", siteArrayIndex);
             var deleteSiteObjId = date[i].site[siteArrayIndex].id;
-            console.log("This is the object ID: ", deleteSiteObjId);
             date[i].site.pull(deleteSiteObjId);
             date[i].save(function(err, date){
                 if (err) {
-                    console.log("Is this really going to tell me anything? ", err);
+                    console.log("Save Error ", err);
                 } else {
                     console.log(date);
                 }

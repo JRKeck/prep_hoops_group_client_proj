@@ -1,5 +1,4 @@
 prepHoopsApp.controller('AdminController', ['$scope', '$http', '$modal', function($scope, $http, $modal){
-    console.log("Admin Controller Loaded");
 
     // Object to hold fields from adminForm
     $scope.adminForm = {};
@@ -59,7 +58,6 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', '$modal', functio
     function loadSites(){
         $http.get('network')
             .then(function(res){
-                //console.log('loading sites');
                 $scope.sites = res.data;
                 $scope.sitesSelector = $scope.sites;
             });
@@ -68,8 +66,6 @@ prepHoopsApp.controller('AdminController', ['$scope', '$http', '$modal', functio
     $scope.removeSite = function(size) {
         var site = this.site.siteShortName;
         var id = this.site._id;
-        console.log("Remove Button Pressed for Site: " + site);
-        console.log("Mongo ID: ", id);
         $scope.animationsEnabled = true;
         $scope.idToDelete = this.site._id;
         var modalInstance = $modal.open(
@@ -98,9 +94,7 @@ prepHoopsApp.controller('SiteDeleteInstanceController', ['$scope', '$http', '$mo
                 if (err) {
                     console.log("Error on Delete is: ", err);
                 } else {
-                    console.log("Delete Successful: ", res);
                     $location.path('/dashboard');
-
                 }
             });
         $modalInstance.close();

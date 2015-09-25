@@ -35,7 +35,6 @@ router.post('/register', function(req,res,next) {
         if (err)
             next(err);
         else
-            console.log('user registered!');
             res.redirect('/');
     })
 });

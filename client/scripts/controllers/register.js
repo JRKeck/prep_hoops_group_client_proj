@@ -1,5 +1,4 @@
 prepHoopsApp.controller('RegisterController', ['$scope', '$http', function($scope, $http){
-    console.log("Register Controller Loaded");
 
     $scope.userRegistrationForm = {};
 
