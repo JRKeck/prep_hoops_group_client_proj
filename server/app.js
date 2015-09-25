@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var indexRoute = require('./routes/index');
 var apiRoute = require('./routes/api');
 var parseRssRoute = require('./routes/parseRSS');
-var blankSiteRoute = require('./routes/blankSite');
 var userAuthRoute = require('./routes/userAuth');
 var networkRoute = require('./routes/network');
 
@@ -68,7 +67,6 @@ passport.use('local', new localStrategy({ passReqToCallback : true, usernameFiel
 app.use('/userauth', userAuthRoute);
 app.use('/network', networkRoute);
 app.use('/parserss', parseRssRoute);
-app.use('/blanksite', blankSiteRoute);
 app.use('/api', apiRoute);
 app.use('/', indexRoute);
 
