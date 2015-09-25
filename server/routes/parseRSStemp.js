@@ -24,8 +24,6 @@ var networksParsed = 0;
 // Holding Array for the RSS Feeds to prevent multiple calls to the DB
 var rssFeeds = [];
 
-
-
 // Get call to just get last parse date for use on client side
 router.get('/getLastDate', function(req, res, next){
     ParseDate.find({}, function(err, obj){
