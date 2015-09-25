@@ -185,6 +185,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     };
 
     //Function to call RSS feed dump into database & pull back articles for requested dates
+
     $scope.getRSS = function (first, last){
       $scope.clearFields();
         var shortFirstDate = first.toISOString();
@@ -203,6 +204,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
 
         });
     };
+    var date = new Date();
+    $scope.minDate = date.setDate((new Date()).getDate());
 
     //Code for DatePicker
 
@@ -218,8 +221,11 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     };
 
     $scope.today = function() {
-        $scope.first = new Date();
+        //$scope.first = new Date();
         $scope.last = new Date();
+        $scope.first = date.setDate((new Date()).getDate()-30);
+
+
     };
 
     $scope.today();

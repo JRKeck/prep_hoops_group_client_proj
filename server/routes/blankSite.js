@@ -7,6 +7,17 @@ var path = require('path');
 var Feeds = require('../models/rssdb');
 var Articles = require('../models/articledb');
 var ParseDate = require('../models/parseDate');
+var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+// a and b are javascript Date objects
+function dateDiffInDays(a, b) {
+  // Discard the time and time-zone information.
+  var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+var datediff;
 
 // Need to get the current last parse Date
 function getDate(){
@@ -52,15 +63,16 @@ function getDate(){
         }
         var startDateMonth = month[startDate.getMonth()];
         var startDateYear = ((startDate.getYear()) + 1900).toString();
-        console.log("Last Parse Date: ", lastParse);
-        console.log("Current Date: ", currentDate);
-        //console.log("Value of a: ", a);
-        //console.log("New Date: ", newDate);
-        console.log("Start Date String: " + startDateYear + startDateMonth + startDateDay);
-        console.log("Last Parse String: " + lastParseYear + lastParseMonth + lastParseDay);
-        console.log("Current Date String: " + currentDateYear + currentDateMonth + currentDateDay);
+       // console.log("Last Parse Date: ", lastParse);
+        //console.log("Current Date: ", currentDate);
+        ////console.log("Value of a: ", a);
+        ////console.log("New Date: ", newDate);
+        //console.log("Start Date String: " + startDateYear + startDateMonth + startDateDay);
+        //console.log("Last Parse String: " + lastParseYear + lastParseMonth + lastParseDay);
+        //console.log("Current Date String: " + currentDateYear + currentDateMonth + currentDateDay);
 
-
+      datediff= dateDiffInDays(startDate,currentDate);
+        console.log(datediff);
     });
 }
 

@@ -7,7 +7,32 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     $scope.dailyAvg = [];
     $scope.percentPaid= [];
     $scope.zeroDays= [];
+    $scope.Array=[];
 
+
+// To find max and min values in an array
+    function arrayMin(arr) {
+        var len = arr.length, min = Infinity;
+            while (len--) {
+                 if (arr[len] < min) {
+                min = arr[len];
+                 }
+    }
+        return min;
+    };
+
+    function arrayMax(arr) {
+        var len = arr.length, max = -Infinity;
+            while (len--) {
+         if (arr[len] > max) {
+            max = arr[len];
+        }
+    }
+        return max;
+    };
+
+    //var date = new Date();
+    //$scope.minDate = date.setDate((new Date()).getDate());
 
 
     //Function to get last parse date and load data for 30 days before
@@ -79,14 +104,18 @@ $scope.getFeeds();
         $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
         var shortSecondDate = last.toISOString();
         $scope.shortSecondDateString = shortSecondDate.substr(0, shortSecondDate.indexOf('T'));
+        if(shortFirstDate> shortSecondDate ){
+            alert("The start date should be earlier than the end date");
+        }
+        else if (shortFirstDate<= shortSecondDate){
+            $http.post('/api/articleGet', [$scope.shortFirstDateString, $scope.shortSecondDateString]).
+                success(function (data) {
+                    $scope.getFeeds();
+                    $scope.dates = data;
+                    $scope.getStats(data);
 
-        $http.post('/api/articleGet', [$scope.shortFirstDateString, $scope.shortSecondDateString]).
-            success(function(data){
-                $scope.getFeeds();
-                $scope.dates = data;
-                $scope.getStats(data);
-
-        });
+                });
+        }
     };
 
     //Function to clear fields
@@ -128,8 +157,9 @@ $scope.getFeeds();
              $scope.totalSiteArticles=0;// reset before loop
              zeroDaysSite=0;//reset before loop
          }
-
+        console.log(arrayMin($scope.zeroDays), arrayMax($scope.zeroDays));
      };
+
 
 
 
@@ -148,11 +178,16 @@ $scope.getFeeds();
     };
 
     $scope.today = function() {
-        $scope.first = new Date();
-        $scope.last = new Date();
+        //$scope.first = new Date();
+        //$scope.last = new Date();
+        //$scope.first = $scope.last-30;
+
+        $scope.first = "Please select a from date";
+        $scope.last = "Please select an end date";
     };
 
     $scope.today();
+
 
     $scope.clear = function () {
         $scope.first = null;
@@ -162,22 +197,23 @@ $scope.getFeeds();
     //creates modal to list articles on specific date
 
     $scope.animationsEnabled = true;
-    $scope.openModal = function(size){
-        $scope.selectedArticles = this.site.articles;
-        var modalInstance = $modal.open(
-            {
-                animation: $scope.animationsEnabled,
-                templateUrl: '/assets/views/routes/articleUrl.html',
-                controller: 'ArticleInstanceController',
-                size: size,
-                resolve: {
-                    selectedArticles: function(){
-                        return $scope.selectedArticles;
+    $scope.openModal = function(size) {
+            $scope.selectedArticles = this.site.articles;
+            var modalInstance = $modal.open(
+                {
+                    animation: $scope.animationsEnabled,
+                    templateUrl: '/assets/views/routes/articleUrl.html',
+                    controller: 'ArticleInstanceController',
+                    size: size,
+                    resolve: {
+                        selectedArticles: function () {
+                            return $scope.selectedArticles;
+                        }
                     }
                 }
-            }
-        )
-    }
+            );
+            console.log($scope.selectedArticles);
+        }
 
 }]);
 
@@ -187,9 +223,9 @@ prepHoopsApp.controller('ArticleInstanceController', ['$scope', '$modalInstance'
     $scope.modalArticles = selectedArticles;
     $scope.articleUrlArray = [];
 
-    for(var i = 0; i < $scope.modalArticles.length; i++){
-        $scope.articleUrlArray.push($scope.modalArticles[i].url);
-    }
+    //for(var i = 0; i < $scope.modalArticles.length; i++){
+    //    $scope.articleUrlArray.push($scope.modalArticles[i].url);
+    //}
 
     $scope.ok = function () {
         $modalInstance.close();
