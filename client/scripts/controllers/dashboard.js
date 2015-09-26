@@ -68,8 +68,9 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         $http.post('/api/articleGet', [first, last]).
             success(function(data){
                 $scope.getFeeds();
-                $scope.dates = data;
                 $scope.getStats(data);
+                $scope.dates = $scope.sortChron(data);
+                console.log($scope.dates);
             });
 
     };
@@ -87,9 +88,10 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
             success(function(data){
                 $scope.getFeeds();
                 $scope.dates = data;
+                $scope.dates = $scope.sortChron(data);
                 $scope.getStats(data);
 
-        });
+            });
     };
 
     //Function to clear fields
@@ -132,6 +134,24 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
          }
 
      };
+
+    $scope.sortChron = function(array){
+        for (var i = 0; i < array.length; i++){
+            for (var j = 0; j < array[i].site.length; j++){
+                array[i].site.sort(function(a, b) {
+                    var siteA = parseFloat(a.siteID);
+                    var siteB = parseFloat(b.siteID);
+                    if (siteA < siteB)
+                        return -1;
+                    if (siteA > siteB)
+                        return 1;
+                });
+            }
+
+        }
+        $scope.databaseResults = array;
+        return $scope.databaseResults;
+    };
 
     //Code for DatePicker
 
