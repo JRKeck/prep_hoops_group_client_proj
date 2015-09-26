@@ -26,7 +26,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Not yet working to get day of the week for specified date
     $scope.getDayOfWeek = function(date){
             $scope.dayOfWeek = date.getDay();
-            //console.log($scope.dayOfWeek);
+
     };
 
     //Gets short names from feeds for table headers
@@ -42,8 +42,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     //Runs parse to refresh database and reloads dashboard with new info
     $scope.runParse = function(){
         $http.get('/parseRSS').
-            success(function(){
-                $scope.getLastParseDate();
+            success(function(req, res){
             });
     };
 
@@ -125,7 +124,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 $scope.articlesPerDayArray[i]=$scope.articlesPerDay;
                  $scope.articlesPerDay=0;
              }
-             //console.log($scope.articlesPerDayArray);
              $scope.totalArticles.push($scope.totalSiteArticles);
              $scope.dailyAvg.push(Math.floor(($scope.totalSiteArticles*100/(data.length)))/100);
              $scope.zeroDays.push(zeroDaysSite);
@@ -134,9 +132,6 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
          }
 
      };
-
-
-
 
     //Code for DatePicker
 
