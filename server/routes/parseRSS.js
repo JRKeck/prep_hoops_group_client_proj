@@ -66,7 +66,7 @@ function findLastParseDate(){
 
 // Get Site information from the Database
 function getSites() {
-    Feeds.find({}, function (err, sites) {
+    Feeds.find({}).sort({siteID: 1}).exec(function (err, sites) {
         if (err) {
             console.log("Error in pull sites from database ", err);
         } else {
