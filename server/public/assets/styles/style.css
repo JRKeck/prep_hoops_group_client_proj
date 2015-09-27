@@ -120,6 +120,12 @@ header {
   font-family: "Montserrat", sans-serif; }
   header .navbar {
     border-radius: 0; }
+    header .navbar .navbar-toggle .icon-bar {
+      background-color: #fff; }
+    header .navbar .navbar-toggle:hover {
+      background-color: #f56529; }
+    header .navbar .navbar-toggle:focus {
+      background-color: transparent; }
   header .navbar-default {
     background-color: #444;
     border: none; }
@@ -132,7 +138,7 @@ header {
       background-color: #f56529; }
     header .navbar-default .navbar-nav > li > a:focus {
       color: #fff; }
-  header .navbar-default .navbar-nav > li.open > a, header .navbar-default .navbar-nav > li.open > a:hover {
+  header .navbar-default .navbar-nav > li.open > a, header .navbar-default .navbar-nav > li.open > a:hover, header .navbar-default .navbar-nav > li.open > a:focus {
     background-color: #f56529;
     color: #fff; }
   header .navbar-default .navbar-nav > li.open .dropdown-menu li a {

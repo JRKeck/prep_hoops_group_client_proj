@@ -5,6 +5,17 @@ header {
   font-family: $font-san-serif;
   .navbar {
     border-radius: 0;
+    .navbar-toggle {
+      .icon-bar {
+        background-color: $color-white;
+      }
+      &:hover {
+        background-color: $color-accent;
+      }
+      &:focus {
+        background-color: transparent;
+      }
+    }
   }
   .navbar-default {
     background-color: $color-md-gray;
@@ -26,7 +37,7 @@ header {
       }
     }
     >li.open {
-      >a, >a:hover {
+      >a, >a:hover, >a:focus {
         background-color: $color-accent;
         color: $color-white;
       }
