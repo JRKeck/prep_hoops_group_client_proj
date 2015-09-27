@@ -45,7 +45,7 @@ router.get('/*', function(req, res, next){
 module.exports = router;
 
 // Find the last parse date in the DB
-function findLastParseDate(){
+var findLastParseDate = function() {
     console.log("#2 Hit the findLastParseDate in parseRSS.js");
     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
         if (err){
@@ -65,10 +65,10 @@ function findLastParseDate(){
             getSites();
         }
     });
-}
+};
 
 // Get Site information from the Database
-function getSites() {
+var getSites = function()  {
     console.log("#3 Hit the getSites function in parseRSS.js");
     Feeds.find({}).sort({siteID: 1}).exec(function (err, sites) {
         if (err) {
@@ -79,10 +79,10 @@ function getSites() {
             dateCollectionUpdate(rssFeeds);
         }
     });
-}
+};
 
 // Need to get the last article collection date from the database
-function dateCollectionUpdate(rssFeeds) {
+var dateCollectionUpdate = function(rssFeeds) {
     console.log("#4 Hit the dateCollectionUpdate function in parseRSS.js");
     Articles.find({}).sort({date: -1}).limit(1).exec(function (err, lastdate) {
         if (err) {
@@ -167,10 +167,10 @@ function dateCollectionUpdate(rssFeeds) {
             }
         }
     });
-}
+};
 
 // Loop through each RSS Feed in the Network
-function networkParser(sites){
+var networkParser = function(sites){
     console.log("#5 Hit the Network Parser function");
     // For each Feed in the network send it to the parser
     for(i = 0; i < sites.length; i++){
@@ -178,10 +178,10 @@ function networkParser(sites){
         var networkCount = sites.length;
         parseFeed(el.rssURL, el.siteFullName, el.siteID, networkCount);
     }
-}
+};
 
 // Parse an RSS Feed
-function parseFeed(feedURL, siteName, siteID, numNetworks){
+var parseFeed = function(feedURL, siteName, siteID, numNetworks){
     console.log ("#6 Hit the parseFeed function.  Should see memory leak right after this.");
     client = new Client();
 
@@ -251,24 +251,24 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
             }
         });
     });
-}
+};
 
 // Convert a date to ISO format
-function dateToISO(date){
+var dateToISO = function(date){
     var ISOdate = new Date(date).toISOString();
     return ISOdate;
-}
+};
 
 // Grab the unique ID from a SportNgin article
-function getSportNginArticleID(url){
+var getSportNginArticleID = function(url){
     var articleID = url.substr(url.lastIndexOf('/') + 1);
     // Remove everything after the ?
     articleID = articleID.substr(0, articleID.indexOf('?'));
     return articleID;
-}
+};
 
 // Get article author
-function getAuthor(el){
+var getAuthor = function(el){
     if(el['dc:creator']){
         var articleAuthor = el['dc:creator'];
         articleAuthor = articleAuthor.toString();
@@ -277,10 +277,10 @@ function getAuthor(el){
         articleAuthor = el.author[0];
     }
     return articleAuthor;
-}
+};
 
 // Get article ID
-function getArticleID(el){
+var getArticleID = function(el){
     if(el.link[0]) {
         var findID = getSportNginArticleID(el.link[0]);
     }
@@ -288,4 +288,4 @@ function getArticleID(el){
         findID = '';
     }
     return findID;
-}
+};
