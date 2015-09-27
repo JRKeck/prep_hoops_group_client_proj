@@ -89,19 +89,20 @@ var dateCollectionUpdate = function(rssFeeds) {
             console.log("Error pulling articles: ", err);
         } else {
             // Format last article collection date in Date for comparison to current date
+            console.log("Last Date returned from collections: ", lastdate[0].date);
             var tempLastCollectionDate = new Date(lastdate[0].date);
             var lastCollectionDate = new Date(tempLastCollectionDate.setDate(tempLastCollectionDate.getDate() + 1));
             var MS_PER_DAY = 1000 * 60 * 60 * 24;
             var currentDate = new Date();
-
+            console.log("Dates - last collection and current", lastCollectionDate, currentDate);
             // a and b are javascript Date objects
-            function dateDiffInDays(a, b) {
+            var dateDiffInDays = function(a, b) {
                 // Discard the time and time-zone information.
                 var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
                 var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
                 return Math.floor((utc2 - utc1) / MS_PER_DAY);
-            }
+            };
 
             var daysSinceLastCollection = dateDiffInDays(lastCollectionDate, currentDate);
             console.log("Days since last collection: ", daysSinceLastCollection);
