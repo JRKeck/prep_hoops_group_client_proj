@@ -10,7 +10,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
 
 
 // To find max and min values in an array
-    function arrayMin(arr) {
+    $scope.arrayMin= function(arr) {
         var len = arr.length, min = Infinity;
             while (len--) {
                  if (arr[len] < min) {
@@ -20,7 +20,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
         return min;
     };
 
-    function arrayMax(arr) {
+    $scope.arrayMax = function(arr) {
         var len = arr.length, max = -Infinity;
             while (len--) {
          if (arr[len] > max) {
@@ -67,6 +67,15 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                 $scope.feeds = data;
                 siteFullName.set('feedsArray', data);
             });
+        $scope.siteName($scope.feeds);
+    };
+
+    $scope.siteNameArray=[];
+    $scope.siteName = function(array){
+            for (var i=0; i<array.length; i++){
+                $scope.siteNameArray.push(array[i].siteShortName);
+            }
+            //console.log($scope.siteNameArray);
     };
 
     $scope.runParse = function(){
@@ -166,7 +175,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
              $scope.totalSiteArticles=0;// reset before loop
              zeroDaysSite=0;//reset before loop
          }
-        console.log(arrayMin($scope.zeroDays), arrayMax($scope.zeroDays));
+        //console.log($scope.arrayMin($scope.zeroDays), $scope.arrayMax($scope.zeroDays));
      };
 
     //Code for DatePicker
@@ -183,12 +192,12 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
     };
 
     $scope.today = function() {
-        //$scope.first = new Date();
-        //$scope.last = new Date();
-        //$scope.first = $scope.last-30;
+        $scope.last = new Date();
+        $scope.first = new Date().setDate($scope.last.getDate()-30);
 
-        $scope.first = "Please select a from date";
-        $scope.last = "Please select an end date";
+
+        //$scope.first = "Please select a from date";
+        //$scope.last = "Please select an end date";
     };
 
     $scope.today();
@@ -217,7 +226,7 @@ prepHoopsApp.controller('DashboardController', ['$scope', '$http', '$location', 
                     }
                 }
             );
-            console.log($scope.selectedArticles);
+            //console.log($scope.selectedArticles);
         }
 
 }]);

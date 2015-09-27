@@ -204,8 +204,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
 
         });
     };
-    var date = new Date();
-    $scope.minDate = date.setDate((new Date()).getDate());
+    //var date = new Date();
+    //$scope.minDate = date.setDate((new Date()).getDate());
 
     //Code for DatePicker
 
@@ -221,10 +221,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     };
 
     $scope.today = function() {
-        //$scope.first = new Date();
         $scope.last = new Date();
-        $scope.first = date.setDate((new Date()).getDate()-30);
-
+        $scope.first = new Date().setDate($scope.last.getDate()-30);
 
     };
 
