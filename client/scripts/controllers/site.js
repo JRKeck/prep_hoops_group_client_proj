@@ -11,6 +11,29 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     $scope.max= [];
     $scope.zeroDays= [];
 
+
+
+// To find max and min values in an array
+    $scope.arrayMin= function(arr) {
+        var len = arr.length, min = Infinity;
+            while (len--) {
+                 if (arr[len] < min) {
+                min = arr[len];
+                 }
+    }
+        return min;
+    };
+
+    $scope.arrayMax = function(arr) {
+        var len = arr.length, max = -Infinity;
+            while (len--) {
+         if (arr[len] > max) {
+            max = arr[len];
+        }
+    }
+        return max;
+    };
+
     //function to get only the selected site for all the date range selected
     $scope.getSites= function(data) {
         for(var i=0; i<data.length; i++) {

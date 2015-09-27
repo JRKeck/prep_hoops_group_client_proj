@@ -75,7 +75,7 @@
                     <tr>
                         <td>Zero Days</td>
 
-                        <td ng-repeat="days in zeroDays track by $index">{{days}}</td>
+                        <td  ng-repeat="days in zeroDays track by $index" ng-style="{'background-color': 'rgba(255,0,0,'+ (days-arrayMin(zeroDays))*days*(.8)/(arrayMax(zeroDays)* arrayMax(zeroDays)) +')'}">{{days}}</td>
                     </tr>
                 </table>
             </div>
