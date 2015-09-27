@@ -36,6 +36,7 @@ table tr:nth-child(even) {
   }
   td.feed-url {
     word-wrap: break-word;
+    text-align: left;
   }
   th.site-edit, th.site-delete {
     width: 100px;

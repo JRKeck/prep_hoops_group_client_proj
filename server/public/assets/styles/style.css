@@ -114,7 +114,10 @@ a.red:hover {
 .search {
   font-weight: bold; }
 
-.networklist {
+.admin h2 {
+  margin-top: 0px; }
+
+.admin .networklist {
   clear: both; }
 
 /* header.scss */
@@ -253,7 +256,8 @@ th.site-short-name {
   width: 60px; }
 
 td.feed-url {
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  text-align: left; }
 
 th.site-edit, th.site-delete {
   width: 100px; }
