@@ -123,15 +123,22 @@ header {
   header .navbar-default {
     background-color: #444;
     border: none; }
-  header .navbar-default .navbar-nav > li:hover {
-    color: #f56529; }
   header .navbar-default .navbar-nav > li > a {
     color: #fff;
     text-transform: uppercase;
     letter-spacing: 1px; }
     header .navbar-default .navbar-nav > li > a:hover {
-      color: #fff; }
+      color: #fff;
+      background-color: #f56529; }
     header .navbar-default .navbar-nav > li > a:focus {
+      color: #fff; }
+  header .navbar-default .navbar-nav > li.open > a, header .navbar-default .navbar-nav > li.open > a:hover {
+    background-color: #f56529;
+    color: #fff; }
+  header .navbar-default .navbar-nav > li.open .dropdown-menu li a {
+    color: #fff; }
+    header .navbar-default .navbar-nav > li.open .dropdown-menu li a:hover {
+      background-color: #f56529;
       color: #fff; }
   header .navbar-brand {
     background-image: url("/assets/images/prep-hoops-logo.svg");
