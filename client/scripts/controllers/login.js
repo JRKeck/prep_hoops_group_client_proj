@@ -1,7 +1,5 @@
 prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', 'AuthService', function($scope, $http, $location, AuthService){
 
-    console.log("Login Controller Loaded");
-
     $scope.loginForm = {};
 
     $scope.login = function () {
@@ -9,8 +7,6 @@ prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', 'Aut
         // initial values
         $scope.error = false;
         $scope.disabled = true;
-        console.log($scope.loginForm.username + $scope.loginForm.password);
-
 
         // call login from service
         AuthService.login($scope.loginForm.username, $scope.loginForm.password)
@@ -28,20 +24,15 @@ prepHoopsApp.controller('LoginController', ['$scope', '$http', '$location', 'Aut
                 $scope.disabled = false;
                 $scope.loginForm = {};
             });
-
     };
 
     $scope.logout = function () {
 
-        console.log(AuthService.getUserStatus());
-
-        // call logout from service
-        AuthService.logout()
-            .then(function () {
-                $location.path('/login');
-            });
-
+    // call logout from service
+    AuthService.logout()
+        .then(function () {
+            $location.path('/login');
+        });
     };
-
 }]);
 

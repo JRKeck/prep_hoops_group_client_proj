@@ -34,21 +34,20 @@ router.get('/getLastDate', function(req, res, next){
 // This is the GET call to fire off the parse when localhost:3000/parseRSS is
 // fed into the browser
 router.get('/*', function(req, res, next){
-    console.log('Parsing RSS!');
+    console.log("#1 Hit the router.get in parseRSS.js");
     // Find the Last Parse Date
-    findLastParseDate();
+    //findLastParseDate();
     // Capture the time of Parsing execution
     newParseDate = dateToISO(Date.now());
-    console.log('New parse date: '+newParseDate);
     res.send('Parsing RSS');
 });
 
 module.exports = router;
 
 // Find the last parse date in the DB
-function findLastParseDate(){
-    ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
-        console.log('In findLastParseDate - id:', obj.id);
+var findLastParseDate = function() {
+    console.log("#2 Hit the findLastParseDate in parseRSS.js");
+    ParseDate.find({}, { sort: { 'date' : -1 } }, function(err, obj) {
         if (err){
             console.log('Error finding last parse date: ', err);
         }
@@ -61,54 +60,52 @@ function findLastParseDate(){
         else {
             // Working Variable for Parse
             lastParseDate = (dateToISO(obj.date));
-            console.log("Last Parse Date: ", lastParseDate);
-            console.log("Sending to Get Sites");
+            console.log("Last parse Date is: ", lastParseDate);
             // Get the RSS Feeds
             getSites();
         }
-        console.log('Last parse date: '+lastParseDate);
     });
-}
+};
 
 // Get Site information from the Database
-function getSites() {
-    Feeds.find({}, function (err, sites) {
+var getSites = function()  {
+    console.log("#3 Hit the getSites function in parseRSS.js");
+    Feeds.find({}).sort({siteID: 1}).exec(function (err, sites) {
         if (err) {
             console.log("Error in pull sites from database ", err);
+        } else {
+            rssFeeds = sites;
+            console.log("Feeds #1: ", rssFeeds[0]);
+            dateCollectionUpdate(rssFeeds);
         }
-        //console.log(sites);
-        console.log("Number of Sites: ", sites.length);
-        console.log("Sending to dateCollectionUpdate.");
-        rssFeeds = sites;
-        dateCollectionUpdate(rssFeeds);
     });
-}
+};
 
 // Need to get the last article collection date from the database
-function dateCollectionUpdate(rssFeeds) {
+var dateCollectionUpdate = function(rssFeeds) {
+    console.log("#4 Hit the dateCollectionUpdate function in parseRSS.js");
     Articles.find({}).sort({date: -1}).limit(1).exec(function (err, lastdate) {
         if (err) {
             console.log("Error pulling articles: ", err);
         } else {
             // Format last article collection date in Date for comparison to current date
+            console.log("Last Date returned from collections: ", lastdate[0].date);
             var tempLastCollectionDate = new Date(lastdate[0].date);
             var lastCollectionDate = new Date(tempLastCollectionDate.setDate(tempLastCollectionDate.getDate() + 1));
             var MS_PER_DAY = 1000 * 60 * 60 * 24;
             var currentDate = new Date();
-            console.log("Last Article Date Colleciton: ", lastCollectionDate);
-            console.log("Current Date: ", currentDate);
-
+            console.log("Dates - last collection and current", lastCollectionDate, currentDate);
             // a and b are javascript Date objects
-            function dateDiffInDays(a, b) {
+            var dateDiffInDays = function(a, b) {
                 // Discard the time and time-zone information.
                 var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
                 var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
                 return Math.floor((utc2 - utc1) / MS_PER_DAY);
-            }
+            };
 
             var daysSinceLastCollection = dateDiffInDays(lastCollectionDate, currentDate);
-            console.log("Days Since Last Parse: ", daysSinceLastCollection);
+            console.log("Days since last collection: ", daysSinceLastCollection);
 
             var month = new Array();
             month[0] = "-01-";
@@ -126,7 +123,6 @@ function dateCollectionUpdate(rssFeeds) {
 
             if (daysSinceLastCollection > 0) {
                 for (var i = 0; i < daysSinceLastCollection; i++) {
-                    console.log("We need to create collection(s)!  Current Date is: ", currentDate);
                     var currentDateDayTemp = (currentDate.getDate()).toString();
                     if (currentDateDayTemp < 10) {
                         var currentDateDay = "0" + currentDateDayTemp;
@@ -136,14 +132,12 @@ function dateCollectionUpdate(rssFeeds) {
                     var currentDateMonth = month[currentDate.getMonth()];
                     var currentDateYear = ((currentDate.getYear()) + 1900).toString();
                     var currentDateString = currentDateYear + currentDateMonth + currentDateDay;
-                    console.log("Current Date String: " + currentDateString);
 
                     var dateArticleToAdd = {
                         date: currentDateString,
                         site: []
                     };
-                    console.log("Preparing to create sites in date: " + currentDateString);
-                    console.log("Number of sites to add: ", rssFeeds.length);
+
                     for (var j = 0; j < rssFeeds.length; j++) {
                         var sitePush = {
                             siteName: rssFeeds[j].siteFullName,
@@ -153,12 +147,10 @@ function dateCollectionUpdate(rssFeeds) {
                         };
                         dateArticleToAdd.site.push(sitePush);
                     }
-                    console.log(dateArticleToAdd);
+
                     Articles.create(dateArticleToAdd, function (err, post) {
                         if (err) {
                             console.log("Error on Article Create: ", err);
-                        } else {
-                            console.log(post);
                         }
                     });
                     currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1));
@@ -171,25 +163,27 @@ function dateCollectionUpdate(rssFeeds) {
                     }
                 }
             } else {
+                console.log("Days since last collection is 0?  Sending to networkParser");
                 networkParser(rssFeeds);
             }
         }
     });
-}
+};
 
 // Loop through each RSS Feed in the Network
-function networkParser(sites){
-    console.log("Number of Sites: ", sites.length);
+var networkParser = function(sites){
+    console.log("#5 Hit the Network Parser function");
     // For each Feed in the network send it to the parser
     for(i = 0; i < sites.length; i++){
         var el = sites[i];
         var networkCount = sites.length;
         parseFeed(el.rssURL, el.siteFullName, el.siteID, networkCount);
     }
-}
+};
 
 // Parse an RSS Feed
-function parseFeed(feedURL, siteName, siteID, numNetworks){
+var parseFeed = function(feedURL, siteName, siteID, numNetworks){
+    console.log ("#6 Hit the parseFeed function.  Should see memory leak right after this.");
     client = new Client();
 
     // Connect to Remote RSS Feed
@@ -232,7 +226,6 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
 
                 // If the articles pubDate is newer than the last parse date push it to array
                 if (articleObj.pubDate > lastParseDate) {
-                    console.log(articleObj.pubDate +' is newer than '+ lastParseDate);
                     holdingArray.push(articleObj);
                 }
                 articleCount++;
@@ -248,7 +241,6 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
                 articleCount = 0;
 
                 if (holdingArray.length > 0){
-                    //console.log(holdingArray);
                     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
                         ParseDate.findByIdAndUpdate(obj.id, {date: newParseDate}, function (err, post) {
                             console.log('New parse date is', newParseDate);
@@ -260,24 +252,24 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
             }
         });
     });
-}
+};
 
 // Convert a date to ISO format
-function dateToISO(date){
+var dateToISO = function(date){
     var ISOdate = new Date(date).toISOString();
     return ISOdate;
-}
+};
 
 // Grab the unique ID from a SportNgin article
-function getSportNginArticleID(url){
+var getSportNginArticleID = function(url){
     var articleID = url.substr(url.lastIndexOf('/') + 1);
     // Remove everything after the ?
     articleID = articleID.substr(0, articleID.indexOf('?'));
     return articleID;
-}
+};
 
 // Get article author
-function getAuthor(el){
+var getAuthor = function(el){
     if(el['dc:creator']){
         var articleAuthor = el['dc:creator'];
         articleAuthor = articleAuthor.toString();
@@ -286,10 +278,10 @@ function getAuthor(el){
         articleAuthor = el.author[0];
     }
     return articleAuthor;
-}
+};
 
 // Get article ID
-function getArticleID(el){
+var getArticleID = function(el){
     if(el.link[0]) {
         var findID = getSportNginArticleID(el.link[0]);
     }
@@ -297,4 +289,4 @@ function getArticleID(el){
         findID = '';
     }
     return findID;
-}
+};

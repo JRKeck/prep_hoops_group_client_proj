@@ -23,10 +23,6 @@ var mongoose = require("mongoose");
 // Turn on the debug feature for mongoose - additional information sent to server console
 mongoose.set("debug",true);
 
-
-////Local DB
-//var mongoURI = "";
-//
 //Mongo Labs DB
  var mongoURI = "mongodb://prephoopsAdmin:PHoopsAdmin@ds039073.mongolab.com:39073/prep_hoops_articledb";
 
