@@ -36,7 +36,7 @@ router.get('/getLastDate', function(req, res, next){
 router.get('/*', function(req, res, next){
     console.log("#1 Hit the router.get in parseRSS.js");
     // Find the Last Parse Date
-    findLastParseDate();
+    //findLastParseDate();
     // Capture the time of Parsing execution
     newParseDate = dateToISO(Date.now());
     res.send('Parsing RSS');
@@ -47,7 +47,7 @@ module.exports = router;
 // Find the last parse date in the DB
 var findLastParseDate = function() {
     console.log("#2 Hit the findLastParseDate in parseRSS.js");
-    ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
+    ParseDate.find({}, { sort: { 'date' : -1 } }, function(err, obj) {
         if (err){
             console.log('Error finding last parse date: ', err);
         }
