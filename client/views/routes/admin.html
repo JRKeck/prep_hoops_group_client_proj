@@ -1,23 +1,23 @@
-<div class="col-md-12 content">
+<div class="col-xs-12 content">
 
     <section class="adminSection col-sm-6">
         <h2>Add a New Site</h2>
-        <form novalidate id="adminForm" method="post">
+        <form class="form-horizontal" novalidate id="adminForm" method="post">
             <div class="error">{{error_message}}</div>
-            <div>
-                <label for="siteFullName">Site Name: </label>
-                <input type="text" ng-model="adminForm.siteFullName" name="siteFullName" id="siteFullName" placeholder="test"/>
+            <div class="form-group">
+                <label for="siteFullName" class="col-xs-4 control-label">Site Name: </label>
+                <input type="text" class="col-xs-7" ng-model="adminForm.siteFullName" name="siteFullName" id="siteFullName" placeholder="test"/>
             </div>
-            <div>
-                <label for="siteShortName">Report Code: </label>
-                <input type="text" ng-model="adminForm.siteShortName" name="siteShortName" id="siteShortName"/>
+            <div class="form-group">
+                <label for="siteShortName" class="col-xs-4 control-label">Report Code: </label>
+                <input type="text" class="col-xs-7" ng-model="adminForm.siteShortName" name="siteShortName" id="siteShortName"/>
             </div>
-            <div>
-                <label for="rssURL">RSS Feed: </label>
-                <input type="text" ng-model="adminForm.rssURL" name="rssURL" id="rssURL"/>
+            <div class="form-group">
+                <label for="rssURL" class="col-xs-4 control-label">RSS Feed: </label>
+                <input type="text" class="col-xs-7" ng-model="adminForm.rssURL" name="rssURL" id="rssURL"/>
             </div>
-            <div>
-                <input type="submit" id="addsite" class="" ng-click="assignSiteID(adminForm)" value="Submit"/>
+            <div class="form-group">
+                <input class="col-xs-offset-4" type="submit" id="addsite" class="" ng-click="assignSiteID(adminForm)" value="Submit"/>
             </div>
         </form>
     </section>

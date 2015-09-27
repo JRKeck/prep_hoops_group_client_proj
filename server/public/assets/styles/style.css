@@ -114,6 +114,9 @@ a.red:hover {
 .search {
   font-weight: bold; }
 
+.networklist {
+  clear: both; }
+
 /* header.scss */
 header {
   color: #fff;
