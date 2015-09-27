@@ -34,6 +34,7 @@ router.get('/getLastDate', function(req, res, next){
 // This is the GET call to fire off the parse when localhost:3000/parseRSS is
 // fed into the browser
 router.get('/*', function(req, res, next){
+    console.log("#1 Hit the router.get in parseRSS.js");
     // Find the Last Parse Date
     findLastParseDate();
     // Capture the time of Parsing execution
@@ -45,6 +46,7 @@ module.exports = router;
 
 // Find the last parse date in the DB
 function findLastParseDate(){
+    console.log("#2 Hit the findLastParseDate in parseRSS.js");
     ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
         if (err){
             console.log('Error finding last parse date: ', err);
@@ -58,6 +60,7 @@ function findLastParseDate(){
         else {
             // Working Variable for Parse
             lastParseDate = (dateToISO(obj.date));
+            console.log("Last parse Date is: ", lastParseDate);
             // Get the RSS Feeds
             getSites();
         }
@@ -66,11 +69,13 @@ function findLastParseDate(){
 
 // Get Site information from the Database
 function getSites() {
+    console.log("#3 Hit the getSites function in parseRSS.js");
     Feeds.find({}).sort({siteID: 1}).exec(function (err, sites) {
         if (err) {
             console.log("Error in pull sites from database ", err);
         } else {
             rssFeeds = sites;
+            console.log("Feeds #1: ", rssFeeds[0]);
             dateCollectionUpdate(rssFeeds);
         }
     });
@@ -78,6 +83,7 @@ function getSites() {
 
 // Need to get the last article collection date from the database
 function dateCollectionUpdate(rssFeeds) {
+    console.log("#4 Hit the dateCollectionUpdate function in parseRSS.js");
     Articles.find({}).sort({date: -1}).limit(1).exec(function (err, lastdate) {
         if (err) {
             console.log("Error pulling articles: ", err);
@@ -98,6 +104,7 @@ function dateCollectionUpdate(rssFeeds) {
             }
 
             var daysSinceLastCollection = dateDiffInDays(lastCollectionDate, currentDate);
+            console.log("Days since last collection: ", daysSinceLastCollection);
 
             var month = new Array();
             month[0] = "-01-";
@@ -155,6 +162,7 @@ function dateCollectionUpdate(rssFeeds) {
                     }
                 }
             } else {
+                console.log("Days since last collection is 0?  Sending to networkParser");
                 networkParser(rssFeeds);
             }
         }
@@ -163,6 +171,7 @@ function dateCollectionUpdate(rssFeeds) {
 
 // Loop through each RSS Feed in the Network
 function networkParser(sites){
+    console.log("#5 Hit the Network Parser function");
     // For each Feed in the network send it to the parser
     for(i = 0; i < sites.length; i++){
         var el = sites[i];
@@ -173,6 +182,7 @@ function networkParser(sites){
 
 // Parse an RSS Feed
 function parseFeed(feedURL, siteName, siteID, numNetworks){
+    console.log ("#6 Hit the parseFeed function.  Should see memory leak right after this.");
     client = new Client();
 
     // Connect to Remote RSS Feed
