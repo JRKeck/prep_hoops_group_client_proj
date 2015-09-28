@@ -213,6 +213,8 @@ footer {
   background-color: #444;
   color: #fff;
   padding: 10px 20px; }
+  footer .copyright {
+    float: right; }
 
 /* tables.scss */
 table {
