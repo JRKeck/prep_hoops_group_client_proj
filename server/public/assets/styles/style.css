@@ -2,6 +2,9 @@
 /* variables.scss */
 /* mixins.scss */
 /* buttons.scss */
+.btn:focus {
+  outline: none; }
+
 .btn-submit {
   background-color: #f56529;
   color: #fff; }
@@ -111,16 +114,22 @@ a.red:hover {
     font-size: 28px; }
 
 .refresh-database {
-  float: right; }
+  float: right;
+  background-color: transparent;
+  border: 2px solid #444;
+  color: #444; }
+  .refresh-database:hover {
+    border-color: #f56529;
+    color: #f56529; }
 
 .date-search {
   margin-bottom: 10px; }
 
 .datepicker .input-group {
   width: 100%; }
-
-.search {
-  font-weight: bold; }
+  .datepicker .input-group .input-group-addon {
+    background-color: #5e5e5e;
+    color: #fff; }
 
 .admin h2 {
   margin-top: 0px; }
@@ -274,3 +283,7 @@ th.site-edit, th.site-delete {
 
 td.date {
   width: 140px; }
+
+td.td-dark {
+  background-color: #5e5e5e;
+  color: #fff; }

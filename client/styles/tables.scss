@@ -45,3 +45,7 @@ table tr:nth-child(even) {
 td.date {
   width: 140px;
 }
+td.td-dark {
+  background-color: lighten($color-md-gray, 10%);
+  color: $color-white;
+}

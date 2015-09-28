@@ -3,41 +3,30 @@
 
     <div class="row">
         <div class="col-md-12">
-
             <div class="date-search row">
-                <p class="search col-md-1">From:</p>
-
-                <div class="col-md-4 col-xs-12 datepicker">
-                    <p class="input-group">
-
-                        <input type="text" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                  <span class="input-group-btn">
-
-                        <button type="button" class="btn btn-default" ng-click="open($event, 'opened1')"><i
-                                class="glyphicon glyphicon-calendar"></i>
-                        </button>
-
-                      </span>
-                    </p>
-                </div>
-                <p class="search col-md-1">To:</p>
-
-                <div class="col-md-4 col-xs-12 datepicker">
-                    <p class="input-group">
-
-                        <input type="text" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                  <span class="input-group-btn">
-
-                        <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i
-                                class="glyphicon glyphicon-calendar"></i></button>
-
-                      </span>
-                    </p>
-                </div>
-
-                <input type="button" id="getRSS" class="col-md-1 btn post" ng-click="getRSS(first, last)"
-                       value="Submit"/>
-
+                <form action="" class="form-inline">
+                    <div class="datepicker form-group col-sm-4 col-xs-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">From:</div>
+                            <input type="text" class="form-control" datepicker-popup ng-model="first" is-open="opened1" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event, 'opened1')"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="datepicker form-group col-sm-4 col-xs-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">To:</div>
+                            <input type="text" class="form-control" datepicker-popup ng-model="last" is-open="opened2" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event, 'opened2')"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-4">
+                        <input type="button" id="getRSS" class="btn btn-submit post" ng-click="getRSS(first, last)" value="Submit"/>
+                    </div>
+                </form>
             </div>
             <div class="table-responsive">
                 <table class="col-xs-12 table-sitepage">
@@ -59,22 +48,22 @@
                     </tr>
 
                     <tr>
-                        <td>Total Articles</td>
+                        <td class="td-dark">Total Articles</td>
 
                         <td ng-repeat="total in totalArticles track by $index">{{total}}</td>
                     </tr>
                     <tr>
-                        <td>Daily AVG</td>
+                        <td class="td-dark">Daily AVG</td>
 
                         <td ng-repeat="avg in dailyAvg track by $index">{{avg}}</td>
                     </tr>
                     <tr>
-                        <td>Maximum</td>
+                        <td class="td-dark">Maximum</td>
 
                         <td ng-repeat="maxNo in max track by $index">{{maxNo}}</td>
                     </tr>
                     <tr>
-                        <td>Zero Days</td>
+                        <td class="td-dark">Zero Days</td>
 
                         <td ng-repeat="days in zeroDays track by $index">{{days}}</td>
                     </tr>

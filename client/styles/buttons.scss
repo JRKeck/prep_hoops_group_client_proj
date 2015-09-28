@@ -1,5 +1,9 @@
 /* buttons.scss */
-
+.btn {
+  &:focus {
+    outline: none;
+  }
+}
 .btn-submit {
   background-color: $color-accent;
   color: $color-white;
