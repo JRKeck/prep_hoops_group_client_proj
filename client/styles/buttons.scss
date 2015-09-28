@@ -1,0 +1,10 @@
+/* buttons.scss */
+
+.btn-submit {
+  background-color: $color-accent;
+  color: $color-white;
+  &:hover, &:focus {
+    background-color: darken( $color-accent, 10% );
+    color: $color-white;
+  }
+}

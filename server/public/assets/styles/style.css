@@ -1,6 +1,14 @@
 /* style.scss */
 /* variables.scss */
 /* mixins.scss */
+/* buttons.scss */
+.btn-submit {
+  background-color: #f56529;
+  color: #fff; }
+  .btn-submit:hover, .btn-submit:focus {
+    background-color: #e1490a;
+    color: #fff; }
+
 /* layout.scss */
 html,
 body {
@@ -108,8 +116,8 @@ a.red:hover {
 .date-search {
   margin-bottom: 10px; }
 
-.datepicker {
-  display: inline; }
+.datepicker .input-group {
+  width: 100%; }
 
 .search {
   font-weight: bold; }
