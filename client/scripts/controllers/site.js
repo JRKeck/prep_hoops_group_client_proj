@@ -55,7 +55,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
                 $scope.clearFields();
                 $scope.lastParseDate = new Date(data[0].date);
                 var lastParseDate = new Date(data[0].date);
-                $scope.thirtyDaysBefore = new Date(lastParseDate.setDate($scope.lastParseDate.getDate() - 30));
+                $scope.thirtyDaysBefore = new Date(lastParseDate.setDate($scope.lastParseDate.getDate() - 7));
                 var shortFirstDate = $scope.lastParseDate.toISOString();
                 $scope.shortFirstDateString = shortFirstDate.substr(0, shortFirstDate.indexOf('T'));
                 var shortSecondDate = $scope.thirtyDaysBefore.toISOString();
@@ -245,7 +245,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
 
     $scope.today = function() {
         $scope.last = new Date();
-        $scope.first = new Date().setDate($scope.last.getDate()-30);
+        $scope.first = new Date().setDate($scope.last.getDate()-7);
 
     };
 

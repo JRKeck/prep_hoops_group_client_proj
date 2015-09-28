@@ -7,7 +7,8 @@
 
 .btn-submit {
   background-color: #f56529;
-  color: #fff; }
+  color: #fff;
+  padding: 6px 20px; }
   .btn-submit:hover, .btn-submit:focus {
     background-color: #e1490a;
     color: #fff; }
@@ -216,7 +217,10 @@ header {
 
 /* modal.scss */
 .modal-content {
-  padding: 20px 30px 0px; }
+  padding: 20px 30px 0px;
+  border: 3px solid #444; }
+  .modal-content .modal-footer {
+    border-color: #2f2f2f; }
 
 .modal-article p.title {
   font-size: 18px;
@@ -224,6 +228,10 @@ header {
 
 .modal-article p.author {
   margin-left: 10px; }
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    margin: 80px auto 0; } }
 
 /* footer.scss */
 footer {

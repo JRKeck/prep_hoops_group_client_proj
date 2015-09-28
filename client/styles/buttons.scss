@@ -7,6 +7,7 @@
 .btn-submit {
   background-color: $color-accent;
   color: $color-white;
+  padding: 6px 20px;
   &:hover, &:focus {
     background-color: darken( $color-accent, 10% );
     color: $color-white;
