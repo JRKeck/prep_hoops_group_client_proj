@@ -11,6 +11,29 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     $scope.max= [];
     $scope.zeroDays= [];
 
+
+
+// To find max and min values in an array
+    $scope.arrayMin= function(arr) {
+        var len = arr.length, min = Infinity;
+            while (len--) {
+                 if (arr[len] < min) {
+                min = arr[len];
+                 }
+    }
+        return min;
+    };
+
+    $scope.arrayMax = function(arr) {
+        var len = arr.length, max = -Infinity;
+            while (len--) {
+         if (arr[len] > max) {
+            max = arr[len];
+        }
+    }
+        return max;
+    };
+
     //function to get only the selected site for all the date range selected
     $scope.getSites= function(data) {
         for(var i=0; i<data.length; i++) {
@@ -185,6 +208,7 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     };
 
     //Function to call RSS feed dump into database & pull back articles for requested dates
+
     $scope.getRSS = function (first, last){
       $scope.clearFields();
         var shortFirstDate = first.toISOString();
@@ -203,6 +227,8 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
 
         });
     };
+    //var date = new Date();
+    //$scope.minDate = date.setDate((new Date()).getDate());
 
     //Code for DatePicker
 
@@ -218,8 +244,9 @@ prepHoopsApp.controller('SiteController', ['$scope', '$http', '$location', '$mod
     };
 
     $scope.today = function() {
-        $scope.first = new Date();
         $scope.last = new Date();
+        $scope.first = new Date().setDate($scope.last.getDate()-30);
+
     };
 
     $scope.today();

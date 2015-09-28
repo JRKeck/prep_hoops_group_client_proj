@@ -34,8 +34,9 @@ router.get('/getLastDate', function(req, res, next){
 // This is the GET call to fire off the parse when localhost:3000/parseRSS is
 // fed into the browser
 router.get('/*', function(req, res, next){
+    console.log("#1 Hit the router.get in parseRSS.js");
     // Find the Last Parse Date
-    findLastParseDate();
+    //findLastParseDate();
     // Capture the time of Parsing execution
     newParseDate = dateToISO(Date.now());
     res.send('Parsing RSS');
@@ -44,8 +45,9 @@ router.get('/*', function(req, res, next){
 module.exports = router;
 
 // Find the last parse date in the DB
-function findLastParseDate(){
-    ParseDate.findOne({}, {}, { sort: { 'date' : -1 } }, function(err, obj) {
+var findLastParseDate = function() {
+    console.log("#2 Hit the findLastParseDate in parseRSS.js");
+    ParseDate.find({}, { sort: { 'date' : -1 } }, function(err, obj) {
         if (err){
             console.log('Error finding last parse date: ', err);
         }
@@ -58,46 +60,52 @@ function findLastParseDate(){
         else {
             // Working Variable for Parse
             lastParseDate = (dateToISO(obj.date));
+            console.log("Last parse Date is: ", lastParseDate);
             // Get the RSS Feeds
             getSites();
         }
     });
-}
+};
 
 // Get Site information from the Database
-function getSites() {
+var getSites = function()  {
+    console.log("#3 Hit the getSites function in parseRSS.js");
     Feeds.find({}).sort({siteID: 1}).exec(function (err, sites) {
         if (err) {
             console.log("Error in pull sites from database ", err);
         } else {
             rssFeeds = sites;
+            console.log("Feeds #1: ", rssFeeds[0]);
             dateCollectionUpdate(rssFeeds);
         }
     });
-}
+};
 
 // Need to get the last article collection date from the database
-function dateCollectionUpdate(rssFeeds) {
+var dateCollectionUpdate = function(rssFeeds) {
+    console.log("#4 Hit the dateCollectionUpdate function in parseRSS.js");
     Articles.find({}).sort({date: -1}).limit(1).exec(function (err, lastdate) {
         if (err) {
             console.log("Error pulling articles: ", err);
         } else {
             // Format last article collection date in Date for comparison to current date
+            console.log("Last Date returned from collections: ", lastdate[0].date);
             var tempLastCollectionDate = new Date(lastdate[0].date);
             var lastCollectionDate = new Date(tempLastCollectionDate.setDate(tempLastCollectionDate.getDate() + 1));
             var MS_PER_DAY = 1000 * 60 * 60 * 24;
             var currentDate = new Date();
-
+            console.log("Dates - last collection and current", lastCollectionDate, currentDate);
             // a and b are javascript Date objects
-            function dateDiffInDays(a, b) {
+            var dateDiffInDays = function(a, b) {
                 // Discard the time and time-zone information.
                 var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
                 var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
                 return Math.floor((utc2 - utc1) / MS_PER_DAY);
-            }
+            };
 
             var daysSinceLastCollection = dateDiffInDays(lastCollectionDate, currentDate);
+            console.log("Days since last collection: ", daysSinceLastCollection);
 
             var month = new Array();
             month[0] = "-01-";
@@ -155,24 +163,27 @@ function dateCollectionUpdate(rssFeeds) {
                     }
                 }
             } else {
+                console.log("Days since last collection is 0?  Sending to networkParser");
                 networkParser(rssFeeds);
             }
         }
     });
-}
+};
 
 // Loop through each RSS Feed in the Network
-function networkParser(sites){
+var networkParser = function(sites){
+    console.log("#5 Hit the Network Parser function");
     // For each Feed in the network send it to the parser
     for(i = 0; i < sites.length; i++){
         var el = sites[i];
         var networkCount = sites.length;
         parseFeed(el.rssURL, el.siteFullName, el.siteID, networkCount);
     }
-}
+};
 
 // Parse an RSS Feed
-function parseFeed(feedURL, siteName, siteID, numNetworks){
+var parseFeed = function(feedURL, siteName, siteID, numNetworks){
+    console.log ("#6 Hit the parseFeed function.  Should see memory leak right after this.");
     client = new Client();
 
     // Connect to Remote RSS Feed
@@ -241,24 +252,24 @@ function parseFeed(feedURL, siteName, siteID, numNetworks){
             }
         });
     });
-}
+};
 
 // Convert a date to ISO format
-function dateToISO(date){
+var dateToISO = function(date){
     var ISOdate = new Date(date).toISOString();
     return ISOdate;
-}
+};
 
 // Grab the unique ID from a SportNgin article
-function getSportNginArticleID(url){
+var getSportNginArticleID = function(url){
     var articleID = url.substr(url.lastIndexOf('/') + 1);
     // Remove everything after the ?
     articleID = articleID.substr(0, articleID.indexOf('?'));
     return articleID;
-}
+};
 
 // Get article author
-function getAuthor(el){
+var getAuthor = function(el){
     if(el['dc:creator']){
         var articleAuthor = el['dc:creator'];
         articleAuthor = articleAuthor.toString();
@@ -267,10 +278,10 @@ function getAuthor(el){
         articleAuthor = el.author[0];
     }
     return articleAuthor;
-}
+};
 
 // Get article ID
-function getArticleID(el){
+var getArticleID = function(el){
     if(el.link[0]) {
         var findID = getSportNginArticleID(el.link[0]);
     }
@@ -278,4 +289,4 @@ function getArticleID(el){
         findID = '';
     }
     return findID;
-}
+};
