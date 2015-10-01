@@ -2,6 +2,9 @@
   "name": "prep_hoops_admin_app",
   "version": "1.0.0",
   "description": "Prep Hoops Admin App",
+  "engines": {
+    "node": "0.12.7"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
